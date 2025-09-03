@@ -1,0 +1,192 @@
+Networking Fundamentals
+========================
+
+
+
+
+Networking refers to the practice of connecting multiple computers and electronic devices together to share information, resources, and services. It enables communication and data transfer between devices, allowing them to exchange data, share files, and access shared resources such as printers, storage, and internet connections.
+
+
+Cisco is the Market leader in networking 
+
+Cisco Certified Intra Networking Engineer
+
+Sharing information is networking as per Cisco
+
+Agar ek pc se dusre pc me koi file transfer Krna ho toh phle UniDisk use krte thee but wo one time use ke liye hota tha.  Uske baad Floppy Drive aayi but in dono se problem solve nhi ho rahi thi.  But us time per logon k waha tv per around 256 Mbps me audio video aata tha Broadcasting k through. Toh networking wale Ruling body ke pas gye us time per ye 2 ruling body thee broadcasting  ke CERN 
+ICANN.
+
+Original Equipment Manufacturer  -  OEM
+
+Software :  OEM
+
+Problems - 
+1) Broadcasting me collision ki problem thi { Means agar dono taraf se data transfer hoga toh traffic jam k jaisa situation hoga  i.e IP conflict }
+
+2) Unicast  {
+
+3) Topology 
+
+--> Hub ka kaam {For eg. 4 Pc's h (1,2,3,4)  Agar 1 ko 3 se connect Krna h toh hub 2 k pas ja k bolega r u 3 then 4 k pas ja k bolega k r u 3 then wo last me 3 k pas ja k puchega k r u 3 toh 3 bolega ka Yes toh tub ja k wo 1 ko 3 se connect krega and isme Privacy nhi hai and agar aur 4 PC's aa gye (5,6,7,8) toh 1 na toh 5 se na hi 6 se na hi 7 se na hi 8 se connect ho payega} Broadcasting krta h ye. Bus Topology rhti.
+
+
+Bridge   -->  Bridge reduces the amount of traffic on a LAN by dividing it into two segments. {For eg there are 8 PC's 1 to 8 and toh bridge k case me Hub 1 me 4 PC rahege 1 to 4 rahege and Hub 2 me 4 PC rahege 5 to 8 rahege toh in dono k beech me Bridge rahega Jo dono Hub ko connect krega and data transfer kurne me help krega 
+
+
+Switch --> It maintains a table known as Content Accessible Memory also known as CAM Table and in it switch maintains Port No and MAC Add. Switch jaise hi connect krte h toh wo 1 msg bhejta h and us se usko har device ka port no and MAC add malum pad jata uske baad jab bhi koi bhi device ko kisi bhi device se communicate krna h toh switch krwa dega q ki uske pas sbki info h. [Switch has 8/16/24/and maximum 48 ports and jitne bhi ports hoge utne collision domain ie. darwaze rhte]
+
+
+Hardware :  OEM   (Hub and Bridge ko combine kur ke Switch bana.  But har ek machine ko apne ek (Hostname usne OS se liya)  , (MAC address  Hardware ID hai ) and individual IP Address chahiye tha Toh IP Address Hub ke pas gya IP k liye per uske pas wo ability nhi hai Fir wo Bridge ke pas gya  uske pas bhi ability nhi thi per.  Then switch me IP Address manually assign Krna pdta  tha q ki switch k pas bhi wo ability nhi thi. But manually assign krne me Human Error and Time Consuming process hai  .  Toh uske baad Router aaya jiske pas  automatically Private  IP Address assign krne ki capability thi  DHCP server ki help se.
+
+
+
+--> Router ek table me har ek device jo us se connected h uska Hostname , MAC address and IP Address store kur ke rkhega k ye dev ko maine ye IP Address Diya hai.  
+
+
+Isme TCP IP Protocol hai and Reciprocal Connection bhi easily hoga.  {It is know as Collection Of Private Network}
+
+(Hostname is Taken from OS}   {IP address  is a Unique ID of every PC } {MAC address is a Hardware ID}
+
+--> Private Network is router Wi-Fi connection
+
+--> Public network is that network which is licensed where u have to follow certain guidelines jo ISP Internet Service Provider ko govt ne batai hai. And wo apne ko Public IP Address provide krta hai.
+
+IP Address Classification -  All the addresses  which are reserved in (Class A , B and C ) are Private IP Address and usko chod k sub Public IP Address Hai.
+
+-------------------------------------------------------
+ A ->  0  -  126  ->Public Network 
+
+--> Addresses reserved from class A
+127.0.0.0 OR 127.0.0.1 is a Loop Back Address 
+0.0.0.0 Release IP
+10.0.0.0 Large Private Organisation k liye reserved
+100.0.0.0 Internet Service Provider k liye reserved 
+-------------------------------------------------------
+B  -> 128 - 191 
+
+-->Addresses Reserved From Class B
+169.254.0.0 --> APIPA
+
+172.16.0.0  and  172.31.0.0  Ye Dono range Mid Size Organisation ke liye reserved hai
+
+-------------------------------------------------------
+C  -> 192  -  223 ->  Private Network 
+
+--> Addresses reserved from class C
+
+192.168.0.0 This is reserved for Small Organisation 
+
+-------------------------------------------------------
+D  ->  224 to 239  Reserved for Multi tasking 
+E   -> 240 to 255 Reserved for R&D
+
+D&E are Useless in Production
+-------------------------------------------------------
+FQDN - Fully Qualified Domain Name
+
+
+16th July Networking Session
+
+
+https://www.google.com.
+
+https is a protocol
+
+: is a  Port 
+
+// This means it is accessed over a network 
+
+www -->  {Is a  Sub Domain OR Child Domain}
+
+. --> Is A Separator 
+
+Google -->  {Is a Main Domain Or 2nd Level Domain }
+
+.com-->  is a  Top Level Domain
+
+. --> {Is the root of Network} 
+
+FQDN can be resolved to an IP by Domain Name System (DNS) and Domain Name System is a Software Server 
+
+ /  -->  Root  of the  filesystem
+
+ // -->  URL  accessed over a network 
+{Uniform Resource Locator} full form of URL 
+
+:/// -->  URI File  {Uniform Resource Identifier}
+
+
+
+--> Root ko resolve krne ke liye there is a Root DNS server managed by a governing body ICANN.
+
+sshd is a Deamon 
+
+ps  -aux  | grep sshd  { Kaun kaun se port number per services listen kur rahi h toh uske liye use hogi }
+
+du  -sh * | grep -i   m {mb me show krega }
+du  -sh * | grep  -i G {GB me show krega} aise hi K krege toh KB me show krega
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------
+
+
+# AV Session -
+===============
+
+
+# ifconfig - This Command will show the Private IP Address of the Machine
+
+
+# curl ifconfig.me - This Command will show the Public IP Address of the Machine
+
+
+
+1 Byte = 8 Bits 
+
+so an IPV4 Address has 4 Bytes that is 32 Bits
+
+
+# 2^7 = 128
+
+# 2^6 = 64
+
+# 2^5 = 32
+
+# 2^4 = 16
+
+# 2^3 = 8
+
+# 2^2 = 4
+
+# 2^1 = 2
+
+# 2^0 = 1
+
+
+
+# By Using Subnets we get -
+
+- Security
+
+- Privacy
+
+- Isolation
+
+
+
+# There are Two Types of Subnets
+
+- Public Subnet - This subnet has access to the Internet as we provide a Route and attach IGW  to it.
+
+- Private Subnet - This does not have access to Internet it uses NAT Gateway.
+
+
+
+
+# Private IP Address Starts with 192, 172 & 10
