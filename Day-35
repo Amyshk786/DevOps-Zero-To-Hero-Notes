@@ -1,0 +1,36 @@
+DAY-35 | EVERYTHING ABOUT KUBERNETES SERVICES | DISCOVERY | LOAD BALANCING | NETWORKING
+========================================================================================
+
+
+
+Like we have Discussed Earlier In Production we do not Deploy a Pod we Usually Deploy a Deployment,  Similarly when Once you deploy a Deployment for Each Deployment you will create a Service in the World of Kubernetes. 
+
+
+
+
+# What If There is No Concept Service in Kubernetes - As a DevOps Engineer  we will usually deploy a Deployment in Production Once we Create a "DEPLOYMENT"  ->  It Will Create a "REPLICASET" for You and RS is Resp to Create  -> "POD" and we have set the Number of Replica as 3 So if a Pod has gone down Replica-Set which is a Kubernetes Controller will Ensure that a New Pod is Up and Running As it provides Auto Healing Capability to Kubernetes Before the Pod goes down or the New Pod Creation will happen Parallelly. But when a Pod has gone down For Instance the IP Address of the Pod was "172.0.3.1" but when a new Pod is Rolled out by the Replica-Set the IP Address of the new Pod will not be the same For Instance the IP Address of the New Pod which is Rolled out is "172.0.3.4". If you have given these 3 Pods to 3 Different Teams or 3 Different Users or 3 Different Projects,  The Users who has the IP Add for the Pod-1 which has gone down will not be able to access that Pod or the Application inside it. So this is a problem if there is No Concept Service in Kubernetes.
+
+
+
+
+As there is a Concept of Load Balancing in Kubernetes so will ask the Users to not Access the Application Using the IP Add We will Create Service (svc) On Top of the Deployment and we will ask the Team or the Users Instead of Accessing the IP Add  You Can Directly Access the Service "svc".  And what this Service will do It will Act as a Load Balancer By Using Kube-Proxy. So now All the Teams OR Users will do they will Access the Service and Kube-Proxy will Forward the Request and do the Load Balancing.
+
+
+
+
+Another Problem which Service is Solving is DISCOVERY,  Service has Came Up with a New Concept and It Says that I will not keep Track of IP Addresses of the Pods or Applications and It has came up with a New Concepts Which is Labels and Selectors. And What this Labels & Selectors will do For Every Pod that is Getting Created what the DevOps Enineers OR Developers they will Apply A Label. So this Label will be Common for All the Pods [Like for Payments All the Pods will ahve teh Label as Payments by which Service will keep a Track of them].  So This the Service DISCOVERY Mechanism of Kubernetes Service [The Service DISCOVERY will be Done By Using Labels & Selectors]
+
+
+
+
+Service Can Also Expose to External World - Whenever we are  Creating a Deployment The Pod that has Created what has happened to this Pod, It Came Up with a IP Add & We cannot Ask the End User or the Customers to Log-In to the K8s Cluster and Access the Application Using the IP Add of the Application. So K8s Service can Expose our Application, It Can Allow Our Application Outside the K8s Cluster. Whenever we are Creating a Service Resource in Kubernetes we have 3 Options ["Cluster IP",  "Node Port",  "Load Balancer"]
+
+
+- Cluster IP - Application will Still be Accessed Insde the K8s Cluster (Container Network) And It will Give us 2 Benefits "Load Balancing" & "Service DISCOVERY"
+
+
+- Node Port - This will Allow your Application to be Accessed Inside Your Orgainsation [Whoever has the Access to Node or VPC EC2 Instance can Access]
+
+
+- Load Balancer - Service will Expose the Application to External World. If we have Deployed Everything on Elastic Kubernetes Service (EKS) and If we are Usin a Service of "Load Balancer"  then we will get Elastic Load Balancer (ELB) IP Add and Anyone can Access Using the Public IP Add. 
+
