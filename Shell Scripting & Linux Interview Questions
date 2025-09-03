@@ -1,0 +1,494 @@
+Shell Scripting and Linux Interview Questions - 
+==================================================
+
+
+
+
+
+
+Q1) List some of the commonly used shell commands ?
+
+
+A1) Sure! Here are some commonly used shell commands that a DevOps Engineer might frequently use:
+
+### File and Directory Management
+- `ls`: List files and directories.
+- `cd`: Change directory.
+- `cp`: Copy files or directories.
+- `mv`: Move or rename files or directories.
+- `rm`: Remove files or directories.
+- `mkdir`: Create a new directory.
+- `rmdir`: Remove an empty directory.
+
+### System Information
+- `top`: Display running processes.
+- `htop`: An improved version of `top` for process management.
+- `df`: Report disk space usage.
+- `du`: Estimate file and directory space usage.
+- `free`: Display memory usage.
+- `uname -a`: Show system information.
+
+### Networking
+- `ping`: Check the network connection to a host.
+- `curl`: Transfer data from or to a server.
+- `wget`: Download files from the web.
+- `ssh`: Connect to a remote server securely.
+- `scp`: Securely copy files between hosts.
+
+### Package Management
+- `apt-get`: Package manager for Debian/Ubuntu (e.g., `apt-get install package`).
+- `yum`: Package manager for CentOS/RHEL.
+- `pip`: Python package manager (e.g., `pip install package`).
+- `npm`: Node.js package manager (e.g., `npm install package`).
+
+### Version Control
+- `git clone`: Clone a repository.
+- `git commit`: Commit changes to the repository.
+- `git push`: Push changes to a remote repository.
+- `git pull`: Pull changes from a remote repository.
+
+### Process Management
+- `ps`: Report a snapshot of current processes.
+- `kill`: Terminate a process.
+- `killall`: Terminate processes by name.
+- `bg`: Resume a stopped job in the background.
+- `fg`: Bring a background job to the foreground.
+
+### Text Processing
+- `grep`: Search text using patterns.
+- `sed`: Stream editor for filtering and transforming text.
+- `awk`: Pattern scanning and processing language.
+- `cat`: Concatenate and display files.
+- `tail`: Output the last part of files.
+- `head`: Output the first part of files.
+
+### Permissions and Ownership
+- `chmod`: Change file permissions.
+- `chown`: Change file owner and group.
+- `chgrp`: Change group ownership.
+
+### Archiving and Compression
+- `tar`: Archive files (e.g., `tar -cvf archive.tar /path/to/directory`).
+- `gzip`: Compress files.
+- `unzip`: Extract compressed files.
+
+### Miscellaneous
+- `echo`: Display a line of text.
+- `history`: Show command history.
+- `man`: Show the manual for a command.
+- `env`: Display environment variables.
+
+
+
+---------------------------------------------------------------------------
+
+
+
+Q2) Write a simple shell script to list all processes 
+
+
+A1) vim list_processes.sh
+
+#!/bin/bash
+
+# This script lists all running processes
+
+echo "Listing all running processes:"
+ps -ef | awk -F" " '{print $2}'
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+Q3) Write a script to print only errors from a remote log
+
+
+
+A3) curl https://raw.githubusercontent.com/iam-veeramalla/sandbox/main/log/dummylog01122022.log | grep ERROR
+
+
+Below are the Error in the Log File
+
+ % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     003/22 08:53:38 ERROR  :......router_forward_getOI:         route handle:   7f5251c8
+03/22 08:53:38 ERROR  :.......mailslot_send: sending to (9.67.116.99:0)
+03/22 08:54:24 ERROR  :......router_forward_getOI:         out inf:   9.67.116.98
+100 22987  100 22987    0     0   295k      0 --:--:-- --:--:-- --:--:--  295k
+03/22 08:54:53 ERROR  :..mailslot_sitter: process received signal SIGTERM
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+Q4) Write a shell script to print numbers divided by 3 & 5 and not 15
+
+
+
+A4) vim sample-script.sh
+
+
+
+#!/bin/bash
+
+############################
+#
+# Author: Amir Shaikh
+# Date: 24/09/2024
+#
+# This script will Print numbers Divisible by 3 , 5 & Not Divisible by 15
+# Version: v1
+############################
+
+
+
+
+for i in {1..100}; do
+        if { [ $((i % 3)) -eq 0 ] || [ $((i % 5)) -eq 0 ]; } && [ $((i % 15)) -ne 0 ]; then
+                echo $i
+        fi
+done
+
+
+
+
+Output = ./sample-script.sh
+3
+5
+6
+9
+10
+12
+18
+20
+21
+24
+25
+27
+33
+35
+36
+39
+40
+42
+48
+50
+51
+54
+55
+57
+63
+65
+66
+69
+70
+72
+78
+80
+81
+84
+85
+87
+93
+95
+96
+99
+100
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+
+
+Q5) Write a script to print number of "S" in Mississippi
+
+
+
+A5) vim numbers.sh
+
+
+#!/bin/bash
+
+
+############################
+#
+# Author: Amir Shaikh
+# Date: 24/09/2024
+#
+# This script will Print "s" in the word "Mississippi"
+# Version: v1
+############################
+
+
+
+x=Mississippi
+
+grep -o "s" <<<"$x" | wc -l
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+
+Q6) How will you debug the shell script?
+
+
+
+A6) To debug your Shell Script we will Use [set -x] at the Start of the Script
+
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+
+
+Q7) What is crontab in Linux? Can you provide an example of usage?
+
+
+
+A7) If we are Linux Admin and we have Roles and Responsibilities to Share the Node-Health at 6 PM Everyday.  In this Case we will use Cron-Tab so this Task will be done at Everyday 6 PM and we can Also mention that if we want to Store the Output in S3 Bucket or Specific Folder Cron Tab will do that.
+
+
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+
+
+Q8) How to open a read-only file?
+
+
+
+A8) vim -r test.sh   [By using this Command the file will be Opened in Read Only Mode]
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+
+
+Q9) What is a difference between soft and hard link?
+
+
+
+A9) In Linux there are 2 Links "Hardlink" and "Softlink"
+
+
+If the Actual file is Deleted "Hardlink" will Not be Deleted
+
+If the Actual file is Deleted "Softlink" will be Deleted
+
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+
+
+Q10) What is a difference between break and continue statements ?
+
+
+
+A10) 
+
+"Break" -> Breaking the Execution
+
+
+"Continue" -> Skip this and Continuing the Execution
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+
+Q11) What are some disadvantages of Shell scripting?
+
+
+
+A11) 
+
+The Execution speed is Slow
+
+Large and Complex Tasks aren't suited to it
+
+Errors are Frequent and Costly and a Single Error can Alter the Command
+
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+
+
+Q12) What a different types of loops and when to use?
+
+
+A12) For Loop, While Loop, Do While Loop
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+
+
+Q13) Is bash dynamic or statically typed and why?
+
+
+
+A13)  Bash is considered a dynamically typed language. This means that variable types are determined at runtime rather than at compile time. In Bash, you don't need to declare a variable's type when you create it; you simply assign a value to a variable, and the type of that value is inferred during execution.
+
+For example:
+
+```bash
+my_var="Hello"
+```
+
+Here, `my_var` is assigned a string, but you could later assign it a number:
+
+```bash
+my_var=42
+```
+
+This flexibility allows you to change the type of a variable on the fly, which is a hallmark of dynamic typing. There are no strict type declarations, and the same variable can hold different types of data throughout its lifecycle.
+
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+
+Q14) Explain about a network troubleshooting utility?
+
+
+
+A14) traceroute
+
+
+tracepath  [This does not require root Preveliages]
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+Q15) How will you sort list on names in a file ?
+
+
+
+A15) To sort a list of names in a file using Bash, you can use the `sort` command. Here's a basic example of how to do it:
+
+1. **Assuming you have a file named `names.txt` that contains a list of names, one name per line.**
+
+   Example content of `names.txt`:
+   
+   Charlie
+   Alice
+   Bob
+   
+
+2. **To sort the names alphabetically, you can use:**
+
+   
+   sort names.txt
+   
+
+   This will output the sorted list to the terminal.
+   
+   
+
+3. **If you want to save the sorted output to a new file, you can use the redirection operator (`>`):**
+
+  
+   sort names.txt > sorted_names.txt
+   
+
+   Now, `sorted_names.txt` will contain:
+   
+   Alice
+   Bob
+   Charlie
+   
+   
+
+4. **If you want to sort the names in reverse order, you can add the `-r` option:**
+
+  
+   sort -r names.txt > sorted_names_reverse.txt
+   
+
+This command-line approach is efficient and straightforward for sorting lists in text files.
+
+
+
+
+
+---------------------------------------------------------------------------
+
+
+
+
+Q16) How will you manage logs of a system that generate huge log files everyday?
+
+
+
+A16) logrotate
