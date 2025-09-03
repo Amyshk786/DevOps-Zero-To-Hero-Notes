@@ -1,0 +1,133 @@
+Containerizing a MERN Stack Application and Deploying using Docker Compose | Step by Step Guide
+=================================================================================================
+
+
+
+GitHub Repo Used for this Lecture 
+Link - https://github.com/iam-veeramalla/MERN-docker-compose
+
+
+
+
+What is a MERN Stack Application - A 3 tier Application is an end-to-end application which has Tier one which is Presentation Layer in simple words you can also call it as UI or the front end tier.  Second Tier which is called as the Business Logic Tier you can also call it as server or backend and then you have a Data Tier which is nothing but your database so any three Tier architecture application has these three tiers for example if you take amazon.com which is a e-commerce application it is also a three Tier architecture application where as a user you are interacting with the UI of Amazon which is the front end of the Amazon which might be written in reactjs or anything and let's say through the UI you are entering your username and password or you are selecting a product immediately the instruction from the UI is sent to a logic layer or the backend application probably written in Java python or let's say any other programming languages.
+
+
+
+Where logic is executed for example you have entered the username and password or let's say you have selected a product so the product details have to be shown right on the UI So the instructions which are received by the UI are sent to this logic layer where the logic layer talks to the database so if the user is asking for the details of a product from the UI So the instructions are sent to the logic layer and in the logic layer a connection is implemented with the database and from the database the details are fetched by the logic layer where user is asking about a product name the age of the product cost of the product and from the logic layer again the details are sent back to the UI so this is how any three Tire architecture.
+
+
+
+
+works so the front end receives the instructions or something that the user can see the instructions are sent to the logic layer where some kind of processing takes place and this processing if required communicates with the database to fetch the product details employee details or to insert anything into the database and if required again database can or in the logic layer information from the database is received and finally displayed on the UI to the user.
+
+
+
+
+M means MongoDB  & It is Database Layer/Tier
+
+E means Express  & It is Back-End Used for Writing the Logic
+
+R means Reactjs   & It is Presentation Layer/Tier
+
+N means Nodejs   & It is Back-End Used for Deploying
+
+
+
+
+
+# Features
+=============
+
+- OpenSource
+
+- Homogenous as it belongs to Java-Script Family
+
+- Simplicity and Security
+
+
+
+
+
+
+
+
+
+---------------------------------------------------
+
+
+# Practical 
+
+
+sudo apt update
+
+
+sudo apt-get install docker.io -y
+
+
+sudo apt-get install docker-compose -y 
+
+
+
+git clone https://github.com/iam-veeramalla/MERN-docker-compose.git
+ 
+
+
+cd MERN-docker-compose/
+
+
+cd mern/frontend
+
+
+sudo usermod -aG docker ubuntu
+
+
+sudo chown "$USER" /var/run/docker.sock 
+
+
+docker build -t mern-frontend .
+
+
+ 
+docker network create mern
+
+
+docker run -d --name=frontend --network=mern -p 5173:5173 mern-frontend
+
+
+
+docker logs frontend
+
+> client@0.1.0 dev
+> vite --host 0.0.0.0
+
+
+  VITE v5.4.9  ready in 394 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://172.19.0.2:5173/
+
+
+
+
+
+
+docker run --network=mern --name mongo -d -p 27017:27017 -v ~/opt/data:/data/db mongo:latest
+
+
+
+cd ..
+
+
+
+cd backend 
+
+
+docker build -t mern-backend .
+
+
+docker run -d --name=backend --network=mern -p 5050:5050 mern-backend
+
+
+
+docker compose up -d
+
