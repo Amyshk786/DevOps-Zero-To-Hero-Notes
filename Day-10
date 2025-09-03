@@ -1,0 +1,136 @@
+Day 10 - Git Branching Strategy 
+===============================
+
+
+
+Branching in Git is a powerful feature that allows you to diverge from the main line of development and continue to work without interfering with the main project. When you're ready, you can merge your branch back into the main branch. Git's branching model makes it easy to experiment, isolate features, and collaborate with others on the same project.
+
+
+
+Key Concepts of Branching in Git :
+====================================
+
+1. Branch: A branch in Git represents an independent line of development. It's essentially a pointer to a specific commit. Branching allows you to work on multiple versions of a project at once.
+
+
+2. Main Branch: By default, Git has a main branch (formerly called master), which represents the main production code. Developers create other branches for features, bug fixes, or experiments. 
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+In Git, branches are a fundamental part of managing parallel work and multiple lines of development. Different types of branches can be used depending on the development strategy or workflow. Below are the main types of branches commonly used in Git, along with their typical purposes.
+
+
+
+1. Main (Master) Branch
+
+Purpose: This branch holds the main, production-ready code.
+
+Description: The default branch when you initialize a Git repository is often named main (previously master). This branch is where production-ready or stable code lives. It should be deployable at any given time. Changes are usually merged into this branch from other branches like feature, release, or hotfix branches.
+
+Typical Workflow: Feature branches are merged here after they are fully tested and approved.
+
+
+git checkout main
+
+
+
+
+-----------------------------------------------------------------
+
+
+2. Feature Branch
+
+Purpose: To develop new features independently of the main codebase.
+
+Description: Feature branches are created for specific new features or enhancements. Developers work on their feature branch without affecting the stable code in the main or develop branches. Once the feature is complete and tested, it’s merged back.
+
+Naming Convention: It’s common to name feature branches descriptively, such as feature/login-page or feature/user-auth.
+
+Typical Workflow: After finishing the feature, merge it back to develop or main.
+
+
+git checkout -b feature/login-page
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+3. Develop Branch
+
+Purpose: A staging area for features that are ready but not yet in production.
+
+Description: In the GitFlow workflow, the develop branch is used to integrate all the feature branches. It's where you test and prepare your code for the next release. It reflects the latest delivered development changes for the next release.
+
+Typical Workflow: New features are merged into develop before a release branch is created.
+
+
+git checkout develop
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+4. Release Branch
+
+Purpose: To prepare for a new production release.
+
+Description: A release branch is created from the develop branch when the code is ready for a release. This branch is for final preparation, such as bug fixes, minor tweaks, or version number updates. Once the release is complete, it is merged into main and tagged, and also merged back into develop to keep it up to date.
+
+Naming Convention: Release branches are often named based on the release version, like release/v1.0.
+
+Typical Workflow: Once tested and finalized, the release branch is merged into main.
+
+
+git checkout -b release/v1.0
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+5. Hotfix Branch
+
+Purpose: To quickly fix bugs in the production code.
+
+Description: Hotfix branches are created to fix critical issues in the main (production) code, without waiting for the next release. A hotfix branch is created off of main, and once the fix is complete, it's merged back into both main and develop to make sure the fix is reflected in future releases.
+
+Naming Convention: A common naming convention is hotfix/critical-bug or hotfix/v1.0.1.
+
+Typical Workflow: Merged back into main (and tagged) and develop.
+
+
+git checkout -b hotfix/critical-bug
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+6. Bugfix Branch
+
+Purpose: To fix bugs that are found during development.
+
+Description: Bugfix branches are similar to feature branches but are focused on fixing known bugs rather than adding new features. Like feature branches, bugfix branches are typically short-lived and merged back into develop or main once the bug is resolved.
+
+Naming Convention: These branches are often named based on the bug being fixed, such as bugfix/issue-101.
+
+Typical Workflow: After the bug is fixed, the branch is merged back into develop or main.
+
+
+git checkout -b bugfix/issue-101
