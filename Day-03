@@ -1,0 +1,26 @@
+Day 3 Concept Of Virtualization - 
+==================================
+
+
+Lets Say You have a Plain Land in your Village or Home Town, You have Constructed a House around it and you along with your family members started to live in this Plain land. Let's Say this plain land is a 1 Acre land and in the Entire 1 Acre Land you started you have Constructed your Dream house and you started living in this 1 Acre land. So you are using all the Essentially Water Resources and you are also using the Entire Land you have built Park or Play Area and you are enjoying this. One sudden day you Realised that I am Living happily or I am Enjoying here but I don't need this Entire 1 Acre and you are not using this entire 1 Acre and only 0.5 Acre is Enough for you. So you have gone Ahead and built another Property in the 0.5 Acre which you was not Utilising and You gave this Property on Rent. The Tenant will have Access to 0.5 Acre Property and You have access to Another 0.5 Acre Property & You Both are Not Interfering in Eachothers Property. So Basically you have Efficiently used the Land Resource which you had and you are also generating Income from that Earlier the Land was Under Utilised.
+
+
+
+
+Virtual Machine - 
+==================
+
+
+Virtual Machine - Lets Say there is a Server, Server is Nothing but you want to Deploy your Application Lets say you have your Application in your Local Laptop and you are a Developer and you developed an application and  now you want to Deliver that to your Customer Today you are using Google.com so all of these things are Hosted on a Public Server so that's why you are able to Access these things. So Inside this Server let's say you Organisation Example.com what they have done they bought 5 Different Servers from HP what Happened is they Deployed this Application (App-1) on the Server 1. This App-1 Requires or it is Using 4 GB RAM and it is using 4 CPUs, So now what happened is this Server is actually of Size 100 GB and 100 Core But you have Deployed an Application of 4 GB and 4 CPU and all your Developers and Testers are using this to Test your Application You Installed an Application Server (Tom Cat, Web Logic) and you Started this Application on this Server But of Late You Realised that this Application Requires Only 4 GB and 4 CPU, So you are wasting the Entire Resources or there are 5 Different teams in your Organisation and what you have done is you gave each and every server to each team like (Server-1 to Team-1, Server-2 to Team-2 and so on), You Realised that these teams are Inefficiently Using these Servers That is Team-5 has Deployed Application-5 But Application-5 might Only Require 10% of Actual Resources of the Server-5 is Providing. If the Server is of 50 GB in RAM and if Team-5 Only Requires 5 GB of RAM What is Happening your are Wasting the 45 GB that is you are only using 10% of the Resources and you are Un-Utilizing the 90% of the Resources. Here came the Big Rock or Actual Problem that is InEfficiency. Here the Teams are Under- Utilizing the Resources or they are bot using the Resources Efficiently, So thats why the Concept of Virtualization came into Picture. What Virtualization does is let's say you have bought Physical Server from HP and what you have done is you have Typically Installed a Hypervisor on Server-1 (Hypervisor is a Software that can Install Virtual Machine on your Bare Metal or Physical Servers) You have done Logical Partition/ Sepration or Isolation on your Server-1. Here as an DevOps Engineer we have added Efficiency by Automating the Process Using a Hypervisor (Some of the Popular Hypervisors are VM Ware, Xen). 
+
+
+The Concept of Virtual Machine is Nothing But you are Basically Creating Virtual Environment that Function as Virtual Computer System We are Breaking them Logically you are not breaking you physical server you are only doing a Logical Isolation. So that's why Virtual Machines are nothing but they are Virtual Environments which Function as a Virtual Computer Systems & These Virtual Computer Systems has their Own CPUs, Memory and Hardware. All the VMs are Not Dependable on other VMs.
+
+
+
+
+Virtualization in Cloud - 
+==========================
+
+
+--> AWS and Other Cloud Providers has Build their Own Data Center in Mumbai and All Over the World as they have their own DC, they have Installed their Physical Servers on their Data Center in Racks. They take all the Preventive Measures and Build their Data Center, And they Install Thousands and Millions of Physical Servers and the Put them in their Data Center and Whenever a User who Makes a Request to Amazon and who Select the Region as Mumbai You can ask for a VM by choosing a Region of your Choice in that Particular Region. So once you have made the Request this Request will go to one of these Physical Servers and as there is a Hypervisor Installed on all the Physical Servers, This Hypervisor will create a VM for you and it will share the Required Details. This is how the World of Virtual Machines Operate, It Operates on Hypervisor They all have their Hypervisor's Installed on their Physical Servers and Whenever Somebody is Requesting for a VM this Hypervisor will give you a VM from one of the Physical Servers Depending upon the Region that you have Selected.
