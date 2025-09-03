@@ -1,0 +1,507 @@
+Day-28 | Docker Networking | Bridge vs Host vs Overlay |Secure Containers with Custom Bridge Network
+======================================================================================================
+
+
+
+
+GitHub Repository Used in Todays Lecture & For Study Material
+Link - https://github.com/iam-veeramalla/Docker-Zero-to-Hero
+
+
+
+# Docker Networking
+
+Networking allows containers to communicate with each other and with the host system. Containers run isolated from the host system
+and need a way to communicate with each other and with the host system.
+
+By default, Docker provides two network drivers for you, the bridge and the overlay drivers. 
+
+```
+docker network ls
+```
+
+```
+NETWORK ID          NAME                DRIVER
+xxxxxxxxxxxx        none                null
+xxxxxxxxxxxx        host                host
+xxxxxxxxxxxx        bridge              bridge
+```
+
+
+
+
+
+--------------------------------------------------- 
+
+
+
+
+### Bridge Networking
+=========================
+
+The default network mode in Docker. It creates a private network between the host and containers, allowing containers to communicate with each other and with the host system.
+
+![image](https://user-images.githubusercontent.com/43399466/217745543-f40e5614-ac34-4b78-85a9-91b24512388d.png)
+
+
+
+
+
+If you want to secure your containers and isolate them from the default bridge network you can also create your own bridge network.
+
+```
+docker network create -d bridge my_bridge
+```
+
+Now, if you list the docker networks, you will see a new network.
+
+```
+docker network ls
+
+NETWORK ID          NAME                DRIVER
+xxxxxxxxxxxx        bridge              bridge
+xxxxxxxxxxxx        my_bridge           bridge
+xxxxxxxxxxxx        none                null
+xxxxxxxxxxxx        host                host
+```
+
+
+
+
+
+This new network can be attached to the containers, when you run these containers.
+
+```
+docker run -d --net=my_bridge --name db training/postgres
+```
+
+
+
+
+This way, you can run multiple containers on a single host platform where one container is attached to the default network and 
+the other is attached to the my_bridge network.
+
+These containers are completely isolated with their private networks and cannot talk to each other.
+
+![image](https://user-images.githubusercontent.com/43399466/217748680-8beefd0a-8181-4752-a098-a905ebed5d2a.png)
+
+
+
+
+However, you can at any point of time, attach the first container to my_bridge network and enable communication
+
+```
+docker network connect my_bridge web
+```
+
+![image](https://user-images.githubusercontent.com/43399466/217748726-7bb347d0-3736-4f89-bdff-31d240b15150.png)
+
+
+
+
+
+
+--------------------------------------------------- 
+
+
+
+
+
+### Host Networking
+=====================
+
+This mode allows containers to share the host system's network stack, providing direct access to the host system's network.
+
+To attach a host network to a Docker container, you can use the --network="host" option when running a docker run command. When you use this option, the container has access to the host's network stack, and shares the host's network namespace. This means that the container will use the same IP address and network configuration as the host.
+
+
+
+Here's an example of how to run a Docker container with the host network:
+
+```
+docker run --network="host" <image_name> <command>
+```
+
+
+
+
+Keep in mind that when you use the host network, the container is less isolated from the host system, and has access to all of the host's network resources. This can be a security risk, so use the host network with caution.
+
+
+
+Additionally, not all Docker image and command combinations are compatible with the host network, so it's important to check the image documentation or run the image with the --network="bridge" option (the default network mode) first to see if there are any compatibility issues.
+
+
+
+
+
+--------------------------------------------------- 
+
+
+
+
+### Overlay Networking
+=========================
+
+This mode enables communication between containers across multiple Docker host machines, allowing containers to be connected to a single network even when they are running on different hosts.
+
+
+
+
+
+--------------------------------------------------- 
+
+
+
+
+
+### Macvlan Networking
+=========================
+
+This mode allows a container to appear on the network as a physical host rather than as a container.
+
+
+
+
+
+
+
+
+--------------------------------------------------- 
+
+
+# Practical for Bridge Networking
+
+
+# Login Container
+
+
+cd Docker-Zero-to-Hero   -> cd examples/first-docker-file/
+
+
+
+
+# We Have Created a Container with the Name Login 
+docker run -d --name login nginx:latest
+
+
+
+
+
+# We Have Logged into the Login Container 
+docker exec -it login /bin/bash
+
+
+apt update 
+
+
+apt-get install iputils-ping -y   [We have Installed Ping ]
+
+
+ping -V
+
+
+docker ps 
+
+Output = docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS     NAMES
+3340d131c5f7   nginx:latest   "/docker-entrypoint.…"   About a minute ago   Up About a minute   80/tcp    logout
+d9f6ebcfa5a9   nginx:latest   "/docker-entrypoint.…"   6 minutes ago        Up 6 minutes        80/tcp    login
+
+
+# We Can Inspect the Login Container and Check its IP Address
+docker inspect login
+
+
+Output =   "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "91c5e4727d4a491cabfc1965683b5da1a51ba40ab3fa7b380a9982d1e0b26460",
+                    "EndpointID": "7f7541fab28a4dc1b167d023dbd90bf6971b8b9d63bf9be3b606f0b55fa2b0d4",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.3",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:03",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+
+
+
+Note - The IP For the Login Container is "IPAddress": "172.17.0.3"  & the Network Type is Default Bridge
+
+
+
+ping 172.17.0.4
+
+
+Output = ping 172.17.0.4
+PING 172.17.0.4 (172.17.0.4) 56(84) bytes of data.
+64 bytes from 172.17.0.4: icmp_seq=1 ttl=64 time=0.054 ms
+64 bytes from 172.17.0.4: icmp_seq=2 ttl=64 time=0.052 ms
+64 bytes from 172.17.0.4: icmp_seq=3 ttl=64 time=0.055 ms
+64 bytes from 172.17.0.4: icmp_seq=4 ttl=64 time=0.050 ms
+64 bytes from 172.17.0.4: icmp_seq=5 ttl=64 time=0.050 ms
+
+
+
+
+IMP Note - As Both Login and Logout Containers are on the Same Bridge Network which is the veth0 or docker0 that is why if we do Ping from Login to Logout it will Happen and Same From Logout to Login It will Happen.
+
+
+
+
+
+
+---------------------------------------------------
+
+# Logout Container
+
+
+# We Have Created another Container with the Name Logout 
+docker run -d --name logout nginx:latest
+
+
+
+
+
+# We Have Logged into the Login Container 
+docker exec -it logout /bin/bash
+
+
+apt update 
+
+
+apt-get install iputils-ping -y   [We have Installed Ping ]
+
+
+ping -V
+
+
+
+docker ps 
+
+Output = docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED              STATUS              PORTS     NAMES
+3340d131c5f7   nginx:latest   "/docker-entrypoint.…"   About a minute ago   Up About a minute   80/tcp    logout
+d9f6ebcfa5a9   nginx:latest   "/docker-entrypoint.…"   6 minutes ago        Up 6 minutes        80/tcp    login
+
+
+
+# We Can Inspect the Logout Container and Check its IP Address
+docker inspect logout 
+
+Output =   "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "91c5e4727d4a491cabfc1965683b5da1a51ba40ab3fa7b380a9982d1e0b26460",
+                    "EndpointID": "f64164d1bc36d979604f1c3f94295f1dbd37f4f172e116f2f8921cb4d90fc0f0",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.4",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:04",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+
+
+
+
+Note - The IP For the Logout Container is "IPAddress": "172.17.0.4"  & the Network Type is Default Bridge 
+
+
+
+ping 172.17.0.3
+
+
+Output =  ping 172.17.0.3
+PING 172.17.0.3 (172.17.0.3) 56(84) bytes of data.
+64 bytes from 172.17.0.3: icmp_seq=1 ttl=64 time=0.057 ms
+64 bytes from 172.17.0.3: icmp_seq=2 ttl=64 time=0.060 ms
+64 bytes from 172.17.0.3: icmp_seq=3 ttl=64 time=0.051 ms
+64 bytes from 172.17.0.3: icmp_seq=4 ttl=64 time=0.049 ms
+64 bytes from 172.17.0.3: icmp_seq=5 ttl=64 time=0.052 ms
+64 bytes from 172.17.0.3: icmp_seq=6 ttl=64 time=0.051 ms
+
+
+IMP Note - As Both Login and Logout Containers are on the Same Bridge Network which is the veth0 or docker0 that is why if we do Ping from Login to Logout it will Happen and Same From Logout to Login It will Happen.
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------
+
+
+Finance Container
+
+
+
+# How to Setup Custom or Virtual Bridge Networking so that 1 Container Cannot Communicate with the Other Container as it has Sensitive Information.
+
+
+
+# We Are Creating a Secure Bridge Network
+docker network create secure-network
+
+
+Output = docker network create secure-network
+a39aa7606a78694b5f7182b55a5115c60fbe75448fd003002f80455f2ade7022
+
+
+
+# If we list All the Networks which we have it will show the Secure-Network which we have Created Just Now
+docker network ls 
+
+Output = docker network ls
+NETWORK ID     NAME             DRIVER    SCOPE
+91c5e4727d4a   bridge           bridge    local
+0c212c1ec60f   host             host      local
+795ff60d1c28   none             null      local
+a39aa7606a78   secure-network   bridge    local
+
+
+
+
+# We Are Creating a New Container which is the Finance Container and It has Sensitive Info so we will be Attaching the Custom Bridge Network to it.
+
+docker run -d --name finance --network=secure-network nginx:latest
+
+
+
+
+
+# We Can Check if the Container is Created and Running 
+docker ps
+
+Output = docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS     NAMES
+82e5da5223e2   nginx:latest   "/docker-entrypoint.…"   5 seconds ago    Up 4 seconds    80/tcp    finance
+3340d131c5f7   nginx:latest   "/docker-entrypoint.…"   44 minutes ago   Up 44 minutes   80/tcp    logout
+d9f6ebcfa5a9   nginx:latest   "/docker-entrypoint.…"   49 minutes ago   Up 49 minutes   80/tcp    login
+
+
+
+
+
+
+# We Can Inspect the Finance Container and Check its IP Address
+docker inspect finance
+
+Output = "Networks": {
+                "secure-network": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "82e5da5223e2"
+                    ],
+                    "NetworkID": "a39aa7606a78694b5f7182b55a5115c60fbe75448fd003002f80455f2ade7022",
+                    "EndpointID": "5709726b293f19d3653696eb6cb5957e5d5fd54a0cd495db131fbf6c7763cf50",
+                    "Gateway": "172.18.0.1",
+                    "IPAddress": "172.18.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:12:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+
+
+
+
+Note - The IP For the  Container is "IPAddress": "172.18.0.2"  & the Network Type is "Secure-Network"
+
+
+
+IMP Note - The Finance Container is Not in the Default Bridge Network so the Login and Logout Containers will Not be Able to Ping the Finance Container as it is In the Secure Bridge Network which we have Created with the name "secure-network". 
+
+
+
+
+
+
+
+
+---------------------------------------------------
+
+
+# Container on Host Network
+
+docker run -d --name host-demo --network=host nginx:latest
+
+Output = docker run -d --name host-demo --nertwork=host nginx:latest
+0133aa6c545e3f1dea5c69a95361e46e3fa0ed7b3dfdf4cb4d18c84046dd4930
+
+
+
+docker ps 
+
+Output =  docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED             STATUS             PORTS     NAMES
+0133aa6c545e   nginx:latest   "/docker-entrypoint.…"   11 seconds ago      Up 10 seconds      80/tcp    host-demo
+82e5da5223e2   nginx:latest   "/docker-entrypoint.…"   11 minutes ago      Up 11 minutes      80/tcp    finance
+3340d131c5f7   nginx:latest   "/docker-entrypoint.…"   56 minutes ago      Up 56 minutes      80/tcp    logout
+d9f6ebcfa5a9   nginx:latest   "/docker-entrypoint.…"   About an hour ago   Up About an hour   80/tcp    login
+
+
+
+
+
+
+docker inspect host-demo
+
+Output = "Networks": {
+                "host": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "0c212c1ec60f139759fba5656fec62ca1f20c6d8949e9b5308014d00e606a37a",
+                    "EndpointID": "e47dc84f74e9da8990b66b7bc79dac57b12f32f80e61f213794d28757d0815fe",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+
+
+
+
+
+
+Note - There will be No IP Address Assigned to the "host-demo" Container as it is created with the Host Network   & the Network Type is "Host"
+
+
