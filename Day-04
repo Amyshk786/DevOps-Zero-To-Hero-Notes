@@ -1,0 +1,25 @@
+Day 4 - How to Create Virtual Machines 
+========================================
+
+
+For Automation in Creating a AWS EC2 Instance We Have AWS EC2 API, For Storage we have AWS S3 API, For Volumes AWS EBS API.
+
+AWS People has Developed AWS EC2 API and Using this AWS EC2 API the DevOps Engineer who is using this Laptop what he can do is he can Write a Script and Using this Script what he will do he would Make a Call to the AWS EC2 API So he makes a call to the AWS API team and In this Script he will say I want to Create 10 EC2 Instances or 100 EC2 Instances or Even 1 EC2 Instance.
+
+
+
+ 
+The Developers at Amazon has written API as Amazon Provides 100 of Services, For EC2 Service there are Bunch of Developers these Developers will Expose the API of this EC2 Server, This API Would Receive a Request and if it receives the request in the Accepted format as a Response it would send you a EC2 Instance. SO the AWS EC2 API is Responsible for receiving the Request and Once it Receives the Request and The Request is Valid (Following All the Standards this EC2 API is Expecting) Authenticated (The User Who is Making the Request Should Have Access to AWS) and Authorized (User Should be Authorized to Create an EC2 Instance). Once These 3 Things are done As a DevOps Engineer Now You can Write a Script and Your Script has to Make an API Call with AWS with a Request that is Matching All These Criteria's Valid, Authenticated & Authorized and as a Output for the Script you Would get a EC2 Instance.
+
+
+Organisations Who Choose AWS as their Cloud Platform will go with AWS Services as they are AWS Propritery Products and they are Specific to AWS.
+
+There are Some Organisation and Most of the Organisations These Days are Choosing The Hybrid Cloud Pattern / Model, They Have their VMs in One Cloud Platform They have their Other Resource Infrastructure in a Different Cloud Platform Either it can be Because of Efficiency , Google Cloud Platform is Very Popular for its AI and ML Stuffs, Some People Prefer Kubernetes on Google So that's why These Days Organisations are Choosing Hybrid Cloud Model, They have their AI & ML in Google, RDS in AWS.  
+and they will Use Terraform for Automation.
+
+1) The Script Can Be made Using AWS CLI
+2) Using AWS API (Boto 3 in Python)
+3) AWS Cloud Formation Template (CFT)
+4) AWS Cloud Development Kit (CDK)
+5) Terraform [Terraform will Help you in All the Cloud Platforms]
+6) Manually By Using the AWS Console 
