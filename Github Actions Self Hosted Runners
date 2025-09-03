@@ -1,0 +1,86 @@
+GITHUB ACTIONS SELF HOSTED RUNNERS | ADD THIS PROJECT TO YOUR RESUME 
+=====================================================================
+
+
+
+GitHub Repository Used for this Lecture 
+Link - https://github.com/Amyshk786/GitHub-Actions-Zero-to-Hero
+
+
+
+
+
+GitHub Hosted Runners -
+
+So let's say you're using systems like Jenkins there is only one way that you can do is you know you can install your Jenkins and then you create another ec2 instance or a Docker container which will act as a runner now. what is Runner Runner is a place where your job gets run in Jenkins world you call it as an agent or worker node that's where your application gets run on Jenkins but in terms of GitHub Actions and GitLab this is categorized into self-hosted Runners and in GitHub we call it as GitHub Hosted runners so what is GitHub hosted Runner,  So when you Run a GitHub project or when you build a CI project on the GitHub system let's take open source projects like kubernetes or ArgoCD so what happens is their CI system is directly built on GitHub because their source code is also hosted on GitHub and GitHub actions using the GitHub hosted Runners is completely free for open source and public projects.
+
+
+
+So when you take a runner from GitHub and execute your project on the GitHub Runner itself you don't own that Runner  it's a public Runner GitHub gives you by the execution of the CI Pipeline and once your execution is done then the runner gets terminated so you don't have any ownership with the runner. So that is a GitHub Hosted Runner.
+
+
+
+
+
+
+Self-Hosted Runners - 
+
+Self-hosted Runner is the same concept of what we do in Jenkins so what do we usually do in Jenkins when you take a Jenkins Master to execute your workloads you would create a Jenkins worker or Jenkins agent and this can be an EC2 instance or Docker container. Similarly in GitHub actions you can do the same thing now why would you do that because you already have a GitHub hosted Runner and if it is a public project you are getting it for free then what is the purpose of using a self-hosted runner that my this should be your first question if not so the answer to this is GitHub hosted Runners they're really good they're really amazing they have  different distributions you can use them for a lot of purpose lot of Open Source projects.
+
+
+
+
+But let's say you are an Enterprise Company you are not Open Source your Code is Not Open you are using Private Repositories or you are Using Public Repositories But still you know you have a lot of Configuration where you require Huge Service to execute your Applications so what are the two things that One is you are a private project your Code is Not Open,  Nobody Can Access Your GitHub Repository, It is a Private GitHub Repository  &  the Second Case is that your Runners that are provided by GitHub are not good enough for your project let's say you require a runner that is 32GB RAM for some various reasons probably you are running end-to-end test that takes huge amount of resources or probably you have very special requirements of packages that are not coming with the GitHub hosted Runners so that can also be another case so these are two reasons And If You have Banking Application so we might Face Security Issues.
+
+
+
+
+# 3 Reasons Why Not to Use GitHub Hosted Runners
+
+
+1) Security
+
+
+2) Private Repository
+
+
+3) You don't have a GitHub hosted Runner that is matching your requirements probably because of Resources or Dependencies
+
+
+
+
+
+
+
+
+---------------------------------------------------
+
+
+# How to Setup SELF-HOSTED RUNNERS
+==================================
+
+
+
+# As You Know The Jenkins Master Communicates With the Jenkins Worker Using the SSH Protocol
+
+
+
+# So For Self Hosted Runners we need to do Some Changes in the Security Group and Edit the Inbound & Outbound Traffic Rules 
+
+
+Allow HTTP and HTTPS In Both Inbound and Outbound       [So That Everything works Smoothly]
+
+
+
+Go To GitHub Settings  ->   ACTIONS  ->  RUNNERS  ->  NEW SELF-HOSTED RUNNER
+
+
+Select the OS Type and Run the Below Mentioned Commands Carefully
+
+
+Once you do that Your EC2 Instance will be Configured as Runner and It will Start Listening to ur GitHub
+
+
+Make the Change in the File and Make it "self-hosted" 
+
+
