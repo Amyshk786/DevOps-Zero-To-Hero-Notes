@@ -1,0 +1,404 @@
+Day-27 | Docker Volumes and Bind Mounts | Persistent Storage for Docker
+=========================================================================
+
+
+# Learn More about Volumes
+Link - https://docs.docker.com/engine/storage/volumes/
+
+
+
+# GitHub Repo used in today's Lecture
+Link - https://github.com/iam-veeramalla/Docker-Zero-to-Hero
+
+
+
+
+Let's say you have a Container and you have Installed Nginx application inside this container and this Nginx application is continuously puts the user information like who is the logged in user and from which IP address this logged in user has accessed the application all of this information Nginx tries to store in a log file. This Log file is Very Important at the time of Security Auditing and If we want to Retrive any Specific Information from the Log File.
+
+
+This Log file is Very Important because whether you are doing your security Auditing of your company or whether you're retrieving any kind of details to understand the user information the log file has to have all the information like for example of last 10 days depending upon your organization requirement or from last five days or last one week time to time you perform auditing.
+
+
+For instance this container has gone down so what happens in this case is because the container has Gone down the log file gets deleted why because containers are ephemeral in nature what is the meaning of ephemeral they are very short-lived, Containers are very Light Weight in Nature They Use all of the resources like CPU memory and the storage or the file system all of these things directly from the kernel or the host operating system that is why Containers are very Light Weight in Nature.
+
+
+If the container goes down, they free up the resources from the operating system and they get killed. So now the user details or the log file of the Nginx is deleted if the log file is deleted now organization does not have information of the users who authenticated with that specific organization or the user IP addresses or the any kind of information that they want to track or perform auditing on the users is completely deleted this is problem one. 
+
+
+
+There can be another problem like if there are 2 Containers One for Front-End and Second for Back-End, The Back-End Container Keeps on Writing some files and this file has to be Read by the Front-End Container To Display the Content. The Back-End Container can Continuously write a JSON File or a XML File or YAML File  and the Content Written by the Back-End Container is Served by the Front-End Container to Display the Information to the Users.
+
+
+
+Due to some reason if the Back-End Container is Down so the Front-End Container will not be able to Display Information to the Users. Third Problem There is an Application and this App needs to Read some file and the File is not on Container, That File is Provided by a Cron Job on the Host Machine [Cron job is a Periodical Job which is Running on a Host] the file Which the Cron Job will generate can be a JSON file, XML file or any other file.
+
+
+
+
+
+# Problems
+============
+
+- If Nginx is Stopped Working or If it is Killed then all the Logs which it has stored will be lost
+
+- If the Back-End is Down Front-End will not be able to Display Information
+
+- App is Unable to Read the File from the Cron Job which is Running on the Host Machine
+
+
+
+
+
+
+
+# Solution
+===========
+
+To Solve the above-mentioned Problems Docker Came up with 2 Concepts "Bind Mounts" & "Volumes"
+
+
+- Bind Mounts - This allows you to Bind a Directory inside your container. In this case there will be 1 Directory called as "C1" which is on the Host Machine so there will be a file with the same name or with a different name on the Container and these 2 Files will be Binded to Each Other. So, in the future if the Container goes down the User can read the file from the Host Machine. And if we create a New Container, we can Bind this file which is on Host Machine with that New Container as well.
+
+
+
+
+
+
+- Volumes - It Provides you a Better Life-Cycle, Using Docker CLI Commands we Can Create Volumes and This will be a Logical Partition that you are Creating on your Host. So you create something under the volume and you can manage the same things like you know you can create a volume you can Destroy a volume, Or you can take this volume out of container C1 and later point of time attach it to C2 or at one single point you can attach the same volume to C1 and C2 so what a volume is doing apart from this bind mounts concept is technically both are Solving the Same problem. Even using a volume what you are doing is kind of you are attaching a specific folder or you are attaching a specific file system to The Container but the main advantage is using volume you are not providing the directory details like you are not saying /app folder on the host should be assigned to a specific folder on the container instead you are saying like create a volume you are asking Docker to create a volume on the host now this volume is basically a logical logical partition on your Host.
+
+
+If we do "df" on the Host Machine it will Provide us all the Disks. Similarly, when you do volume Docker will create a logical disk or it will create a logical volume and this volume will be mounted to your container. The biggest advantage that you are getting using volumes is you are managing the entire thing using the docker CLI itself and basically this volumes has a Life-Cycle so why I am saying that volumes as a life cycle is because whenever you are using volumes the concept of volumes you are getting the advantage of managing it like you know creating it destroying it all of these things. 
+
+
+
+And one more advantage of using volumes is if you are using volumes you can create a volume on any place like you can create on the same HOST you can create on any External EC2 Instance for example or you can use any External Storage devices like S3 or NFS like you are not restricted with the options so there are bunch of things that you can create with volumes that are using some external sources so this is a Huge Advantage.
+
+
+
+
+This will be very useful if your host does not have enough disk or for example your container requires a huge amount of volume so and this volume should later point of time be taken as a backup so to do all of these things your host will be with very limited resources so what volumes offers you is you can also create it on some external storage devices or you know on External Compute Devices so that later point of time you can easily take their Backup you can move them from this Cloud Provider to Your Local Storage. 
+
+
+
+
+
+
+
+
+
+--------------------------------------------------- 
+
+
+# Volume Commands 
+=================
+
+
+1) docker volume ls   [This will list all the Available Volumes]
+
+
+Output - 
+
+ubuntu@ip-172-31-46-247:~$ docker volume ls
+
+DRIVER    VOLUME NAME
+
+
+
+
+
+2) docker volume create amir  [This will create a Volume with the name Amir & We can Dedicate this Volume to 1 Container or  Specific Containers]
+
+
+
+
+3) docker volume inspect amir [This will provide you all the details]
+
+Output = docker volume inspect amir
+[
+    {
+        "CreatedAt": "2024-10-16T13:35:46Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/amir/_data",
+        "Name": "amir",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+
+
+
+
+4) docker volume rm amir  [To Remove / Delete a Specific Volume]
+
+
+
+
+5) cd Docker-Zero-to-Hero/examples/first-docker-file/
+
+
+docker build -t voldemo .
+
+
+docker volume create amir 
+
+
+docker run -d --mount source=amir,target=/app nginx:latest
+
+
+[nginx:latest Wo Image H Jaha Humne amir Naam k volume ko Mount Kiya h]
+
+docker ps 
+
+Output = docker ps
+CONTAINER ID   IMAGE          COMMAND                  CREATED          STATUS          PORTS     NAMES
+e53e15813529   nginx:latest   "/docker-entrypoint.…"   16 seconds ago   Up 15 seconds   80/tcp    magical_satoshi
+
+
+
+
+
+docker inspect e53e15813529   [This will Display Entire Info of the Container & It will also show the mount as Amir as we have Attached that to this Container & The Destination is "/app"]
+
+Output = docker inspect e53e15813529
+[
+    {
+        "Id": "e53e15813529550c2435aa9d71fac99d2126e8b5bda9ace66ffe28b7d12b75c7",
+        "Created": "2024-10-16T14:03:22.953511209Z",
+        "Path": "/docker-entrypoint.sh",
+        "Args": [
+            "nginx",
+            "-g",
+            "daemon off;"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 50889,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2024-10-16T14:03:23.263008667Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:7f553e8bbc897571642d836b31eaf6ecbe395d7641c2b24291356ed28f3f2bd0",
+        "ResolvConfPath": "/var/lib/docker/containers/e53e15813529550c2435aa9d71fac99d2126e8b5bda9ace66ffe28b7d12b75c7/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/e53e15813529550c2435aa9d71fac99d2126e8b5bda9ace66ffe28b7d12b75c7/hostname",
+        "HostsPath": "/var/lib/docker/containers/e53e15813529550c2435aa9d71fac99d2126e8b5bda9ace66ffe28b7d12b75c7/hosts",
+        "LogPath": "/var/lib/docker/containers/e53e15813529550c2435aa9d71fac99d2126e8b5bda9ace66ffe28b7d12b75c7/e53e15813529550c2435aa9d71fac99d2126e8b5bda9ace66ffe28b7d12b75c7-json.log",
+        "Name": "/magical_satoshi",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                33,
+                138
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": [],
+            "BlkioDeviceWriteBps": [],
+            "BlkioDeviceReadIOps": [],
+            "BlkioDeviceWriteIOps": [],
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "volume",
+                    "Source": "amir",
+                    "Target": "/app"
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware",
+                "/sys/devices/virtual/powercap"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/bae800133b6c3a779ec3a14ac64940b43499aaee73ea52e45e79f21d5b683ebb-init/diff:/var/lib/docker/overlay2/b45308e3953ab068b9be953f58aa02a50356387bdf16715826d3de90d70685f8/diff:/var/lib/docker/overlay2/e5c33b20de995bab4c74710d0ca3a741f4045a62beea10ad0cae90f7637351b2/diff:/var/lib/docker/overlay2/971a68db788ed207b644997891ee12f84882fc706da0b77df44b9e2128f7bd7f/diff:/var/lib/docker/overlay2/b5063dc34bd96fcb4d221bf7cb22b15f26383178080fa8c87730d365d4071562/diff:/var/lib/docker/overlay2/bcffd25cba4b4bd26667cc58011a5a833402050bac28c2ca6a03fac21f5bfb9b/diff:/var/lib/docker/overlay2/92de90da3c04c9c6d94a53806d3a11c994fad304715d0936fd21fbdc2550a437/diff:/var/lib/docker/overlay2/03f2238ae391ad22661565f72df9b592ba9fc416a7a03a74916cce6d9d8fa1e5/diff",
+                "MergedDir": "/var/lib/docker/overlay2/bae800133b6c3a779ec3a14ac64940b43499aaee73ea52e45e79f21d5b683ebb/merged",
+                "UpperDir": "/var/lib/docker/overlay2/bae800133b6c3a779ec3a14ac64940b43499aaee73ea52e45e79f21d5b683ebb/diff",
+                "WorkDir": "/var/lib/docker/overlay2/bae800133b6c3a779ec3a14ac64940b43499aaee73ea52e45e79f21d5b683ebb/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "volume",
+                "Name": "amir",
+                "Source": "/var/lib/docker/volumes/amir/_data",
+                "Destination": "/app",
+                "Driver": "local",
+                "Mode": "z",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "e53e15813529",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.27.2",
+                "NJS_VERSION=0.8.6",
+                "NJS_RELEASE=1~bookworm",
+                "PKG_RELEASE=1~bookworm",
+                "DYNPKG_RELEASE=1~bookworm"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "Image": "nginx:latest",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGQUIT"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "23733a2ce6828e7b24e6d3c9517dfc94ad69fe77f4028733a06f442b2e6f5b59",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "80/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/23733a2ce682",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "13e73a79aa0afc3df3e43c0103291d555a39714468131aa0729049a873b8d305",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "91c5e4727d4a491cabfc1965683b5da1a51ba40ab3fa7b380a9982d1e0b26460",
+                    "EndpointID": "13e73a79aa0afc3df3e43c0103291d555a39714468131aa0729049a873b8d305",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+
+
+
+
+Note - For Deleting the Volume You will need to Stop the Container after that Delete the Container and at last Delete the Volume. [Because in this Case the Volume is in Use with the Container]
+
+
