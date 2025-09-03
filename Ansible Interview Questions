@@ -1,0 +1,206 @@
+Ansible Interview Questions - 
+================================
+
+
+
+
+Q1) What is Configuration Management ?
+
+
+A1) Configuration management is a method or it's a process of managing your software system or hardware, So let's assume that in your organization you have a lot of servers whether it's on-premise cloud or be it anywhere and you know you have hundreds of these Servers and you want to manage Installation of a couple of packages or you want to Manage the Upgradation of a couple of softwares or you know you have to do some Mandatory Installations whether it be security patches or 
+something else, So for this we use configuration management so why do we use that because you know if you want to do it manually on all of these servers or using some scripts it will take a lot of time because each of these servers may be different like you know they are of different operating systems or they're of different flavors of a similar operating system so because of which you might have to end up writing multiple scripts or you know you might have to do some manual patching so to avoid this you can use a Single Tool Which Supports the configuration Management Like Ansible, Puppet, Chef etc.
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q2) Why Ansible Over Other Configuration Management Tools ?
+
+
+
+
+A2) 
+
+- Agentless architecture -> Ansible connects over SSH (or WinRM) and doesn't require agents on managed nodes, simplifying deployment and reducing security overhead 
+
+- Human‑friendly YAML syntax -> Playbooks are easy to write and read—even for non‑developers—compared to Ruby DSL (Chef) or Puppet DSL 
+
+- Orchestration and CM in one -> Ansible handles orchestration tasks well alongside configuration 🎛, whereas Chef/Puppet excel at long‑term state tracking but are less flexible for orchestration
+
+- Ansible is Backed-Up by a very Good Community because Ansible is written in Python [RedHat]
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Q3) Can you explain any Ansible Playbook that you wrote and found to be effective?
+
+
+
+
+
+A3)
+
+
+
+
+Q4) How Ansible helped your organization ?
+
+
+
+
+A4)
+
+- Faster provisioning -> Spin up new environments quickly using dynamic inventory and re‑usable role‑based playbooks.
+
+- Reduced drift -> Ensured consistent configuration across all servers; drift was minimized by scheduled playbook runs or via Tower job templates.
+
+- Empowered non‑DevOps teams -> Through Tower (or AWX), developers/self-service users could run automated tasks without CLI or direct SSH access.
+
+- Standardized compliance -> Playbooks became source-of-truth definitions enforcing configuration compliance as code 
+
+
+
+
+
+Q5) Scenario: Let's assume you are not aware of the Ansible Servers that would be created in the future but still want to manage them. How can you achieve that ?
+
+
+
+
+
+
+A5)
+
+
+
+
+
+
+
+
+Q6)  What is Ansible Tower and have you used it? If yes, why?
+
+
+
+
+
+
+
+A6)
+
+
+
+
+Q7)  How do you manage the RBAC of users for Ansible Tower?
+
+
+
+A7) 
+
+
+Q8) What is Ansible Galaxy command and why is it used for?
+
+
+
+
+A8
+
+
+Q9) Can you explain me structure of Ansible Playbook using Roles ?
+
+
+
+A9) 
+
+
+Q10) 
+
+
+A10) What is handlers in Ansible and why are they used?
+
+
+
+
+Q11) I would like to run a specific set of takks only on windows vms and not Linux vms is it possible ?
+
+
+
+A11) 
+
+
+
+
+Q12) Does Ansible support parallel execution of tasks ?
+
+
+
+
+
+
+A12) 
+
+
+
+Q13) What is the protocol that Ansible use to connect to windows vms ?
+
+
+
+
+A13) 
+
+
+
+Q14) Can you explain me the variable precedence in Ansible ?
+
+
+
+
+A14) 
+
+
+
+
+Q15) How do you handle secrets in Ansible?
+
+
+
+
+A15) 
+
+
+
+
+Q16) Can Ansible be used for laC? Infrastructure as Code ?
+
+
+
+
+A16) 
+
+
+
+
+
+Q17) Write an Ansible Playbook to install and start httpd service on an existing ec2 instance.
+
+
+
+
+
+A17) 
+
+
+
+
+
+Q18)  What do you think that Ansible can improve ?
+
+
+A18) 
