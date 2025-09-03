@@ -1,0 +1,164 @@
+Day-33 | KUBERNETES PODS | DEPLOY YOUR FIRST APP
+===============================================
+
+
+
+In kubernetes the lowest level of deployment is a pod, so in kubernetes you cannot directly deploy a container in Docker what you are doing is you are building a container and you are deploying a container right in kubernetes also we will use these containers that you have deployed in Docker because end of the day whether it is kubernetes or whether it is Docker the end goal is to deploy your applications in containers right so that is the concept of containerization but what kubernetes says is okay don't deploy your application and container assist but deploy to me as a pod.
+
+
+
+A Pod is described as a definition on how to run a container, In Docker whenever you want to run a container what you would do is basically you would say "docker run -d" or "docker run -t" or docker run -it followed by the name of the container then you would pass -p to do some Port mapping then you would say -v to do some Mount volume a volume mounts then if you have some Network you would say  --network and you would pass the network detail so in Docker you are basically passing all of these arguments to run a container in command line whereas in kubernetes what you will do is you will pass those specifications in the pod.yaml file. So in kubernetes you basically have a wrapper or you basically have a concept that is similar to container but it abstracts the user defined commands in pod dot specification yaml.
+
+
+
+So what you do in kubernetes is you instead of container you will deploy a pod now a pod can be a single container or it can be multiple containers I'll tell you why a pod can be multiple so assume you are building a pod with one single container what you will do is similar to Docker end of the day pod is also exactly like a Docker container the only difference when you have one single container the only difference is here instead of you using a command called Docker run and then you pass all the different arguments you will try to put all of them in a yaml file.
+
+
+
+So inside the yaml file you will say something like this API version is uh V1 then you provide the name of this container sorry of this pod and all of these things then you will provide the specification so inside the specification you will provide all of the details of the container okay so you have multiple containers option here and inside which you provide specification of your containers.
+
+
+
+As Kubernetes is a Enterprise Level Platform and it want to bring Declarative Capabilities.  So or it want to build a Standardization so the thing is you can put these yaml files in kubernetes we deal everything with yaml files so whether it is pod resource whether it is deployment resource whether it is Services we are going to talk about all of these things in future but everything will be written in yaml files only.
+
+
+
+Pod is Nothing but but one or group of containers so why it has to be one or group of containers so most of the times a pod is a single container but there are some cases where you have some you know sidecar containers or you have some init containers so what are these things like these are the things that support your axle container just to give you an example let's say you have a container you have your application deployed in a container and this wants to read some config files or you know this wants to read some uh user related files from another container so in such cases what you will do is instead of creating two different uh pods in kubernetes you can put both of them in a single part and what part says is if you put one or two containers or multiple containers inside a single pod I will ensure that kubernetes will ensure that both of the containers will have some advantages so that's why you put one or group of containers inside a single pod when it is required what are the advantages so if you put group of containers in a single pod.
+
+
+
+Let's say you have container A and container B and if you put both of them in one single pod in Kubernetes then Kubernetes will allow you "Shared Networking" "Shared Storage". So this way what happens is container a and container B inside a single pod can talk to each other using localhost that means to say if uh container wants to talk to container on Port 3000 so it can simply access using localhost 3000.  So the application can be directly accessed and the information can be retrieved or if both of them wants to share some files.  So even in such cases because both of them are in one single part they can share the files as well so that is one of the reasons why people put multiple containers but it is a very rare case the usual practice for this is to create some sidecar containers or init containers which is an advanced topic which I'll explain going ahead when we talk about Service Mesh or when we talk about uh you know things like some advanced concepts of Kubernetes.
+
+
+
+There is a Pod and inside this part of Kubernetes you have a container so container and pod so basically what Kubernetes does is it allocates a cluster IP address to this pod okay and you can access the applications inside the containers using this pod cluster IP address so IP addresses are not generated for the containers but they are generated for the pods.  Pod is basically a wrapper that Kubernetes has created for a container to make the life of devops Engineers easy because when we try to deal with containers like hundreds of containers thousands of containers in production if you have a wrapper like pod which can Define everything in a yaml file.
+
+
+
+
+If a developer can go to a git repository or a devops engineer can go to a git repository and look for the pod.yaml file he will understand everything about the container that okay so this container is running on the application is running inside it on Port 80. it has a volume Mount then uh you know what is the networking of it or you will understand multiple details that you have for your Docker container so Kubernetes has created a wrapper for it okay so most of the cases when you are dealing with a pod you deal with a single container and you know you access the container using the cluster IP address that Kubernetes gave for pod so who is giving this cluster IP address if you watch the previous videos Kube-Proxy is generating this cluster IP address.  So this is the concept of Pod in Kubernetes.
+
+
+
+
+
+---------------------------------------------
+
+
+# kubectl
+
+
+In Docker we Have Docker CLI so In Kubernetes we have kubectl it is Command Line for Kubernetes so you can directly interact with the kubernetes Clusters let's say you have a kubernetes cluster and inside that you have 10 nodes okay so to understand how many nodes are there inside your kubernetes cluster you can just use this command "kubectl get nodes". To see how many Pods are there you can simply say "kubectl get pods"  If you want to see how many deployments are there "kubectl get deployment" If you want to delete a deployment you want to create a deployment so for such cases to interact with kubernetes we have kubectl.
+
+
+
+
+# Use the Below Link for kubectl Installation
+Link - https://kubernetes.io/docs/tasks/tools/
+
+
+
+# Once the Installation is done run the command
+kubectl version
+
+
+
+
+# Use the Below Link for minikube Installation
+Link - https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download
+
+
+# Note - minikube is a Command line tool that will allow you to create a Kubernetes Cluster.
+
+
+So for Creating a Cluster you will have to Run the Below Command
+minikube start
+
+
+
+
+# Use the Below Link for Pod Installation
+Link - https://kubernetes.io/docs/concepts/workloads/pods/
+
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx:1.14.2
+    ports:
+    - containerPort: 80
+
+
+
+
+
+
+
+---------------------------------------------
+
+
+
+
+
+
+NOTE - Refer the Below Mentioned Cheat-Sheet for kubectl
+
+Link - https://kubernetes.io/docs/reference/kubectl/quick-reference/
+
+
+
+# To Create a Pod Uisng the YAML File
+kubectl create -f pod.yml 
+
+
+
+
+# List all pods in the current namespace, with more details  
+kubectl get pods -o wide  
+
+
+
+# To Log-In Into the minikube Cluster use Below Command
+minikube ssh 
+
+
+
+
+# For Deleting the Pod Use the Below Command  
+kubectl delete pod nginx
+
+
+
+
+# To get All the Info of the Pod Use the Below Command
+kubectl describe pod nginx 
+
+
+
+IMP NOTE - To Get Advance Capabilities Like Auto Scaling & Auto Healing we will need to use a Wrapper Called as "Deployment" On Top Of Our Pod.
+
+
+
+
+
+---------------------------------------------
+
+
+# Kind Kubernetes Installation
+==============================
+
+Refer this Repo for Kubernetes Installation - https://github.com/LondheShubham153/kubestarter
+
+
+kind (Kubernetes IN Docker) is a tool designed to run Kubernetes clusters in Docker containers. It allows developers to create local Kubernetes clusters quickly and easily for testing and development purposes.
+
+
+
+Documentation Link For Installing Kind - https://kind.sigs.k8s.io/docs/user/quick-start/#installation
+
+
+
