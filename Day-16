@@ -1,0 +1,422 @@
+Day 16 - Infrastructure as Code [IaC] Terraform
+================================================
+
+
+
+GPT Notes - 
+
+
+Terraform is an open-source Infrastructure as Code (IaC) tool developed by HashiCorp that allows you to define, provision, and manage infrastructure using configuration files. It's a popular choice for automating infrastructure deployments across multiple cloud providers like AWS, Azure, GCP, and on-premises environments. Here's a detailed breakdown of Terraform's core concepts, its architecture, and how it works.
+
+
+
+
+
+--------------------------------------------------------------------
+
+
+
+
+# Terraform Key Concepts
+==========================
+
+
+
+1. Infrastructure as Code (IaC):
+
+Terraform enables the management of infrastructure using code. This means that your infrastructure (servers, databases, networks, etc.) is represented in human-readable configuration files. These files can be version-controlled, enabling easy collaboration, tracking, and reusability.
+
+
+
+
+
+2. Declarative Language:
+
+Terraform uses a declarative language (HCL - HashiCorp Configuration Language), where you define what you want rather than how to achieve it. Terraform figures out the optimal way to reach the desired state.
+
+
+
+
+
+3. Providers:
+
+Providers are plugins that allow Terraform to interact with various services like AWS, Azure, Google Cloud, Kubernetes, or even GitHub. Each provider has its own set of resources and data sources. Before using a provider, it must be configured in the Terraform configuration.
+
+Example:
+
+provider "aws" {
+  region = "us-west-2"
+}
+
+
+
+
+
+4. Resources:
+
+Resources are the fundamental blocks in Terraform. They define individual infrastructure components like virtual machines, networks, or databases.
+
+Example of an AWS EC2 instance resource:
+
+resource "aws_instance" "example" {
+  ami = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+}
+
+
+
+
+
+5. Modules:
+
+Modules are reusable configurations. A module can be a single file or a directory of configuration files. They help in organizing and reusing infrastructure configurations across multiple environments or projects.
+
+Example:
+
+module "vpc" {
+  source = "terraform-aws-modules/vpc/aws"
+  version = "2.78.0"
+  
+  name = "my-vpc"
+  cidr = "10.0.0.0/16"
+}
+
+
+
+
+
+6. State:
+
+Terraform maintains a state file (usually named terraform.tfstate) to keep track of resources created and their current state. The state is critical for determining what changes need to be applied during subsequent terraform apply operations. This state can also be stored remotely (e.g., in an S3 bucket) for shared environments or teams.
+
+
+
+
+
+7. Plan and Apply:
+
+terraform plan: Generates an execution plan to show what Terraform will change in the infrastructure (adding, modifying, or destroying resources).
+
+terraform apply: Applies the changes from the plan, provisioning or updating resources as needed.
+
+
+Example:
+
+terraform plan
+terraform apply
+
+
+
+
+
+8. Provisioners:
+
+Provisioners are used to execute scripts or commands on a resource during its creation or destruction. They are used sparingly, as using them can lead to configuration drift, which Terraform is designed to avoid.
+
+Example:
+
+resource "aws_instance" "example" {
+  ami = "ami-0c55b159cbfafe1f0"
+  instance_type = "t2.micro"
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo apt-get update",
+      "sudo apt-get install -y nginx"
+    ]
+  }
+}
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+
+# Terraform Workflow
+=====================
+
+
+
+1. Write:
+
+Define infrastructure resources in .tf files using HCL. For example, you could define EC2 instances, databases, networks, and more.
+
+
+
+
+2. Initialize:
+
+The terraform init command initializes the working directory containing the .tf files. This downloads the necessary provider plugins and prepares Terraform to manage the infrastructure.
+
+terraform init
+
+
+
+
+3. Plan:
+
+Terraform compares the current state of your infrastructure with your desired configuration and generates a plan showing what actions will be taken (e.g., creating, modifying, or deleting resources).
+
+terraform plan
+
+
+
+
+4. Apply:
+
+Once you review the plan, you can apply the changes to your infrastructure by running terraform apply. This will make the infrastructure match the desired state defined in the .tf files.
+
+terraform apply
+
+
+
+
+5. Destroy:
+
+To tear down or remove the infrastructure that Terraform created, you can run terraform destroy. This ensures that all resources managed by Terraform are cleaned up.
+
+terraform destroy
+
+
+
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+# Advantages of Terraform
+==========================
+
+1. Multi-Cloud Support: Terraform can manage infrastructure across various cloud providers and services, making it ideal for hybrid or multi-cloud environments.
+
+
+2. Version Control: Infrastructure can be version-controlled alongside application code, making changes traceable and easy to roll back.
+
+
+3. Declarative Approach: You simply define the desired infrastructure state, and Terraform automatically determines how to achieve that state, minimizing human errors.
+
+
+4. Reusable Modules: Modules help promote code reuse, making infrastructure management efficient and consistent across different environments.
+
+
+5. Automation-Friendly: Terraform integrates easily into CI/CD pipelines, enabling fully automated infrastructure provisioning and management.
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+Terraform Architecture
+========================
+
+1. Core:
+
+The core is responsible for reading configuration files, handling the state, and determining how to apply changes to resources.
+
+It interacts with the providers (e.g., AWS, Azure, GCP) to manage infrastructure.
+
+
+
+2. Providers:
+
+Providers are responsible for translating Terraform’s declarative configurations into API calls that interact with specific services. Terraform has a rich ecosystem of providers, from cloud providers to SaaS platforms.
+
+
+
+3. State Management:
+
+Terraform’s state file is central to its operation. It tracks the current status of your infrastructure and helps in managing the resources. Remote state storage (e.g., AWS S3, GCP Cloud Storage) allows teams to collaborate effectively.
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------
+
+
+
+Remote State and Locking
+
+When multiple team members are working on infrastructure, having a remote state ensures that everyone is working with the latest version. Terraform also supports locking mechanisms (e.g., using DynamoDB for AWS) to prevent race conditions where multiple users attempt to modify the infrastructure at the same time.
+
+
+
+
+
+
+
+--------------------------------------------------------------------
+
+
+# Terraform Best Practices
+===========================
+
+
+
+1. Use Version Control: Keep your .tf files in a version control system like Git. This makes it easier to track changes, revert when necessary, and collaborate with others.
+
+
+
+2. Store State Remotely: Always use remote state when working in teams or across environments. This avoids conflicts and ensures everyone is working with the most up-to-date infrastructure state.
+
+
+
+3. Use Modules: Leverage modules to create reusable pieces of infrastructure code, which can be shared across multiple projects or environments.
+
+
+
+4. Plan Before Apply: Always review the plan before applying changes to ensure you understand the impact on your infrastructure.
+
+
+
+5. Automate with CI/CD: Integrate Terraform with your CI/CD pipeline to automate infrastructure provisioning, ensuring consistency and reducing manual intervention.
+
+
+
+6. Use Workspaces: Terraform workspaces allow you to manage multiple environments (e.g., development, staging, production) within the same configuration.
+
+
+
+
+
+
+--------------------------------------------------------------------
+
+
+
+# Terraform Common Commands
+===========================
+
+
+terraform init:    Initializes the working directory.
+
+
+terraform plan:    Shows what changes Terraform will make.
+
+
+terraform apply:    Applies the configuration to create or update resources.
+
+
+terraform destroy:    Destroys all the managed resources.
+
+
+terraform fmt:        Formats Terraform configuration files according to a standard.
+
+
+terraform validate:   Validates the configuration for syntax correctness.
+
+
+terraform output:    Outputs values from the state file.
+
+
+terraform taint:    Marks a resource as needing to be destroyed and recreated.
+
+
+
+
+
+--------------------------------------------------------------------
+
+
+Conclusion - Terraform simplifies the management of infrastructure, especially in complex environments. Its declarative nature, multi-cloud support, and flexibility make it an essential tool for DevOps teams looking to implement IaC. By using Terraform, you can automate the provisioning, scaling, and management of infrastructure with confidence and ease.
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+
+
+AV Session - 
+
+
+For Example we are working in Flipkart and it has 300 Applications,  Flipkart can Deploy this Application in Various Sources like AWS, AZURE, GCP, ORACLE, DIGITAL OCEAN, OpenShift ON-PREM.
+
+
+Flipkart have made a Decision to Host their Application on AWS and We have Started to Create on EC2 Instances, S3 Buckets, RDS Database As All of these Resources are Required for our Organization.
+
+
+So As a DevOps Engineer We have Automated this Entire Process on AWS Instead of Creating All the stuff Manually Through Console,  We will Use the AWS CLI or AWS CFT and We have Automated the Infrastructure on AWS Cloud Platform.
+
+
+Now we have Wrote 100s of Scripts for EC2 Instances, S3 Buckets, RDS Database and Other AWS Services.
+
+
+But now due to Cost Issue or AWS Support Issue the Management has decided to Move to Microsoft AZURE,  As the Management has decided to Move from AWS to AZURE the 100s of Script which we have Made on AWS CFT will be of No Use We will have to write New scripts again in AZURE by Using AZURE Resource Manager so that we can Create Resource on AZURE.
+
+
+But now due to Cost Issue or AZURE Support Issue the Management has decided to Move to ON-PREM,  As the Management has decided to Move from AZURE to ON-PREM the 100s of Script which we have Made on AZURE Resource Manager will be of No Use We will have to write these scripts again in Open-Stack Heat Templates [Heat temp is a way how Open-Stack Automates Resource Creation on ON-PREM Datacenters]
+
+
+
+
+These Days Orgainsations are Using Hybrid Cloud Model it Means Any Orgainsations Depending Upon their Requirements they can Host A Part of their Infrastructure on AWS and A Part of their Infrastructure on AZURE. If AWS is giving Good Costing on Storage Services so we Can Use AWS for Storage and For DevOps Related Services AZURE is giving better Costing so We can use AZURE for DevOps Services.  In this Case we will have to Learn Both AWS CFT & AZURE Resource Manager, So to avoid these kind of Issues Terraform came into Picture [Terraform is API as Code], Terraform is Developed By Hashicorp.
+
+
+
+By Using Terraform we can Write Some Terraform Scripts and terraform will take care of Automating the Resources whether it is on AWS, AZURE, GCP, ON-PREM. As a DevOps Engineers we need to Write Terraform Scripts and terraform will take care of automating the resources on the cloud provider so you just need to tell the terraform that my provider is AWS so once you say that my provider is AWS so terraform will say that give me the scripts for AWS and I can automate the stuff related to AWS.  Within terraform migration is very smooth like your organization if it decides to migrate from AWS to Azure you need to make some minimum changes like you know you need to update some modules or you need to just Update the Provider Details and once you do that you know you can easily migrate from AWS to Azure so this is how terraform solves the problem and the other thing is instead of learning too many tools, You can Just learn 1 Tool and this one tool can take 
+care of creating new modules for you and you know just looking at the terraform documentation you can write automation for any infrastructure so this concept is called as API as Code.
+
+
+
+API as Code - 
+
+API as Code is a Concept using which you can automate any provider whether it is AWS Azure or Openstack anything using their APIs. So what terraform does internally is terraform will talk to the API of azure terraform will talk to the API of gcp or terraform will talk to the API of Openstack so using which like you don't have to write any code so once you write the terraform templating or you write the terraform script files terraform will convert them depending upon the provider details that you have Provided. 
+
+
+So in one of the files called provider.tf you say that the provider is AWS so once you write the terraform module terraform will convert that script into AWS readable API Or the API request that AWS can understand and it executes the action and gives you the result back okay so this is how terraform is one tool that can automate your resources on any cloud provider, So this is a concept of API as Code.
+
+
+
+
+
+# A Gist of What we Learned Today - 
+=====================================
+
+
+Infrastructure as Code is a concept using which you can Automate your Infrastructure, So it can be Anything like you know you can write your Cloud Formation Templates or you can write your Azure Resource Manager or anything so all of these things fall into the category of Infrastructure as Code. 
+
+
+
+Whereas Terraform is a Concept Which is Used to Solve All of These Problems, Terraform also Works On the Same Concept of Infrastructure as Code But Terraform has Advanced Capabilities Called API as Code, Instead of you Writing All of These Things Terraform says that just Learn One Language Instead of Learning AWS Cloud Formation Templates Azure Resource Manager Just Learn One Language that is Called as Terraform and Terraform will Take Care of Talking to all of those Cloud Providers Using the Concept of API as Code. 
+
+
+ 
+-----------------------------------------------------------------
+
+
+
+ 
+# How Terraform Works - 
+=========================
+
+
+Terraform has Written their own Modules let's say you want to create an EC2 Instance on AWS so Terraform said that Instead of You Directly Making API call with AWS you can Write Some Terraform File and in this Terraform file we can go through the terraform documentation. So Terraform will tell you that there is a Module called EC2 and Using this EC2 Module you just Write bunch of lines just like you write in English and What we Will do is Once User Submits this request in Terraform File, Terraform will Receive this Request and It will Take Your Input and it will convert your Input into API call this is happening at the back end. Terraform will convert your Request Into API call and it gets the Request Back and Again Terraform will send you the Request Back to you. So as a User you are not Directly Talking to the APIs of AWS and Azure But you are Writing Terraform Scripts and Terraform is Converting your Request into API calls. So this is concept of Terraform and This is How Terraform Utilizes the Concept Called API as Code.
+
