@@ -1,0 +1,100 @@
+
+OSI Model Simplified | You will never forget OSI model after this
+===================================================================
+
+
+# When You are Sending a Request the Flow is L-7 to L-1
+
+
+# When You are Receiving a Request the Flow is L-1 to L-7 
+
+
+# Even before our browser initiates a request to the Google server Or Any Other Server there are 2 Things that happens that is Even before OSI Model comes into picture.
+
+- DNS Resolution
+
+- TCP Handshake
+
+
+
+1. DNS Resolution - If we try to Access "https://www.google.com" Firstly Our Router will check and Verify if this "https://www.google.com" is Mapped to an IP Address. So there is a System called as Domain Name System (DNS), Which is Nothing but a Database where Records are Maintained [Domain Name : IP Address] For All the IP Addresses. In our case for "https://www.google.com" there will be an IP Address which is mapped. Browser & Routers stores this in their Local Cache and If they don't find this in their Local Cache then this request goes to the Internet Service Provider (ISP), and the ISP then checks if there is a Mapping in their DNS. Once this is Done then the request goes to the Second step which is "TCP Handshake".
+
+
+
+
+
+2. TCP Handshake - TCP Handshake is also Called as 3-Way Handshake when our Laptop Sends a Request to the Server like "https://www.google.com" This Request is called "SYNK", Then Server then Sends a Response which is Called "SYNK ACKNOWLEDGE"  & Finally Our Laptop Says "ACKNOWLEDGE". This is how TCP Handshake is Done.
+
+
+
+
+# Once the Above 2 Prerequisites are Done then your Data Initiation OR Data Request Initiation Starts
+
+
+
+
+
+
+--------------------------------------------------------
+
+
+# Open Systems Interconnection (OSI) Model
+============================================
+
+
+
+When you Search "https://www.google.com"  & If the Above-Mentioned Prerequisites are Successful.
+
+
+- Layer-7 Application Layer
+
+Then Your Browser Initiates a "http" OR "https" Request to the Server & It Says use "http" Request as we have asked for it [Humne start me http dale ftp dale toh ftp use hota] & This Stage is Called as Layer-7 Also Called as Application Layer [We Can Pass Some Headers, Provide Info for Authentication]
+
+
+
+
+- Layer-6 Presentation Layer
+
+Now the Next Step should be Data Encryption/Formatting As from Our Laptop to the Server the Data Goes through Multiple Routers 
+
+
+
+
+- Layer-5 Session Layer 
+
+Once the "http" Request is Made Data is Encrypted The next step is Your Browser should Create a "Session" [Like if we use FB at start we provide our Login Credentials and we LogIn Into FB this is Nothing But a Session which gets Created by our Browser, After sometime if we Come Again the Browser will Not Ask us to Re-Authenticate as the Session is Already Created. Until we LogOut from FB It will not ask us to Re-Authenticate]
+
+
+Note - Layer-5, Layer-6 & Layer-7 are Maintained by Your Browser
+
+
+
+
+- Layer-4 Transport Layer
+
+Once the Session is Also Created to Transmit the Data, Here the Data is Segmented, Data Segmentation is Done & Also the Protocol is Defined Whether you want to use TCP or UDP and this is Standardized. [If we Use "http" By Default "TCP" is Used & If we Use "DNS" By Default "UDP" is Used]
+
+
+
+
+- Layer-3 Networking Layer
+
+Once the Data Segmentation is also done now it is the Time to Send the Data and To send the Data First thing that Happen is the Data which we have sent is first received by our Router and Router does 2 Particular things [ 1- Identify Src & Dest   2- What is Shortest Path ] Adds Source & Destination IP Address to Each Segment, Once the Router Adds SRC & DEST IP to the Segments we Call this as "Packets" & Packets have the Clear Information  How to Travel, Which Path to Take and This Decision is taken by your Router. [Router Tells Each & Every Packets that This is the SRC-IP, this is the DEST-IP,  AND You will Need to Travel Through These HOPS]
+
+
+
+
+- Layer-2 Data-Link Layer
+
+
+Now your Router received the Information, as you know these Routers are Connected to Switches using Ethernet Ports, Now for the Data to be sent through these Ethernet Ports or through these Switches. So at this point of time when the data has to be sent to the ethernet ports the data has to be transformed from the "Packets" to "Frames", Depending upon the Medium If you are using Routers Data will be in the form of "Packets"  If you are using Switches the Data is Converted into "Frames" & In this Frames Along with the IP Address MAC Address Information is also Added. Mac information tells these switches what are the other components within your network.
+
+
+
+
+- Layer-1 Physical Layer
+
+
+End of the Day Your Routers, Switches are Connected to Optical Cables and these Optical Cables Understands the Electronic Signals Language. So here your Data is Transmitted into Electronic Signals	and using optical cables data is transmitted very fast. This is how the data is Transformed.
+
+
