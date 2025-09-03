@@ -1,0 +1,342 @@
+Day 13 - Top 15 AWS Services DevOps Engineer Should Learn 
+===========================================================
+
+
+
+Here’s a detailed overview of the AWS services a DevOps engineer should master:
+
+
+
+
+1) EC2 (Elastic Compute Cloud)
+
+Purpose: EC2 offers scalable compute capacity, providing virtual servers (instances) that can be used to run applications in the cloud.
+
+Key Features:
+
+Launch, manage, and scale instances with custom configurations (memory, CPU, storage).
+
+Spot instances for cost savings.
+
+Auto-scaling to automatically adjust capacity.
+
+Integration with EBS for persistent storage.
+
+
+Why Important: EC2 is essential for deploying, managing, and scaling applications.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+2) VPC (Virtual Private Cloud)
+
+Purpose: VPC provides isolated cloud resources, allowing you to launch AWS services in a virtual network that you define.
+
+Key Features:
+
+Subnets for dividing the VPC into smaller networks.
+
+Route tables for controlling traffic between subnets and external networks.
+
+Security groups and network ACLs for managing inbound/outbound traffic.
+
+VPN, VPC Peering, and Direct Connect for hybrid cloud setups.
+
+
+Why Important: Mastering VPC helps control network security, connectivity, and access for cloud resources.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+3) EBS (Elastic Block Store) - All Volumes
+
+Purpose: EBS provides block-level storage volumes for use with EC2 instances.
+
+Types of EBS Volumes:
+
+General Purpose SSD (gp3, gp2): Balanced performance for most workloads.
+
+Provisioned IOPS SSD (io1, io2): High-performance, high-IOPS workloads like databases.
+
+Magnetic (st1, sc1): Cost-effective storage for cold data and infrequent access.
+
+
+Why Important: EBS ensures data persistence for EC2 instances, supporting critical applications with varying performance needs.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+4) S3 (Simple Storage Service)
+
+Purpose: S3 is an object storage service that provides scalability, data availability, security, and performance.
+
+Key Features:
+
+Storage classes (Standard, Infrequent Access, Glacier) for cost-efficient storage.
+
+Versioning, lifecycle management, and cross-region replication.
+
+S3 encryption and access controls (IAM policies, bucket policies).
+
+Event notifications and integration with Lambda for serverless data processing.
+
+
+Why Important: S3 is a foundational service for storing backups, log files, application data, and more.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+5) IAM (Identity and Access Management)
+
+Purpose: IAM allows secure management of access to AWS services and resources.
+
+Key Features:
+
+Fine-grained permissions using policies for users, groups, and roles.
+
+Role-based access control (RBAC) for services, applications, and users.
+
+Multi-factor authentication (MFA) for enhanced security.
+
+
+Why Important: IAM is critical for securing access to AWS resources and adhering to least-privilege best practices.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+6) CloudWatch
+
+Purpose: CloudWatch monitors AWS resources and applications, providing logs, metrics, and alerts.
+
+Key Features:
+
+Custom dashboards for resource monitoring.
+
+Alarms for thresholds on metrics (CPU usage, disk IO, etc.).
+
+Logs aggregation for troubleshooting and analysis.
+
+CloudWatch Events for automating responses to system changes.
+
+
+Why Important: Essential for monitoring system health, performance, and automating responses to events.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+7) Lambda
+
+Purpose: AWS Lambda enables you to run code without provisioning or managing servers, utilizing a serverless architecture.
+
+Key Features:
+
+Event-driven execution based on triggers (e.g., S3 file upload, API Gateway request).
+
+Scalability, as Lambda automatically scales the application by running code in response to each event.
+
+Integration with other AWS services like S3, DynamoDB, and API Gateway.
+
+
+Why Important: Reduces operational overhead by eliminating the need to manage infrastructure for specific workloads.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+8) AWS Cloud Build Services
+
+AWS CodeBuild: A fully managed continuous integration service that compiles source code, runs tests, and produces deployable software packages.
+
+AWS CodePipeline: A continuous delivery service that automates the release pipeline for fast, reliable updates.
+
+AWS CodeDeploy: A service for automating code deployments to any instance (EC2, Lambda, on-premises servers).
+
+Why Important: These services are critical for DevOps workflows, enabling CI/CD pipelines to streamline code integration and deployment.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+9) AWS Config
+
+Purpose: AWS Config tracks AWS resource configurations and changes, enabling compliance auditing and security analysis.
+
+Key Features:
+
+Configuration history and tracking of changes across resources.
+
+Compliance checking against desired configurations (e.g., specific security groups, VPC settings).
+
+Notifications for configuration changes and integration with AWS Lambda for automatic remediation.
+
+
+Why Important: It ensures compliance, governance, and security best practices by auditing configuration changes.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+10) Billing and Cost Management
+
+Purpose: Tools for tracking, monitoring, and optimizing AWS costs and usage.
+
+Key Features:
+
+Cost Explorer for tracking spending and identifying trends.
+
+Budgets and alerts to manage costs proactively.
+
+Detailed usage reports for optimizing resources and cutting costs.
+
+
+Why Important: Managing cloud costs is crucial for optimizing resource usage and staying within budget.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+11) AWS KMS (Key Management Service)
+
+Purpose: AWS KMS helps manage encryption keys securely and enables data encryption for various AWS services.
+
+Key Features:
+
+Centralized key management and policies.
+
+Automatic integration with services like EBS, S3, RDS, and Lambda for encryption at rest.
+
+Auditing and tracking of key usage with CloudTrail.
+
+
+Why Important: KMS helps secure sensitive data through encryption, ensuring compliance with security policies.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+12) CloudTrail
+
+Purpose: CloudTrail records AWS API calls for governance, compliance, and auditing.
+
+Key Features:
+
+Logs every action made by users, roles, or AWS services.
+
+Integration with CloudWatch for real-time monitoring of API activity.
+
+Trail creation for continuous monitoring and automated compliance checking.
+
+
+Why Important: CloudTrail is essential for tracking user actions and maintaining security by providing a full audit trail of all changes in the AWS environment.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+13) AWS EKS (Elastic Kubernetes Service)
+
+Purpose: EKS is a managed service that makes it easy to run Kubernetes on AWS without managing the Kubernetes control plane.
+
+Key Features:
+
+Automated scaling and updates of Kubernetes clusters.
+
+Secure and fully managed Kubernetes environment with integrated IAM and VPC.
+
+Integration with Fargate for serverless Kubernetes.
+
+
+Why Important: EKS simplifies Kubernetes operations, making it easier to run and scale containerized applications in AWS.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+14) Fargate & ECS (Elastic Container Service)
+
+Purpose: ECS is a container orchestration service, and Fargate is a serverless compute engine for containers that removes the need to manage infrastructure.
+
+Key Features:
+
+ECS: Manage and scale containerized applications.
+
+Fargate: Run containers without managing EC2 instances.
+
+Integration with EKS for Kubernetes support.
+
+
+Why Important: These services allow DevOps teams to deploy, manage, and scale containers without managing the underlying infrastructure.
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+15) ELK Stack (Elasticsearch, Logstash, Kibana)
+
+Purpose: The ELK Stack provides real-time search, analysis, and visualization of log data.
+
+Key Features:
+
+Elasticsearch: Full-text search and analytics.
+
+Logstash: Data processing pipeline for transforming and forwarding log data.
+
+Kibana: Visualization and dashboarding tool for log data analysis.
+
+
+Why Important: ELK is essential for log aggregation, search, and real-time troubleshooting of production environments.
+
+
+
+
+
+
+Note - Mastering these services helps DevOps engineers build scalable, secure, and efficient cloud infrastructures while automating critical processes like CI/CD, monitoring, and security management.
