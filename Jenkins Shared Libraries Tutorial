@@ -1,0 +1,66 @@
+JENKINS SHARED LIBRARIES TUTORIAL | WHAT IS SHARED LIBRARY IN JENKINS| DEMO INCLUDED
+=====================================================================================
+
+
+
+
+In MNCs there are a lot of Microservices because they Have huge applications so for each and every Microservice as Part of your DevOps Engineering you will write cicd pipeline for each micro service now why do you write cicd pipeline for each micro service because microservices are the things that are individually managed like you can individually deploy individually create or destroy depending upon your requirement that is the concept of micro service there will not be dependency of one micro service with another micro service so let's say you have login you have logout you have transaction payments each of them have to be individually managed if they have to be individually managed you need to write a cicd pipeline for each of this micro service so in our case let's assume you are using Jenkins as an orchestrator and for 200 micro services that you have in your organization you have written 200 Jenkins Pipelines ignoring the different environments that you have Dev Staging and Production so this is the minimalistic configuration that you will have so once you start writing the Jenkins pipeline.
+
+
+
+
+As a devops engineer you will go to the application the first cicd pipeline that you have built and you will take the Jenkins file and you will copy the Jenkins file for your next application and you will start modifying it depending upon the additional requirements or depending upon the file name changes or the folder name changes that you required to do in this Jenkins file for your new application.
+
+
+
+
+Whenever you start onboarding a new application that's what you will do I mean that's a regular practice instead of you writing each and everything it is good to copy and you create the Jenkins file or the cicd pipeline for your new Application while this is completely fine there is no problem with it once you have 200 
+pipelines ready for all your 200 application let's say let's say there is a configuration change that you have to do because you have copied this Jenkins file to all the other 200 applications you know in the first application itself you have noticed that I don't want to use "mvn clean package" but I want to use "mvn clean install" or all the microservices n my organization this is just one change.
+
+
+
+
+But what would be the result of it you have to go back and edit 200 Jenkins pipelines now if you understand how much time will it take for you to manually go to each and every Pipeline and update this simple change sometimes it can be even a serious change where in your Jenkins pipeline you have noticed some security issue probably you have exposed something that should not be exposed while you start using the Jenkins pipeline you have realized that your secret or your environment variable is showing up in the logs or it can be anything, So you can run into any issue in one of your pipeline and you realized that because you have copied more or less to the other Pipelines this issue has to be fixed in all the pipelines so it's a humongous effort to modify all of the 200 pipelines and more than that if you don't modify you are running into security issue so to solve this problem.
+
+
+
+
+Jenkins said is we will simplify this process for you using the concept of shared libraries a shared library is a common repetitive or a common reusable code like in this case. In Jenkins, a shared library is a way to store commonly used code(reusable code), such as Scripts or Functions, that can be used by Different Jenkins Pipelines.
+
+
+
+Instead of writing the same code again and again in multiple pipelines, you can create a shared library and use it in all the pipelines that need it. This can make your code more organized and easier to maintain. Think of it like a library of books, Instead of buying the same book over and over again, you can borrow it from the library whenever you need it.
+
+
+
+We can Store Our Jenkins Shared Libraries in the Below Mentioned Folders.
+
+
+1) vars/: For global variables.
+
+2) src/: For reusable code (classes).
+
+3) resources/: For non-Groovy resources used by the library.
+
+
+
+
+
+
+# Advantages of Shared Libraries
+================================
+
+- Standarization of Pipelines
+
+- Reduce duplication of code
+
+- Easy onboarding of new applications, projects or teams
+
+- One place to fix issues with the shared or common code
+
+- Code Maintainence
+
+- Reduce the risk of errors
+
+
+
