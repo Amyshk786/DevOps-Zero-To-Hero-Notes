@@ -1,0 +1,432 @@
+Day-30 | KUBERNETES IS EASY | INTRODUCTION TO KUBERNETES
+=========================================================
+
+
+Kubernetes is a Container Orchestration Platform,   Containers are Ephemeral in nature ephemeral is nothing but something that is Short Life or Short Living in nature that means containers can Die and Revive Anytime. So basically if you have a Host and on top of which you have Installed Docker on top of which you created let's say 100 containers now one of these containers is taking a lot of memory all of a sudden It started taking a lot of memory. 
+
+
+
+So this one impacts your 99th or it impacts your 50th container why it impacts because this container is not getting enough resources so it will die or if it is already not scheduled what happens is this container will not get started so basically the life of containers is very short lived if there is a lack of memory resources or you know if there is some issue with the container like the image is not getting pulled in any of the cases the container will immediately die because there is only one host here and on top of that I installed 100 containers there is no relation between container number one and there is no relation between container number 100. 
+
+
+
+But still what is happening here is the container one which is consuming a lot of memory and that is killing the container 100 it is not directly killing but this is the way how Linux works.  In Linux what happens is there is a priority that is allocated for each process so now what happens is that when one of the process is taking a lot of memory depending upon your Linux and kernel rules the process like Linux have to Define right or kernel has to decide which process to kill let's say there are 100 process it cannot randomly kill process number 50 right so there is a particular algorithm in kernel using which it deletes one of the processes so here in this case container one was taking a lot of resources because of which container 100 is not at all getting created or it is directly dying. So this is one use case what is the problem here because you have only one host and on top of it you have installed docker and you have created 100 containers one of the container is dying because of the other thing so what is one problem that we have learned here Single Host Nature of Docker Container so this is problem number one.
+
+
+
+
+Now let's move to problem number two what is problem number one the nature of Docker or the nature of this container platform is scope to One Single Host so because it is only one single host the containers which are there it is impacting another Container and if one of the container is impacting the other container there is no way that this container can come up so this is problem number one. 
+
+
+
+
+Now the problem number two let's say somebody has killed One of your container now  what will happen if somebody kills the container immediately the application that is running inside the container will be not accessible and the reason for it  not being accessible because the container got killed and unless there is a User or a DevOps Engineer who starts this container somebody has to act upon the container that got killed so this behavior is called as Auto healing.
+
+
+
+
+Auto healing is a behavior where without users Manual Intervention so without the user's manual intervention your container should start by itself but does it happen in the docker let's say you are playing around with your Docker containers on your personal laptop does the container come up automatically no it does not come up now there are hundreds of reasons why your container can go down and In Real Life there are Thousands of Containers in the Orgainsation and DevOps Engineer cannot do "docker ps" COMMAND to check which containers are running.  So there has to be a mechanism that is called as Auto Healing. So Auto Healing is a very important feature that Docker or any container platform by itself is missing so what is problem number two Auto Healing.
+
+
+
+
+So the problem number three is called as Auto Scaling now let us try to understand what is this problem number three so again let's take the same example you have a EC2 instance or a Physical Host on top of which you install docker on top of which you have let's assume you just created one container and this container you know it has some resources called as 4GB RAM and 4 CPU now this container can maximum consume up to 4G 4 CPU and 4 GB Ram because it is the maximum capacity of 
+your host in general your container will not get all the required resources from your host because the host itself has a lot of processes that is running right but for easy understanding let's say maximum this container can go up to 4 CPU and 4GB.
+
+
+
+
+Your application has some 10,000 Users but what happened is during a festival season let's say some Christmas or Dasera or any Festival season your users all of a sudden went from 10,000 to 1 Lakh so this happens all the times right so let's say a movie is released on Netflix and this is a very popular movie something like Marvel or Avengers or any popular actors movie so usually Netflix might receive load from 10,000 users but on this particular occasion Netflix will receive some 1 Million. So to act upon the Increasing load you need to have a specific feature which is called as Auto Scaling now what is Auto Scaling as soon as the load gets increased there are two ways one is manually you increase the container count from one to 10 because the load is increased by 10 times I am just giving an example so manually you increase the load from one to ten or the containers similar containers like similar to C1 what you will do is you will create 10 different C1 containers or it has to happen automatically.
+
+
+
+
+As soon as this sees the load the docker container has to immediately understand that so the load is getting increased so I have to scale up myself but Docker does not support both of the things. So let's say you have one container called C1 so manually what you will do is let's say you want to increase from 10,000 to 20,000 user request what you have to do you have to create another container called C1 and apart from this you have to configure load balancing. If there is no load balancing you know you cannot tell user that for first 10,000 users access my application URL as 172.16.3.4 and for next 10,000 your users access my application on 170.16.3.5 that is not possible Netflix will never tell you this right all that you do as an end user is just access netflix.com  so you just access netflix.com and Watch your favorite movie.
+
+
+
+
+So now what is happening behind the hood is there is a load balancer which is actually sending you the load whether you are doing it manually or automatically whether you increase these containers count manually from one to ten or automatically if your platform is increasing from 1 to 10 behind the hood there is a load balancer so this load balancer basically says that  now I understood that instead of one container there are two or instead of two there are three or there are ten so let me equally split the load so there has to be this mechanism of load balancer which supports your auto scaling so this is feature number three which is missing in your docker.
+
+
+
+
+
+And the Problem Number 4 is Docker is a very minimalistic or very simple platform  Docker does not support any of your Enterprise level application support,  Docker does not provide any Enterprise level support. When we Deploy a Enterprise Grade Application it Must have a Load Balancer, Firewall, Auto Scalability, Support API Gateways these are Some Enterprise Grade Standard But Docker Does not Support this Enterprise level standards By Default. 
+
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+# Problems with Docker
+========================
+
+
+1) Single Host Nature of Docker Container
+
+2) Auto Healing
+
+3) Auto Scaling
+
+4) Enterprise Level Support
+
+
+So what are the three different things the first one is Docker has a single host, Docker Platform relies on one single host whether you install it on your laptop or ec2 instance what you are doing is on one specific ec2 instance you are installing Docker and top of which you are installing containers whether the containers are like you know if you have 10 containers 100 containers you are just simply installing on that specific host and you are serving the traffic.
+
+
+
+The problem number two is Auto Healing what is happening with auto healing is your containers are  not able to heal automatically if the container is dying then devops engineer should keep track of this 10 000 or 1 lakh or 1 million containers and he has to start by himself or when customers report thatyour application has gone down you have to start which is a very bad user experience. 
+
+
+
+Now the problem number three is about Auto Scaling 
+
+
+And the Problem Number 4 is Docker is a very minimalistic or very simple platform  Docker does not support any of your Enterprise level application support,  Docker does not provide any Enterprise level support. When we Deploy a Enterprise Grade Application it Must have a Load Balancer, Firewall, Auto Scalability, Support API Gateways these are Some Enterprise Grade Standard But Docker Does not Support this Enterprise level standards by default. 	
+
+
+
+
+
+
+
+---------------------------------------------------
+
+
+
+
+
+
+# Solution using Kubernetes for All the Problems which we Faced while Using Docker
+===================================================================================
+
+
+By Default Kubernetes is a Cluster what is a cluster cluster is basically Group Of Nodes. So previously when we installed Docker we just installed on One Personal Laptop or you know we just installed on One simple EC2 Instance. So Kubernetes in general in a production use case it is installed in a Master Node Architecture so what is Master-Node Architecture just like Jenkins we create clusters. So that means to say whenever we install kubernetes we just create one master node and we create multiple nodes.  Kubernetes can also be installed on one single node you can definitely do it but that is only your Developer Environment. 
+
+
+
+So to just practice Kubernetes or to just start working around with kubernetes you can also install kubernetes on one single node but in general in production kubernetes is Installed in whether it is High Availability or a Standalone Mode Kubernetes is generally installed as a cluster. So now what happens I might be installing it as a cluster but your question will be what what is the Advantage if I install as a cluster the advantage would be in kubernetes there are two nodes let's assume so if this node so let's assume this is the specific node and this is container one and container 99 so if container one is impacting this container 99 immediately kubernetes will put this container 99 in a different node. 
+
+
+
+So what happened this container 99 is not affected by container one or the meaning is that a Faulty Node so there is a Faulty Node for example or there is one faulty application in the node which is impacting the other applications so kubernetes because it has Multiple Node Architecture immediately it can put nodes in a different pods in a different node or applications in a different node. So because of which you have a cluster-like architectures  So this is one problem that is already solved by using the Cluster Behavior of Bubernetes. Kubernetes is By Default Cluster in Nature. 
+
+
+
+
+
+
+
+Now the Second Problem what is that Auto Healing, so kubernetes basically has something called as Replication Controller or Replica Sets. So Replica set is a new name Replication Controller is old name. So all that you need to do is you don't even have to deploy a new container  for example let's say you have C1 and your C1 or your application is receiving load increase load previously it was receiving 10000 on one Festival it is receiving one lakh. So what we can simply do is kubernetes is basically dependent on YAML files so in replication controller.yaml file replica set controller.yaml file or even in the deployment YAML file.  
+
+
+
+You can go to one specific yaml file yaml is basically a indentation format file just like Json files so you can simply go to this yaml template file and say that increase my replicas from 1 to 10 because my traffic is increasing I know that tomorrow is Festival so I want to increase traffic from 1 to 10 this is manual way and kubernetes also supports something called as HPA which is Horizontal Pod Auto-Scalar. So using which you can directly say that whenever there is a load just keep increase if one of my container is receiving a threshold of 80 percentage so whenever you see that the load is reaching threshold of 80 percent just spin up one more container so in such cases it will keep up spinning the Containers if the load is even going from 1 million to 10 Millions even your Horizontal Pod Scalar feature of your kubernetes can handle so this is how you are achieving Auto Scaling two problems solved.  
+
+
+
+
+
+
+
+Now let's go with the Problem number three which is Auto Healing so what is Auto Healing basically the word heal itself means that whenever there is a damage kubernetes has to control the damage and fix the damage so it will either control or it will fix. So most of the time it will control the damage now what is the meaning of Controlling the Damage or what is the meaning of Auto Healing. Let's say for some reason one of your container is going down there are hundreds of reasons why your container can go down I'll explain you what are the classic problems of why a pod can go down or why a container can't go down there are multiple things and there are some standard things that you can remember or you know standard debugging steps for a container when container goes down but for now let's assume that your container is going down so in case of Docker like I told you you have to look into the docker PS commands look into all the list of containers and understand  one of my container went down, so let me restart or let me re-create this container whereas kubernetes has a feature called Auto Healing.
+
+
+
+Using this Auto Healing feature whenever the container is going down even before the container goes down kubernetes will start a new container. So even before this container goes down how kubernetes will basically work is In kubernetes there is something called as API Server whenever the API Server understands that one of the container is going down or whenever it receives a signal called container is going down immediately what kubernetes  does is even before this container goes down it will Roll Out a new Container.  So whenever it will Roll Out a new container the end user will not even understand that the container has gone down and a new container has come up. So even before your container goes down a new rollout or a new container is created or a new pod is created in kubernetes we usually deal in terms of PODS not in containers but for now let's understand that even if your container is going down before that kubernetes starts a new container so using which we have achieved a feature called Auto Healing so three problem solved.
+
+
+
+
+
+
+
+
+
+
+Now let's go with the Problem number four which is the Enterprise Level Support,  Docker does not have Enterprise Nature so it does not have many Enterprise Support Capabilities like it does not support Firewalls it does not support Load Balancers or by default  so it does not support a lot of things unless you go to Docker Swarm.  So what the people at kubernetes have done is so kubernetes is basically a tool that was originated from Google so people at Google were using a specific tool called Borg where they say that kubernetes is one of the parts of Borg. You can consider kubernetes as Initial Solution for Borg,  So the People at Google what they have done is they have built a Enterprise Level Container Orchestration Platform. So why they have built a Container Orchestration Platform  that supports Enterprise level Because the docker platform which is just a Container Platform.  It does not have all of these capabilities but to run your application on a pad on a platform which is not Enterprise ready it is not suggestible.
+ 
+ 
+ 
+So that's why nobody use Docker in production so Docker is never used in Production. so you might use Docker Swarm in production but Docker independently is never used in production because it's not a Enterprise level solution so Docker is basically a container platform which will allow you to play with containers on your personal laptop or on your EC2 Instances but in general you can consider that Docker has some container runtime which will allow you to run containers or which will allow you to manage the life cycle of containers but it's not an Enterprise solution because it does not have all the list of capabilities like Auto Healing, Auto Scaling, Load Balancer, Support Firewall, Support for API gateways. So all of White Listing Blacklisting so these are all features that you require to run your application in production.
+
+
+
+
+
+
+
+
+# Solution with Kubernetes
+============================
+
+
+1) Single Host Nature of Docker Container -> This Issue is Solved By Cluster-Like Nature of Kubernetes
+
+
+
+2) Auto Scaling ->  Kubernetes has a Replica Controller or Replica Sets in which we Can Define How Many Replica's we want and It Also has HPA which Automatically Scales the Cluster.
+
+
+
+3) Auto Healing ->  Kubernetes By Default has a Auto Healing Feature as In Kubernetes there is Something Called as API Server which Understands when a Specific Pod is Going Down so it Automatically Roll Out a New Pod.
+
+
+
+4) Enterprise Level Support ->  Kubernetes has a Good Team Which is Working Towards Developing Kubernetes and Improving it so It can Solve the Problems and Orchestrate the Container to Production.
+
+
+
+---------------------------------------------------
+
+
+# Essential Kubernetes Commands
+=================================
+
+
+
+
+
+1) Cluster and Node Info
+
+
+- kubectl cluster-info    [# Show master/control plane info]
+
+
+
+- kubectl get nodes        [# List nodes]
+
+
+
+- kubectl describe node <node-name>    [# Show node details]
+
+
+
+
+
+
+
+2) Working with Pods
+
+
+- kubectl get pods          [# List Pods in default namespace]
+
+
+
+- kubectl get pods -A      [# List Pods across all namespaces]
+
+
+
+- kubectl describe pod <pod-name>        [# Show detailed Pod info]
+
+
+
+- kubectl logs <pod-name>              [# View logs]
+
+
+
+- kubectl exec -it <pod-name> -- /bin/sh            [# Get shell access inside Pod]
+
+
+
+- kubectl delete pod <pod-name>              [# Delete Pod (will restart if controlled by Deployment)]
+
+
+
+
+
+
+
+3) Deployments and ReplicaSets
+
+
+- kubectl create deployment myapp --image=nginx             [# Imperative Deployment]
+
+
+
+- kubectl get deployments                               [# List deployments]
+
+
+
+- kubectl describe deployment myapp                      [# Show details]
+
+
+
+- kubectl scale deployment myapp --replicas=5            [# Scale pods]
+
+
+
+- kubectl rollout status deployment myapp                 [# Check rollout status]
+
+
+
+- kubectl rollout history deployment myapp                [# View deployment history]
+
+
+
+- kubectl rollout undo deployment myapp                   [# Rollback to previous version]
+
+
+
+
+
+
+
+
+
+
+
+
+4) Services and Networking
+
+
+
+- kubectl expose deployment myapp --type=ClusterIP --port=80            [# Create ClusterIP service]
+
+
+
+- kubectl expose deployment myapp --type=NodePort --port=80          [# Create NodePort service]
+
+
+
+- kubectl get svc                                                  [# List services]
+
+
+
+- kubectl describe svc myapp                                       [# Show service details]
+
+
+
+
+
+
+
+
+
+
+
+
+5) Namespaces
+
+
+
+- kubectl get namespaces                                             [# List namespaces]
+
+
+
+- kubectl create namespace dev                                       [# Create namespace]
+
+
+
+- kubectl delete namespace dev                                      [# Delete namespace]
+
+
+
+- kubectl config set-context --current --namespace=dev              [# Set default namespace]
+
+
+
+
+
+
+
+
+
+
+
+
+6) ConfigMaps 
+
+
+
+- kubectl create configmap my-config --from-literal=key=value             # Create ConfigMap
+
+
+
+- kubectl get configmaps                                                  # List ConfigMaps
+
+
+
+- kubectl describe configmap my-config                                    # Show ConfigMap
+
+
+
+
+
+# Secrets
+
+- kubectl create secret generic my-secret --from-literal=pwd=12345        # Create Secret
+
+
+
+- kubectl get secrets                                                     # List Secrets
+
+
+
+- kubectl describe secret my-secret                                       # Show Secret
+
+
+
+
+
+
+
+
+
+
+
+
+7) Storage
+
+
+
+- kubectl get pv                           # List PersistentVolumes
+
+
+
+- kubectl get pvc                           # List PersistentVolumeClaims
+
+
+
+- kubectl describe pvc mypvc                 # Show PVC details
+
+
+
+
+
+
+
+
+
+
+
+8) Advanced Features
+
+
+
+- kubectl top pod                                           # Show resource usage of Pods (needs metrics-server)
+
+
+
+- kubectl cordon <node-name>                                 # Mark node unschedulable
+
+
+
+- kubectl drain <node-name>                                    # Safely evict Pods before maintenance
+
+
+
+- kubectl taint nodes <node-name> key=value:NoSchedule                  # Add taint to node
+
+
+
+- kubectl label nodes <node-name> disktype=ssd                                # Add label to node
+
+
