@@ -1,0 +1,27 @@
+DAY-40 | KUBERNETES CUSTOM RESOURCES | CUSTOM CONTROLLER | DEEP DIVE & DETAILED EXPLANATION
+============================================================================================
+
+
+-> Write a Sample Kubernetes Controller - https://github.com/kubernetes/sample-controller
+
+
+
+# Kubernetes says if you want to Extend the API of Kubernetes or If you want to Introduce a New Resource to Kubernetes. So to Extend the API or to Extend the Capabilities of APIs there are 3 Resources in Kubernetes.
+
+
+1) Custom Resource Definition (CRD) -  Defining a New Type of API to Kubernetes & We will have to Submit a Custom Resource Definition to Kubernetes and CRD is a YAML file in which is used to Introduce a New type of API to Kubernetes and that will have all the Fields a User can Submit in the Custom Resource.
+
+
+
+2) Custom Resource - User will Create a Custom Resource and this Custom Resource will be Validated against the CRD which is Created and if it has all the requirements fulfilled it will be Deployed.
+
+
+
+3) Custom Controller - Custom Controller is a Kubernetes Controller which is Deployed by the DevOps Engineer by Using Helm Charts, Manifest, Operator and this Custom Controller will Verify the Custom Resource and Perform the Required Actions.
+
+
+
+
+
+# Conclusion - First DevOps Engineer will Create a Custom Resource Definition (CRD) using Manifest or Helm Charts or Operator. Once this is Done then the DevOps Engineer will Create a Custom Controller using Manifest or Helm Charts or Operator. Now if a User Wants to Extend the Capabilities of Kubernetes API then they will Create a Custom Resource, Once this Custom Resource is Created it will be Validated CRD If it has Followed all the Necessary Standards or Not. After that the Custom Kubernetes Controller will Verify the Custom Resource and Perform the Required Actions.
+
