@@ -1,0 +1,42 @@
+Kubernetes Service, Ingress with TLS and Ingress Controllers with Live coding
+===============================================================================
+
+
+One line explanation
+---------------------
+
+- SSL Passthrough: The Load Balancer/Proxy doesn’t decrypt incoming HTTPS traffic and forwards it to the backend server as it is.
+
+
+- SSL Offloading (also known as SSL Termination): The Load Balancer/Proxy decrypts incoming HTTPS traffic and sends it to the backend server without encryption.
+
+
+- SSL Bridging: The Load Balancer/Proxy decrypts incoming HTTPS traffic and re-encrypts it before forwarding it to the backend server.
+
+
+
+
+
+
+1) SSL Passthrough - Passthrough represents the most straightforward approach for managing encrypted traffic on a Load Balancer. True to its name, this method involves routing traffic through the Load Balancer without undergoing decryption on the Load Balancer itself. While this option minimizes overhead significantly, it comes with limitations, as no layer 7 actions can be executed. Consequently, features like cookie-based sticky sessions are not feasible with this method. Additionally, in scenarios where applications do not share sessions among servers, users may experience session loss due to redirection to different servers within the group.
+
+
+SSL passthrough ensures a secure connection throughout the transmission process, with decryption occurring only at the destination, minimizing the risk of man-in-the-middle attacks targeting the traffic between the load balancer and server. Moreover, as load balancers abstain from decrypting traffic between clients and servers, they experience relatively low overhead, enabling more precise traffic direction. Nevertheless, SSL passthrough demands more central processing unit (CPU) cycles, resulting in higher operational costs. Furthermore, it lacks the ability to inspect requests or perform actions on web traffic, ruling out the use of access rules, redirects, and cookie-based sticky sessions. Due to these constraints, SSL passthrough is most suitable for smaller deployments. For larger and more demanding usage requirements, alternative approaches may need consideration.
+
+
+
+
+
+
+2) SSL Offloading - SSL offloading, also known as SSL termination, allows the user to initiate a secure connection with the Load Balancer thanks to the Load Balancer frontend’s SSL certificate. The Load Balancer decrypts incoming HTTPS traffic. Layer 7 actions may therefore be applied to the traffic at this stage. Traffic is not re-encrypted on its way from the Load Balancer to the backend server, unlike with SSL bridging. Traffic that has gone through the offloading process is marked with a new header, called X-Forwarded-Proto, which informs the backend server that the client used HTTPS to contact the Load Balancer.
+
+
+However, since incoming traffic from load balancers to web servers is already unencrypted, SSL offloading may leave your network vulnerable to man-in-the-middle attacks and data theft. The sharing of encryption and decryption keys between network instances can compound the problem. To offset these potential disadvantages, you may need to beef up your IT team’s data and network security capabilities.
+
+
+
+
+
+
+3) SSL Bridging - SSL bridging enables users to establish a secure, encrypted connection with the Load Balancer using the SSL certificate of the Load Balancer frontend. The Load Balancer decrypts incoming HTTPS traffic, allowing it to perform layer 7 actions on the received traffic. Subsequently, the Load Balancer’s backend establishes a new encrypted connection to re-encrypt the traffic between the Load Balancer and the backend server, utilizing the backend server’s certificate this time. For instance, within a micro-services architecture, when there is a requirement to address additional functionalities such as cross-cutting concerns, it is advisable to employ this approach.
+
