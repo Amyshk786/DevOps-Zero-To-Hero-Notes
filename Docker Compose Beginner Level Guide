@@ -1,0 +1,115 @@
+Docker Compose Beginner Level Guide with multiple examples | Docker Compose is Easy
+====================================================================================
+
+
+
+# Docker Compose Docs
+Link - https://docs.docker.com/compose/
+
+
+
+# Complete Docker Compose Examples
+Link - https://github.com/docker/awesome-compose
+
+
+
+# Three Tier Architecture Used in the video
+Link - https://github.com/iam-veeramalla/three-tier-architecture-demo/blob/master/docker-compose.yaml
+
+
+
+# Docker 
+==========
+
+Docker is a Container Platform that is Developed by Docker Inc, Main Goal of this Docker Platform is to Manage the Life-Cycle of our Containerized Application or Manage the Life-Cycle of our Containers. Uisng a VM we can Install Docker on Top of it [Docker Desktop OR Docker CLI] By Using this we Can START the Container, STOP the Container, Either Delete the Container, Run the Container as a Background Process. 
+
+
+STEP 1
+Assume we are Working in a Orgainsation and there is a Developer who is working on a Python Flask Application and he has Asked us to Containerize this Application so we will Sit with the Developer and Create a DockerFile and Understand what things have to go Inside this DockerFile [Base Image, RUN, EXPOSE the Port and Finally Uisng CMD or ENTRYPOINT we can provide the Process which needs to be Executed when the Container is Started].
+
+
+
+STEP2 
+Now we will need to Create Docker Image for Creating the We will Log-In to the VM and RUN the Docker Build Command [docker build -t my-app:v1 .]
+
+
+
+STEP3
+Now the next step will be to RUN this Docker Container which will be the Final Stage [docker run -d -p or any oth arguments which we want to pass]
+
+We can verify the State of the Container by Running the "docker ps" Command 
+
+
+
+
+
+
+---------------------------------------------------
+
+
+# Docker Compose
+==================
+
+
+Docker Compose is a Tool which is also Developed by Docker Inc But here the Difference is that Docker Compose is Used to Manage Multi Container Applications.
+
+
+
+In the Previous Example we were only talking about a Simple Python Flask App and when this Application is Executed it Runs as a Calculator. But Instead if you are Working in a Orgainsation and you are Developing an E-Commerce Application. This E-Commerce Application will have Multiple Microservices, Will have Databases, Messaging Ques, Caching Servers.
+
+
+
+Lets Assume this E-Commerce Application has 4 Microservices Using Docker 
+
+- Redis is used for Caching
+
+- MySQL is DB
+
+- Python App, Python Log-In App, Payments App 
+
+- Transactions App
+
+
+How will we manage the Life-Cycle of All of these Containers at Once If we use Docker then we will Have to Build Each Microservice, Then we have to RUN each Microservice and also these Apps Would have their Different Dependencies. [Eg of Dependencies- Payments App Only to be Installed when the DB is Up & Running]
+
+
+
+
+# When is Docker Compose Used & How it is Different From Kubernetes ->
+
+- Local Development
+
+- CI/CD
+
+- Testing
+	
+
+
+
+
+
+---------------------------------------------------
+
+Practical
+=========
+
+
+# sudo apt update
+
+
+# sudo apt-get install docker-compose -y
+
+
+# git clone https://github.com/docker/awesome-compose.git
+
+
+# cd awesome-compose/nginx-nodejs-redis
+
+
+# docker-compose up
+
+
+# We Can Access the App on "PublicIpAddress:81  & PublicIpAddress:82"
+
+
+
