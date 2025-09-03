@@ -1,0 +1,81 @@
+Day 39 | INTRODUCTION TO K8s RBAC | 30 DAYS FREE OPENSHIFT CLUSTER | LEARN RBAC WITH REAL CLUSTER
+==================================================================================================
+
+
+# Kubernetes Role Based Access Control (RBAC) Can be Broadly Divided into 2 Parts 
+
+
+1) User Management - If we Use "Minikube" or KIND we get the Admin Access as we use these for Learning Kubernetes. But When we use K8s in the Organizations Our Primary Responsibility is to First Define Access [Like for Developers, QE] What Access will Developers will get and What access QE will get. So by using Role Based Access Control (RBAC) [RBAC means depending upon the role of the person we will Define the Access].
+
+
+
+
+2) Service Account or How Services Manage Access in Kubernetes - For an Instance we have Created a Pod, Now what Access does this Pod should have in the K8s Cluster. Similar to User Management we can also Manage the Access of our Services and Applications that are Running on the Cluster using RBAC.
+
+
+
+Conclusion - The two Primary Responsibility of RBAC is User Management & Also Managing the Access of the Services and Applications that are Running on the Cluster.
+
+
+
+
+
+
+
+
+# In Kubernetes there are 3 Major Things to Manage Role Based Access Control (RBAC)
+------------------------------------------------------------------------------------
+
+
+- Service Account & Users
+
+- Kubernetes Roles & Cluster Roles
+
+- Role Binding & Cluster Role Binding (CRB)
+
+
+
+
+1) Service Account & Users IMP Note - Kubernetes does not Deal with User Management whereas Kubernetes Offloads the User Management to Identity Providers. These Days if LogIn to Any Application OR Website It has an Option where it says "LogIn Google", "LogIn Facebook" ETC... In this Case we can Access the Application or Website without Creating an Account with these applications Without Creating a User. So this is what Exactly Kubernetes also does Like if we are Using AWS EKS in this Kubernetes tells us to Use IAM Users & Using these IAM Users you can LogIn Into Kubernetes, In Between you will just need to create Something called as IAM Provider or OAUTH Provider. And the Users will be in their Specific groups like Developer will be in Developer Group,  QE will be in QE Group. Service Account is just a YAML Manifest.
+
+
+API Server Act as a OAUTH Server and below are Some External Identity Providers which Kubernetes  Supports
+
+- Keycloak 
+
+- LDAP
+
+- OKTA 
+
+- SSO 
+
+
+
+
+
+2) Kubernetes Roles & Cluster Roles - To Define Access after this part Kubernetes Supports 2 Important Resources called Role and Role Binding. We can also Consider Roles as Cluster Roles & Role Binding as Cluster Role Binding when they have Cluster Level Permissions. Once you Logged In as a User, First we will Create a Role and to Attach this Role to a User you will Use Role Binding. [A Role is a YAML File where you write They Need Access to Pods, Config Maps, Secrets] And If we Attach this Role to User Abhishek that user will get all the Permissions which we have Written in the Role.YAML File.
+
+
+
+
+
+
+3) Role Binding & Cluster Role Binding (CRB) - First we will Create a User/Service Account,  Then we will Create a Role  & By using Role Binding we will Bind the Role to the User/Service Account. 
+
+- Role will take care of Permissions
+
+- User/Service Account will take care of User Management 
+
+- Role Binding will take care of Binding the Roles to the Users
+
+
+
+This is the Concept of Kubernetes RBAC
+
+
+
+
+
+
+30 Days Free OpenShift Account Link - https://developers.redhat.com/developer-sandbox
+
