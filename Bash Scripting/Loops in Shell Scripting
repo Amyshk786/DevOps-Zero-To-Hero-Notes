@@ -1,0 +1,57 @@
+Variables in Shell Scripting
+
+
+#/bin/bash
+#
+# This Shell script will Analyze the Application.log and System.log files and check which file has received the Data in last 24 hours and show us the number of "ERROR" "INFO" "FATAL" and "CRITICAL"
+
+LOG_DIR="/home/ubuntu/logs"
+
+
+
+ERROR_PATTERNS=("ERROR" "INFO" "FATAL" "CRITICAL")
+
+echo "Analysing the Log Files"
+echo "======================="
+
+
+echo -e "\nList of Log Files Updated in last 24 hours"
+LOG_FILES=$(find $LOG_DIR -name "*.log" -mtime -1)
+echo "$LOG_FILES"
+
+
+for LOG_FILE in $LOG_FILES; do
+
+
+echo -e "\nSearching "${ERROR_PATTERNS[0]}" Logs in $LOG_FILE file"
+grep "${ERROR_PATTERNS[0]}" "$LOG_FILE"
+
+echo -e "\nNumber of "${ERROR_PATTERNS[0]}" Logs in $LOG_FILE file"
+grep -c "${ERROR_PATTERNS[0]}" "$LOG_FILE"
+
+
+
+echo -e "\nSearching "${ERROR_PATTERNS[1]}" Logs in $LOG_FILE file"
+grep "${ERROR_PATTERNS[1]}" "$LOG_FILE"
+
+echo -e "\nNumber of "${ERROR_PATTERNS[1]}" Logs in $LOG_FILE file"
+grep -c "${ERROR_PATTERNS[1]}" "$LOG_FILE"
+
+
+
+echo -e "\nSearching "${ERROR_PATTERNS[2]}" Logs in $LOG_FILE file"
+grep "${ERROR_PATTERNS[2]}" "$LOG_FILE"
+
+echo -e "\nNumber of "${ERROR_PATTERNS[2]}" Logs in $LOG_FILE file"
+grep -c "${ERROR_PATTERNS[2]}" "$LOG_FILE"
+
+
+
+
+echo -e "\nSearching "${ERROR_PATTERNS[3]}" Logs in $LOG_FILE file"
+grep "${ERROR_PATTERNS[3]}" "$LOG_FILE"
+
+echo -e "\nNumber of "${ERROR_PATTERNS[3]}" Logs in $LOG_FILE file"
+grep -c "${ERROR_PATTERNS[3]}" "$LOG_FILE"
+
+done
