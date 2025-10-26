@@ -1,0 +1,160 @@
+Image you are a DevOps Engineer and you want to Analyze the Application.log file & System.log file.
+
+So we will get the Dummy Application and Demo Log file from Chatgpt
+
+
+vim application.log
+
+[2025-10-26 10:00:01] INFO     Starting Application: SimpleEcom v3.4.1
+[2025-10-26 10:00:02] INFO     Environment: production | Region: us-east-1
+[2025-10-26 10:00:03] DEBUG    Loading configuration from /etc/simpleecom/config.yaml
+[2025-10-26 10:00:04] INFO     Connecting to database... (host=db.simpleecom.internal, port=5432)
+[2025-10-26 10:00:04] INFO     Database connection established successfully
+[2025-10-26 10:00:05] INFO     Starting web server at http://0.0.0.0:8080
+[2025-10-26 10:00:10] INFO     [REQ_ID=abc123] GET /api/products → 200 (45ms)
+[2025-10-26 10:00:14] WARN     [REQ_ID=def456] GET /api/inventory → Slow query (983ms)
+[2025-10-26 10:00:20] ERROR    [REQ_ID=ghi789] POST /api/orders → 500 (SQL Timeout)
+[2025-10-26 10:00:21] DEBUG    Retrying transaction for order_id=87422 (attempt 1/3)
+[2025-10-26 10:00:22] INFO     Retry successful for order_id=87422
+[2025-10-26 10:00:33] INFO     [REQ_ID=jkl112] POST /api/checkout → 200 (Payment approved)
+[2025-10-26 10:01:05] CRITICAL Payment gateway service unreachable for 15s. Switching to backup.
+[2025-10-26 10:01:09] INFO     Backup payment gateway active (gateway2.payments.net)
+[2025-10-26 10:01:33] ERROR    Cache connection failed: RedisTimeoutError
+[2025-10-26 10:01:35] FATAL    Application memory threshold exceeded (95%). Initiating shutdown.
+[2025-10-26 10:01:37] INFO     Saving current session data...
+[2025-10-26 10:01:40] INFO     Graceful shutdown complete. Bye!
+
+
+
+
+
+vim system.log
+
+Oct 26 09:55:01 ip-172-31-22-10 systemd[1]: INFO     Starting Daily Security Scan...
+Oct 26 09:55:02 ip-172-31-22-10 kernel: INFO     eth0: Link is Up - 1Gbps Full Duplex
+Oct 26 09:55:05 ip-172-31-22-10 sshd[842]: INFO     Accepted publickey for ec2-user from 52.15.44.21 port 61244 ssh2
+Oct 26 09:55:06 ip-172-31-22-10 sudo[843]: INFO     ec2-user executed /usr/bin/systemctl restart nginx
+Oct 26 09:55:08 ip-172-31-22-10 systemd[1]: INFO     Started NGINX Web Server.
+Oct 26 09:56:12 ip-172-31-22-10 docker[900]: WARN     Container “flask_app” high memory usage (84%)
+Oct 26 09:56:44 ip-172-31-22-10 kernel: ERROR    Disk I/O failure on /dev/xvda1 sector 1054432
+Oct 26 09:57:02 ip-172-31-22-10 systemd[1]: CRITICAL Unit docker.service crashed too many times within 1 minute.
+Oct 26 09:57:05 ip-172-31-22-10 kernel: INFO     Rebooting in safe mode...
+Oct 26 09:57:45 ip-172-31-22-10 systemd[1]: INFO     Boot completed (Kernel 6.5.3-aws)
+Oct 26 09:57:50 ip-172-31-22-10 cloud-init[411]: INFO     Successfully started CodeDeploy agent
+Oct 26 09:58:03 ip-172-31-22-10 codedeploy-agent[420]: ERROR    Unable to reach CodeDeploy endpoint: timeout
+Oct 26 09:58:10 ip-172-31-22-10 codedeploy-agent[420]: INFO     Retrying in 30 seconds...
+Oct 26 09:58:40 ip-172-31-22-10 codedeploy-agent[420]: INFO     Connected to CodeDeploy successfully.
+Oct 26 09:59:15 ip-172-31-22-10 systemd[1]: FATAL    Kernel panic - not syncing: Attempted to kill init!
+Oct 26 09:59:20 ip-172-31-22-10 systemd[1]: CRITICAL System halted unexpectedly.
+
+
+
+Now we will Create a Folder named as "logs" and we will Move these files to that Folder
+
+mkdir logs
+
+mv application.log system.log logs/
+
+
+
+
+-------------------------------------------------
+
+# Now we can check how many Errors are thre using the "grep" command 
+
+ubuntu@ip-172-31-21-137:~/logs$ grep "ERROR" application.log
+[2025-10-26 09:00:22] ERROR [REQ_ID=dc33ac] POST /api/cart → 500 (SQLIntegrityError: duplicate key)
+[2025-10-26 09:02:20] ERROR Payment gateway timeout (3 retries)
+
+
+
+
+# By using "-c" we can get the Count of the Error logs
+
+ubuntu@ip-172-31-21-137:~/logs$ grep -c "ERROR" application.log
+2
+
+
+
+# If there are 100s of Files and we need to check Everyday which file has got the Logs so we can use the below Command so it will show us the Log files which got changed or Updated in last 24 Hours.
+
+find . -name "*.log" -mtime -1
+
+
+
+ubuntu@ip-172-31-21-137:~/logs$ find . -name "*.log" -mtime -1
+./application.log
+./system.log
+
+
+
+
+
+
+
+
+-------------------------------------------------
+
+# Now we will Write a Shell Script for this so that we don't need to write these Commands on Daily Basis
+
+vim analyse-logs.sh
+
+#/bin/bash
+#
+# This Shell script will Analyze the Application.log and System.log files and check which file has received the Data in last 24 hours and show us the number of "ERROR" "INFO" "FATAL" and "CRITICAL"
+
+LOG_DIR="/home/ubuntu/logs"
+APP_LOG_FILE="application.log"
+SYS_LOG_FILE="system.log"
+
+
+echo "Analysing the Log Files"
+echo "======================="
+
+
+echo -e "\nList of Log Files Updated in last 24 hours"
+find $LOG_DIR -name "*.log" -mtime -1
+
+
+echo -e "\nSearching Error Logs in Application.log file"
+grep "ERROR" "$LOG_DIR/$APP_LOG_FILE"
+
+
+echo -e "\nNumber of Error Logs in Application.log file"
+grep -c "ERROR" "$LOG_DIR/$APP_LOG_FILE"
+
+
+echo -e "\nNumber of Info Logs in Application.log file"
+grep -c "INFO" "$LOG_DIR/$APP_LOG_FILE"
+
+
+echo -e "\nNumber of Fatal Logs in Application.log file"
+grep -c "FATAL" "$LOG_DIR/$APP_LOG_FILE"
+
+
+echo -e "\nNumber of Critical Logs in Application.log file"
+grep -c "CRITICAL" "$LOG_DIR/$APP_LOG_FILE"
+
+
+echo -e "\nNow we will be Analysing the System.log file"
+echo "=================================================="
+
+echo -e "\nSearching Error Logs in System.log file"
+grep "ERROR" "$LOG_DIR/$SYS_LOG_FILE"
+
+
+echo -e "\nNumber of Critical  Logs in System.log file"
+grep -c "ERROR" "$LOG_DIR/$SYS_LOG_FILE"
+
+
+echo -e "\nNumber of Info Logs in System.log file"
+grep -c "INFO" "$LOG_DIR/$SYS_LOG_FILE"
+
+
+echo -e "\nNumber of Fatal Logs in System.log file"
+grep -c "FATAL" "$LOG_DIR/$SYS_LOG_FILE"
+
+
+echo -e "\nNumber of Critical  Logs in System.log file"
+grep -c "CRITICAL" "$LOG_DIR/$SYS_LOG_FILE"
+
