@@ -1,0 +1,89 @@
+# Below are the Environmental Variables which we have used in the Previous example But if we want to Use Multiple Variables so then we will use "Arrays" and Below is the Example for that & We can also store the Output of the "find" Command in a Environment Variable Below is the example for that.
+
+A) ENVIRONMENT VARIABLES
+LOG_DIR="/home/ubuntu/logs"
+APP_LOG_FILE="application.log"
+SYS_LOG_FILE="system.log"
+
+
+
+
+B) ARRAYS
+ERROR_PATTERNS=("ERROR" "INFO" "FATAL" "CRITICAL")
+
+
+
+
+C) Output as Command Executed in a Environment Variable
+LOG_FILES=$(find $LOG_DIR -name "*.log" -mtime -1)
+echo "$LOG_FILES"
+
+
+
+
+# In the below File we have Used "ENVIRONMENT VARIABLES", "ARRAYS" & Output of the Command Execution
+
+
+vim analyse-log.sh
+
+#/bin/bash
+#
+# This Shell script will Analyze the Application.log and System.log files and check which file has received the Data in last 24 hours and show us the number of "ERROR" "INFO" "FATAL" and "CRITICAL"
+
+LOG_DIR="/home/ubuntu/logs"
+APP_LOG_FILE="application.log"
+SYS_LOG_FILE="system.log"
+
+
+ERROR_PATTERNS=("ERROR" "INFO" "FATAL" "CRITICAL")
+
+echo "Analysing the Log Files"
+echo "======================="
+
+
+echo -e "\nList of Log Files Updated in last 24 hours"
+LOG_FILES=$(find $LOG_DIR -name "*.log" -mtime -1)
+echo "$LOG_FILES"
+
+
+echo -e "\nSearching Error Logs in Application.log file"
+grep "${ERROR_PATTERNS[0]}" "$LOG_DIR/$APP_LOG_FILE"
+
+
+echo -e "\nNumber of Error Logs in Application.log file"
+grep -c "${ERROR_PATTERNS[0]}" "$LOG_DIR/$APP_LOG_FILE"
+
+
+echo -e "\nNumber of Info Logs in Application.log file"
+grep -c "${ERROR_PATTERNS[1]}" "$LOG_DIR/$APP_LOG_FILE"
+
+
+echo -e "\nNumber of Fatal Logs in Application.log file"
+grep -c "${ERROR_PATTERNS[2]}" "$LOG_DIR/$APP_LOG_FILE"
+
+
+echo -e "\nNumber of Critical Logs in Application.log file"
+grep -c "${ERROR_PATTERNS[3]}" "$LOG_DIR/$APP_LOG_FILE"
+
+
+echo -e "\nNow we will be Analysing the System.log file"
+echo "=================================================="
+
+echo -e "\nSearching Error Logs in System.log file"
+grep "${ERROR_PATTERNS[0]}" "$LOG_DIR/$SYS_LOG_FILE"
+
+
+echo -e "\nNumber of Critical  Logs in System.log file"
+grep -c "${ERROR_PATTERNS[0]}" "$LOG_DIR/$SYS_LOG_FILE"
+
+
+echo -e "\nNumber of Info Logs in System.log file"
+grep -c "${ERROR_PATTERNS[1]}" "$LOG_DIR/$SYS_LOG_FILE"
+
+
+echo -e "\nNumber of Fatal Logs in System.log file"
+grep -c "${ERROR_PATTERNS[2]}" "$LOG_DIR/$SYS_LOG_FILE"
+
+
+echo -e "\nNumber of Critical  Logs in System.log file"
+grep -c "${ERROR_PATTERNS[3]}" "$LOG_DIR/$SYS_LOG_FILE"
