@@ -1,0 +1,53 @@
+#📌 Log Analysis Automation Script — README
+
+         
+
+#!/bin/bash
+#===============================================================================================================================================
+#🧾 Overview
+#This shell script automatically analyzes log files within a Linux system.
+#It searches for specific log severity patterns (like ERROR, WARN, INFO, FATAL, etc.), counts occurrences, and generates a detailed report.
+#It is useful for:
+#✅ Log monitoring
+#✅ Troubleshooting application/system issues
+#✅ Debug & audit support
+#✅ Automated health checks in DevOps workflows
+# Author: Amir Shaikh
+# Role: Senior DevOps Engineer
+#===============================================================================================================================================
+
+
+LOG_DIR="/home/ubuntu/logs"
+ERROR_PATTERNS=("ERROR" "FATAL" "CRITICAL" "INFO" "WARN" "DEBUG")
+REPORT_FILE="/home/ubuntu/logs/log_analysis_report.txt"
+
+
+echo "Analyzing Log Files" > "$REPORT_FILE"
+echo "====================" >> "$REPORT_FILE"
+
+
+echo -e "\nList  of the log files Modified within last 10 days" >> "$REPORT_FILE"
+LOG_FILES=$(find $LOG_DIR -name "*.log" -mtime -10)
+echo "$LOG_FILES" >> "$REPORT_FILE"
+
+
+for LOG_FILE in $LOG_FILES; do
+
+	echo -e "\n" >> "$REPORT_FILE"
+	echo "===================================================" >> "$REPORT_FILE"
+	echo "$LOG_FILE" >> "$REPORT_FILE"
+	echo "===================================================" >> "$REPORT_FILE"
+
+
+	for PATTERN in ${ERROR_PATTERNS[@]}; do
+
+echo -e "\nSearching for $PATTERN logs in $LOG_FILE file" >> "$REPORT_FILE"
+grep "$PATTERN" "$LOG_FILE" >> "$REPORT_FILE"
+
+echo -e "\nNumber of $PATTERN logs in $LOG_FILE file" >> "$REPORT_FILE"
+grep -c "$PATTERN" "$LOG_FILE" >> "$REPORT_FILE"
+	done
+done
+
+
+echo -e "\nLog Analysis Completed!! & Report Saved in: $REPORT_FILE"
