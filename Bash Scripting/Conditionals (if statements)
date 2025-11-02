@@ -1,0 +1,72 @@
+
+📁 Script Information
+File Name: log_analysis.sh
+Language: Bash
+Compatible OS: Linux / Unix / macOS
+
+
+⚙️ Purpose
+✅ Identify and analyze log files modified recently
+✅ Search for specific log severity patterns
+✅ Count the number of log occurrences for each pattern
+✅ Generate a clean, readable report
+✅ Highlight files that have excessive errors
+
+
+- LOG_DIR → location of your application or system log files.
+- ERROR_PATTERNS → an array containing all log keywords you want to detect.
+- REPORT_FILE → the output file where all analysis results are saved.
+
+
+
+
+
+#!/bin/bash
+#
+# Log Analysis Script
+# Scans recent log files for ERROR, FATAL, CRITICAL, INFO, WARN, DEBUG patterns
+# Generates a report and flags files with too many issues.
+
+
+LOG_DIR="/home/ubuntu/logs"
+ERROR_PATTERNS=("ERROR" "FATAL" "CRITICAL" "INFO" "WARN" "DEBUG")
+REPORT_FILE="/home/ubuntu/logs/log_analysis_report.txt"
+
+
+echo "Analyzing Log Files" > "$REPORT_FILE"
+echo "====================" >> "$REPORT_FILE"
+
+
+echo -e "\nList  of the log files Modified within last 10 days" >> "$REPORT_FILE"
+LOG_FILES=$(find $LOG_DIR -name "*.log" -mtime -10)
+echo "$LOG_FILES" >> "$REPORT_FILE"
+
+
+for LOG_FILE in $LOG_FILES; do
+
+	echo -e "\n" >> "$REPORT_FILE"
+	echo "===================================================" >> "$REPORT_FILE"
+	echo "$LOG_FILE" >> "$REPORT_FILE"
+	echo "===================================================" >> "$REPORT_FILE"
+
+
+	for PATTERN in ${ERROR_PATTERNS[@]}; do
+
+echo -e "\nSearching for $PATTERN logs in $LOG_FILE file" >> "$REPORT_FILE"
+grep "$PATTERN" "$LOG_FILE" >> "$REPORT_FILE"
+
+echo -e "\nNumber of $PATTERN logs in $LOG_FILE file" >> "$REPORT_FILE"
+
+
+ERROR_COUNT=$(grep -c "$PATTERN" "$LOG_FILE")
+echo "$ERROR_COUNT" >> "$REPORT_FILE"
+
+if [ "$ERROR_COUNT" -gt 5 ]; then
+	echo -e "\nAction Required: too Many $PATTERN Issues in Log File $LOG_FILE"
+fi
+
+	done
+done
+
+
+echo -e "\nLog Analysis Completed!! & Report Saved in: $REPORT_FILE"
