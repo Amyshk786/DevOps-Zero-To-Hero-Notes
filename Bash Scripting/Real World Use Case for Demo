@@ -1,4 +1,4 @@
-Image you are a DevOps Engineer and you want to Analyze the Application.log file & System.log file.
+Imagine you are a DevOps Engineer and you want to Analyze the Application.log file & System.log file.
 
 So we will get the Dummy Application and Demo Log file from Chatgpt
 
@@ -76,7 +76,7 @@ ubuntu@ip-172-31-21-137:~/logs$ grep -c "ERROR" application.log
 
 
 
-# If there are 100s of Files and we need to check Everyday which file has got the Logs so we can use the below Command so it will show us the Log files which got changed or Updated in last 24 Hours.
+# If there are 100s of Files and we need to check Everyday which file has got the New Logs so we can use the below Command so it will show us the Log files which got changed or Updated in last 24 Hours.
 
 find . -name "*.log" -mtime -1
 
