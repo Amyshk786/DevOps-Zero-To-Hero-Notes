@@ -48,6 +48,177 @@ Add inbound traffic rules as shown in the image (you can just allow TCP 8080 as 
 - Copy the Jenkins Password and Save it as we are not Creating any other user we are using the Default Admin User.
 
 
+# For Creating Jenkine Pipeline Follow Below Steps
+====================================================
+
+Go to New Item  -> Name = ultimate-demo  -> Select Pipeline  -> Under Defination Select "Pipeline Script from SCM"
+
+- Under SCM select "Git"   -> Provide Repository URL      -> Select the Branch Main or Master   -> Provide path to the Jenkins File   -> Click on Apply
+
+
+- DevOps Engineers have to Write Docker File and then make a Docker Image which should have all the Dependencies like Maven, and others
+
+
+- Go to Jenkins Dashboard  ->  Manage Jenkins  -> Plugins  ->  Available Plugins  ->  Search for "Docker pipeline" & "Sonarqube Scanner"   Install Without Restart
+
+
+IMP NOTE - We will have to Install the Sonar Server on our EC2 Instance as well in the Same VPC
+
+
+
+
+
+
+Configure a Sonar Server locally
+----------------------------------
+
+sudo su -
+
+adduser sonarqube
+
+sudo apt update && sudo apt install unzip -y
+
+sudo su - sonarqube
+
+wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-10.4.1.88267.zip
+
+unzip *
+
+chown -R sonarqube:sonarqube /opt/sonarqube
+
+chmod -R 775 /opt/sonarqube
+
+cd /opt/sonarqube/bin/linux-x86-64
+
+./sonar.sh start
+
+Now After 1 Minute you can access the SonarQube Server on http://<ip-address>:9000
+
+username of sonar is admin & Password is also admin
+
+
+
+
+
+
+
+
+
+# Now we want to Configure Sinarqube with Jenkins so w can follow below steps 
+-------------------------------------------------------------------------------
+
+
+Click on the Top Right of Sonarqube Dashboard -> My Account  -> Security  ->  Access Tokens  -> Provide Name as "Jenkins" & Copy the Token
+
+
+Go to Jenkins  ->  Manage Jenkins  -> Manage Credentials  ->  Global -> System Cred ->  Add Credentials  -> Kind = Secret text 
+
+- under Secret Paste the Token,  Provide name as sonarqube
+
+
+
+
+
+
+
+
+
+
+# Now we will Install Docker on our EC2 Instance 
+--------------------------------------------------
+
+sudo su -
+
+
+sudo apt update
+sudo apt install docker.io
+
+
+sudo su - 
+usermod -aG docker jenkins && newgrp docker 
+usermod -aG docker ubuntu && newgrp docker
+#systemctl restart docker
+
+
+
+Now we will Restart the Jenkins 
+http://<ec2-instance-public-ip>:8080/restart
+
+
+
+
+
+
+# Now we will Have to Setup Kubernetes Cluster using Minikube
+---------------------------------------------------------------
+
+First we will have to Install Minikube Once that is done 
+
+- Follow this Link for Minikube Installation on Ubuntu - https://github.com/Amyshk786/kubestarter/blob/main/minikube_installation.md
+
+
+- We will have to Go to Operator Hub and Download the ArgoCD [It is Important to Install ]
+https://operatorhub.io
+
+
+
+Go To Argo CD and Click on Install 
+
+1) Install Operator Lifecycle Manager (OLM), a tool to help manage the Operators running on your cluster.
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.38.0/install.sh | bash -s v0.38.0
+
+
+
+2) Install the operator by running the following command:
+kubectl create -f https://operatorhub.io/install/argocd-operator.yaml
+
+
+
+3) After install, watch your operator come up using next command.
+kubectl get csv -n operators
+
+
+
+
+# Now we will provide the Docker and GitHub Credentials in Jenkins
+--------------------------------------------------------------------
+
+
+Go to Jenkins  ->  Manage Jenkins  -> Manage Credentials  ->  Global -> System Cred ->  Add Credentials  -> Kind = "Username & Password"
+
+- Provide username as "Docker_Hub username"
+
+- Password of DockerHub
+
+- ID as "docker-cred"
+
+
+Click on Create 
+
+
+
+
+
+
+
+
+Go to Jenkins  ->  Manage Jenkins  -> Manage Credentials  ->  Global -> System Cred ->  Add Credentials  -> Kind = Secret text 
+
+- ID as "github"
+
+- Go to GitHub Settings  -> Developer Settings  ->  Personal Access Tokens   ->  Token Classic  -> Generate a New Classic Token
+
+- Provide Name as "Jenkins" and Select All  -> Click on Generate Token 
+
+- Under Secret Paste the Token
+
+
+- Restart Jenkins
+
+
+- Change the Sonarqube IP to Instance IP
+
+
 
 
 
