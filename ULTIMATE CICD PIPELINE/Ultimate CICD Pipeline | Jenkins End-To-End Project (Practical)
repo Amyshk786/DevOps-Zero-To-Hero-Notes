@@ -45,6 +45,9 @@ Add inbound traffic rules as shown in the image (you can just allow TCP 8080 as 
 
 
 
+- Copy the Jenkins Password and Save it as we are not Creating any other user we are using the Default Admin User.
+
+
 
 
 
