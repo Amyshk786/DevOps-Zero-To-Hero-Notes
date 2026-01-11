@@ -26,15 +26,26 @@ Go To CLI and Type   aws configure  It will ask for Access Key & Secret Access K
 1) We Can Launch EC2 Instance using AWS Console
 
 
+
+
+
+
+
 2) There is a AWS Documentation on How to Create EC2 Instance using AWS CLI. [AWS CLI Documentation]
 
 
 --> AWS CLI Documentation Link - https://docs.aws.amazon.com/cli/
 
 
+
 --> Template For Creating a EC2 Instance - [Check the AZ before Creating Instance]
 
 [aws ec2 run-instances --image-id ami-0a0e5d9c7acc336f1 --count 1 --instance-type t2.micro --key-name nv --security-group-ids sg-0196f2491ad37694b --subnet-id subnet-0403630b1be87c2c7]
+
+
+# Use the Below Command For Deleting/Terminating the EC2 Instance which we have Created
+
+[aws ec2 terminate-instances --instance-ids "INSTANCE_ID"]
 
 
 
