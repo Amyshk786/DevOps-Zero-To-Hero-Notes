@@ -1,0 +1,101 @@
+
+
+Day-08 - Shell Scripting Project Used In Real Time | GitHub API Integration 
+================================================================================
+
+
+
+As a DevOps Engineer we Maintain Multiple GitHub Repositories and this is one of the repository that you are maintaining that means you are creating users right and you are monitoring this GitHub repository monitoring in the sense if there is some vulnerabilities on the repo or you know you are creating cicd pipelines on this repo so basically you own this repository and now someone asks you that  I don't have access to the settings tab and I just want to see who are the list of people who have access to this particular repository you know  what you would do you would click simply click on the settings tab and you would go to the collaborators and you will find who are the list of people and you will probably send them a screenshot,  But as a devops engineer you want to understand this on a daily basis or you know let's say someone is resigning your organization and you want to see if this person has access to this repo if that person has access to the repo you have to revoke the access so on a day-to-day basis you might want to go to the GitHub repository and see who has access to the repository someone wants to have the read access someone wants to have the right access so you will just go to the repository see if that person already has read access so you can promote them to write access so to do all of these things every time instead of logging to the repository right instead of every time logging to the GitHub repository what you can do is you Can Write a Shell Script and What this Shell Script requires This Shell Script Require GitHub Integration.
+
+
+
+GitHub Repository Link For this Lecture - https://github.com/iam-veeramalla/shell-scripting-projects/blob/main/github-api/list-users.sh
+
+
+
+
+There are 2 Ways to Talk to An Application 
+
+1) API
+
+
+2) CLI
+
+
+
+
+
+As a devops engineer you maintain a lot of GitHub repositories so again it can be GitHub Bit, GitLab, As a devops engineer you support multiple teams you support multiple teams and each team Each team works on a micros service for each team you will create a GitHub repo and you will not just create the GitHub repo for them but what you will also do is for each repository you will make sure proper Access is Granted. That means Only People who Require Access to the Repo are Granted with the Access and Then we will Write the CI/CD Pipelines and Whatever is Required.
+
+
+
+
+Today we will See how to List People who have Access to the Repo, This is required for eg if someone is resigning from the organization  And we need to check if that person has Access to the Repo,  If he has the Access we will Revoke the Access.
+
+
+
+Everytime we will not go to the GitHub UI Search for the Repo,  Search for the Settings Page,  Go to the Collabaraters and if the Person has the Access we have to Revoke the Access. 
+
+
+
+Instead of Doing this What we can do  First we can List Group of People who have Access to the Repository and if the Person is there  Then Either Through Shell Scripting or Manually we can Revoke the Access.   So we will Automate this Task Today as it is Day to Day Responsibility of a DevOps Engineer.
+
+
+
+
+
+#!/bin/bash
+
+# GitHub API URL
+API_URL="https://api.github.com"
+
+# GitHub username and personal access token
+USERNAME=$username
+TOKEN=$token
+
+# User and Repository information
+REPO_OWNER=$1
+REPO_NAME=$2
+
+# Function to make a GET request to the GitHub API
+function github_api_get {
+    local endpoint="$1"
+    local url="${API_URL}/${endpoint}"
+
+    # Send a GET request to the GitHub API with authentication
+    curl -s -u "${USERNAME}:${TOKEN}" "$url"
+}
+
+# Function to list users with read access to the repository
+function list_users_with_read_access {
+    local endpoint="repos/${REPO_OWNER}/${REPO_NAME}/collaborators"
+
+    # Fetch the list of collaborators on the repository
+    collaborators="$(github_api_get "$endpoint" | jq -r '.[] | select(.permissions.pull == true) | .login')"
+
+    # Display the list of collaborators with read access
+    if [[ -z "$collaborators" ]]; then
+        echo "No users with read access found for ${REPO_OWNER}/${REPO_NAME}."
+    else
+        echo "Users with read access to ${REPO_OWNER}/${REPO_NAME}:"
+        echo "$collaborators"
+    fi
+}
+
+# Main script
+
+echo "Listing users with read access to ${REPO_OWNER}/${REPO_NAME}..."
+list_users_with_read_access
+
+
+
+
+
+
+
+
+
+
+
+
+
