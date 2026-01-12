@@ -1,0 +1,140 @@
+
+
+
+Day-18 - | What is CICD ? | Introduction to CICD | How CICD works
+===================================================================
+
+
+
+Continuous Integration & Continuous Delivery - 
+===============================================
+
+
+1) Continuous Integration is a Process where you integrate A Set of Tools or Set of Processes that you follow before delivering your Application to your Customer.
+
+
+
+2) Continuous Delivery is a Process where you Deploy your Application or You Deliver your Application on a Specific Platform to your Customer.
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+You have developed your App on your Personal Laptop and your customer is in USA or Europe. So how your application is delivered from your personal laptop to your customer who is sitting in a Different part of the world. 
+
+
+First we need to Unit Test the Application,  Static Code Analysis,  Code Quality/ Vulnerability Testing,  Automation Testing (end-to-end testing of your app),  Reporting where we store all reports  and Finally Deploy Your Application.  
+
+
+
+
+- Unit Testing is Nothing But Testing Code for a Block or Specific Functionality.
+
+
+- Static Code Analysis is to verify format, all indentation is right, syntax is right, make sure you didn't declare any unnecessary variables.
+
+ 
+- Code Quality/ Vulnerability testing is done to check for vulnerability, that can be misused by hackers
+
+
+- Automation Testing/Functional Testing /End-To-End Testing, In this you verify your Application in end to end manner such that one functionality doesn't affect other functionality.
+
+
+- Reports - reports for how many units test passed , what is code quality etc.
+
+
+- Deployment Stage- Deploying your application on a platform so that your customer can access your application.
+
+
+
+
+SO CICD is the process where you Automate these things 
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Use Case 1 - 
+=============
+
+
+Developer has written V1 of an App and he is Confident that it will work. 
+
+
+He then Submit that Code to GitHub Repository & In GitHub All the Things which we have discussed [Unit Test the Application,  Static Code Analysis,  Code Quality/ Vulnerability Testing,  Automation Testing (end-to-end testing of your app),  Reporting where we store all reports  and Finally Deploy Your Application]
+
+
+We will now Deploy A CICD Tool Jenkins & We will Tell Jenkins Always watch this GitHub Repo and Whenever there is a Pull Request or Whenever there is a New Commit That is Made Onto this GitHub Repository On A Specific Branch or On A Specific Repository, Just Tell me that there is a Change in This Branch and In This Repo.
+
+
+Once I get Notified by Jenkins I will Run A Set of Actions [Jenkins will tell us Whenever the Developer will make any changes to Any Branch or Repo] & As Part of Automation Jenkins Will Run All the Steps which we have told to Jenkins.
+
+
+
+Jenkins Will Act as a Orchestrator Or It will Act as a Pipe,  And Jenkins Will Automate A Lot of Tools in it or Orchestrate a Lot of Tools in it 
+
+-> For Unit Testing and Building the Application If it is a Java Application  Jenkins will Integrate the Building of Application in Maven.
+
+-> For Unit Testing Jenkins will use JUnit or JaCoCo
+
+-> Jenkins Will Use Integrate Sonarqube For Code Quality and Code Testing
+
+-> Jenkins Can Integrate ALM or Any Other Reporting Tool for Reporting
+
+-> For Deployment We can Use K8s or Docker Platform or You can Also Integrate EC2 Instance or Cloud Based VMs
+
+
+
+All of these Things Can be Automated Within Your Jenkins Pipeline, So that's why Jenkins is Called as a Orchestrator  Which will Facilitate All of These Tools or It will Integrate All of these Tools Within It By Using Jenkins Pipeline
+
+
+
+Note - DevOps Engineer Will Install or Configure All of these Tools Within Jenkins, So that they Get Run when Code is Commited in the GitHub Repository.
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Use Case 2 - 
+==============
+
+
+
+Developer has written V1 of an App and he is Confident that it will work. 
+
+
+He then Submit that Code to GitHub Repository 
+
+
+Jenkins Pipeline Here Can Also Promote Your Application to Different Stages Like 
+
+Dev Environment
+
+Staging Environment
+
+Production Environment
+
