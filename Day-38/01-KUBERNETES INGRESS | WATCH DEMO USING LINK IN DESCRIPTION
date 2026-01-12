@@ -1,0 +1,42 @@
+
+
+
+DAY-38 | KUBERNETES INGRESS | WATCH DEMO USING LINK IN DESCRIPTION
+====================================================================
+
+
+
+# Before Using K8s All the Organization's were using Nginx OR F5 Load Balancer and these are Enterprise Load Balancers they offer very good load balancing capabilities like for example you can do "Ratio based load balancing", "sticky sessions", "Path-Based Load Balancing", "Domain OR Host-Based Load Balancing", "Whitelisting & Blacklisting of IPs". These are the capabilities that Enterprise Load Balancers support.
+
+- Ratio-Based Load Balancing ->  Like send 3 Request to Pod-1 and 7 Request to Pod-2
+
+
+- Sticky Sessions ->  If One Request has gone to Pod-1 then all the requests of that specific user have to go to Pod-1 only
+
+
+- Path -
+
+
+- Domain OR Host Based -
+
+
+- White Listing of IPs - Only Allow Specific Customers to Access the Application & Block Specific Users that is called Black Listing
+
+
+
+
+
+
+# When these Organization's migrated from Virtual Machines to Kubernetes Initially they were very happy that Kubernetes was offering you Auto Healing Auto Scaling Automatic Service Discovery Exposing the Application to External  World. So they were Creating a "Deployment" and after that they were creating "Service" and they were getting all the Features which Deployment and Service provides. 
+
+
+Problem No.1 - Service was Not Providing Enterprise Grade Load Balancing, Service was Providing the Load Balancing in a simple Mechanism which is "Round Robbin" Load Balancing. If there are 2 Pods it will send 5 Request to Pod-1 and 5 Request to Pod-2.
+
+
+
+Problem No.2 - Cloud Providers were Charging for the Static Public IP Address For Each Service and if the Organization has 1000 Micro-services then the charges will Increase.
+
+
+
+
+# Concept of Ingress - Users have to Create Ingress Resource on their Kubernetes Cluster and the Enterprise Load Balancer will have to create a Ingress Controller. 
