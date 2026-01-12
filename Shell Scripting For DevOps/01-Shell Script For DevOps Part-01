@@ -1,0 +1,137 @@
+
+
+
+Note - This Notes are From Shell Scripting Series as these Videos were Added in the Series and it is Part of the Series
+
+
+
+Lecture 1 Shell Scripting For Devops -
+======================================== 
+
+
+
+
+What is Automation -  Automation is a Process where you will try to Reduce your Manual Activity. Let's say you are given a Manual Activity so Now to Reduce this Manual Activity you choose to Automate this one  this is Common in Any field. So Similary if you are doing any such thing on your Linux Hosted machine or on your Linux Computer. 
+
+
+- Shell Scripting in Linux is a process of Automating your Day to day activities or Regular Activities on your Linux Compute.
+
+
+- touch Command is used in Automation
+
+
+#!/bin/bash - This is Called Shebang 
+
+
+--> bash, dash, ksh, sh are the types of shells that are used to interact with the Unix operating system. They are all command-line interpreters that allow users to run programs and scripts. 
+
+
+
+
+
+
+
+
+Interview Questions - 
+
+1) Difference between #!/bin/bash & #!/bin/sh - Previously both of them were same Because /bin/sh was Redirecting using the Linking Concept to /bin/bash but now it is Not the same Because some of the Operating System have decided to use /bin/dash as Default so your script might not Execute if you are using Bash Scripting on a Machine where Dash is Default.
+
+
+2) What will be the Output for date | echo "today is" ? - As Date is a Default CMD or Default Shell CMD and it sends the output to "stdin" channel to the Input One, Pipe CMD only receives the Information from the output that is typed from this CMD But if this CMD is sending the information to "stdin" this CMD will not work or The Pipe does not redirect the Output from the 1st CMD to 2nd CMD.  It will only print "today is" as Date is a System Default CMD and this CMD sends the output to "stdin",  But Pipe will not be able to Receive the Information from "stdin" As Pipe can Only Receive the Information if the CMD is not sending the Information to "stdin" and If the CMD is Ready to Pass the information to the Next Command. 
+[Like ps -ef | grep "amazon"]  
+ 
+These are the Channels which a Virtual Machine Has - "stdin", "stdout", "stderr"
+
+
+
+3) Difference Between WGET & CURL Command ? - "curl" Command will give us the output using the grep CMD, But If we Use "wget" Cmd it will first download the file and after that we have to do cat and grep 
+
+
+Note - "curl" Command Retrives the Information from the Internet.
+
+
+
+
+As a Dev/Ops Engineer we will be Responsible for - 
+======================================================
+
+1) Infrastructure Maintainence of the Organisation 
+
+2) Managing All the Code of the Organisation by Using Git
+
+3) Configuration Management
+
+So for All the above mentioned Responsibilities we Use Shell Scripting to Automate our Day to Day Activities
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Go to AWS Console and Launch a EC2 Instance t2.mirco will work
+
+Create a Empty file   [touch first-shell-script.sh]
+
+List the file [ls]
+
+If we Want to check which file was created first or files with timestamp  [ls -ltr]
+
+
+vim first-shell-script.sh
+
+#!/bin/bash
+
+echo "My name is Amir"  --> Save the File by Pressing Esc :wq!
+
+Use this Cmd to Make the File Executeable   [chmod u+x first-shell-script.sh]
+
+
+Use this Cmd to Execute the File   [sh first-shell-script.sh  OR  ./first-shell-script.sh]
+
+
+
+--> For Checking the Node Health OR Node Status I use "top" Command	
+
+--> Printing our Disk Space I use "df" Command
+
+--> To get the No. of CPU I use "nproc" Command
+
+--> To get Free Memory on the Disk I use "free" Command
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+We are Creating a Folder named as myfirstfolder by using CMD  [mkdir myfirstfolder]
+
+cd myfirstfolder   By going in this folder we will write a Shell Script
+
+
+vim sample-shell-script.sh
+
+#!/bin/bash
+
+# create a folder 
+mkdir amir
+
+
+# create two files
+cd amir
+touch firstfile secondfile
+
+
+
+
+
+
+
+
+
+
+
+
+
