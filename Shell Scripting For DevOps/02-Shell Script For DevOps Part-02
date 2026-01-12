@@ -1,0 +1,507 @@
+
+
+
+Shell Script for Devops Lecture-02 
+======================================
+
+ 
+
+
+1) We are creating a Bash Script using the vim editor
+
+Note - [echo will give a title above the info so it will be easy to understand if the Shell script is Small] 
+
+vim nodeHealth.sh
+
+#!/bin/bash
+
+
+
+####################################################
+# Author: Amir
+# Date: 11/02/2024
+#
+# This Script outputs the node health of the Cluster
+#
+# Version: V1
+####################################################
+
+
+echo "Print the disk space"
+df -h
+
+
+echo "Print the Memory"
+free -g
+
+
+echo "Print the CPU"
+nproc
+
+
+
+
+
+
+2) We will have to make the File Executeable 
+chmod u+x nodeHealh.sh
+
+
+
+
+3) We are Executing the File - 
+
+./nodeHealth.sh
+
+Print the Disk Space
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       7.6G  1.8G  5.8G  24% /
+devtmpfs        470M     0  470M   0% /dev
+tmpfs           478M     0  478M   0% /dev/shm
+tmpfs            96M  888K   95M   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           478M     0  478M   0% /sys/fs/cgroup
+/dev/loop0       25M   25M     0 100% /snap/amazon-ssm-agent/7628
+/dev/loop1       56M   56M     0 100% /snap/core18/2790
+/dev/loop3       92M   92M     0 100% /snap/lxd/24061
+/dev/loop2       64M   64M     0 100% /snap/core20/2015
+/dev/loop4       41M   41M     0 100% /snap/snapd/20290
+/dev/xvda15     105M  6.1M   99M   6% /boot/efi
+tmpfs            96M     0   96M   0% /run/user/1000
+
+Print the Memory
+              total        used        free      shared  buff/cache   available
+Mem:              0           0           0           0           0           0
+Swap:             0           0           0
+
+Print the CPU
+1
+
+
+
+
+--> OR We can use set -x # debug mode which most of the Dev/Ops Engineer Use If we have very Big Shell Script
+
+1) vim nodeHealth.sh 
+
+#!/bin/bash
+
+
+
+####################################################
+# Author: Amir
+# Date: 11/02/2024
+#
+# This Script outputs the node health
+#
+# Version: V1
+###################################################
+
+
+set -x # debug mode
+
+df -h
+
+
+free -g
+
+
+nproc
+
+
+
+
+2) chmod u+x nodeHealh.sh
+
+
+
+
+
+3) ./nodeHealth.sh
+
++ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       7.6G  1.8G  5.8G  24% /
+devtmpfs        470M     0  470M   0% /dev
+tmpfs           478M     0  478M   0% /dev/shm
+tmpfs            96M  896K   95M   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           478M     0  478M   0% /sys/fs/cgroup
+/dev/loop0       25M   25M     0 100% /snap/amazon-ssm-agent/7628
+/dev/loop1       56M   56M     0 100% /snap/core18/2790
+/dev/loop3       92M   92M     0 100% /snap/lxd/24061
+/dev/loop2       64M   64M     0 100% /snap/core20/2015
+/dev/loop4       41M   41M     0 100% /snap/snapd/20290
+/dev/xvda15     105M  6.1M   99M   6% /boot/efi
+tmpfs            96M     0   96M   0% /run/user/1000
++ free -g
+              total        used        free      shared  buff/cache   available
+Mem:              0           0           0           0           0           0
+Swap:             0           0           0
++ nproc
+1
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+In our Org we have different processes and we have to find out the processes of "amazon"
+
+1) We will use the below CMD 
+
+ps -ef  [But this will show all the Processes}
+
+
+[-ef in the above Command stands for entire process or every/everyone process & f Stands for Full]
+
+
+
+2) To get Amazon specific Processes use below CMD 
+
+ps -ef | grep "amazon"   [Grep cmd fetches the Output which we requested]
+
+
+[ (Pipe) | Sends the Output of the First Command to the Second.]
+
+
+root        1110       1  0 09:43 ?        00:00:00 /snap/amazon-ssm-agent/7628/amazon-ssm-agent
+ubuntu      2275    2263  0 11:35 pts/4    00:00:00 grep --color=auto amazon
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Example of grep CMD 
+
+1) vim test.sh
+
+echo 1
+echo 11
+echo 12
+echo 55
+echo 99  --> save
+
+
+
+2)  chmod u+x test.sh
+
+
+
+3)  ./test.sh | grep 1  [grep has found out every number which has 1 in it]
+
+1
+11
+12
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+1) We will add the CMD ps -ef to the Shell Script
+
+#!/bin/bash
+
+
+
+####################################################
+# Author: Amir
+# Date: 11/02/2024
+#
+# This Script outputs the node health
+#
+# Version: V1
+###################################################
+
+
+set -x # debug mode
+
+df -h
+
+
+free -g
+
+
+nproc
+
+ps -ef
+
+
+
+
+2) Our Manager asked the Process ID of the Amazon Running processes so we will use the below CMD    ["awk" Command]
+
+"grep" CMD gives us the Entire Statements or the Entire Sentences  [print lines that match patterns]
+
+whereas the awk CMD 
+
+"awk" It can give you the specific columns from the Output  [pattern scanning and processing language]
+
+-F means "Field-Seprator"
+
+ps -ef | grep amazon | awk -F" " '{print $2}'
+
+1110
+2525
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+IMP Note - When we are Using "set -e" The Script will Exit the Shell Script when there is a Error, But if there is a Pipe "|" Used in the Command and I there is a Error then "set -e" will not work and the Script will Run. So we will have to use "set -o pipefail" Whenever we are Using "set -e"
+
+[set -x # debug mode]
+
+[set -e # exit the script when there is an error]
+
+[set -o pipefail]
+
+
+-> In the below Eg we have seen how AWK Command works 
+
+#!/bin/bash
+
+
+
+####################################################
+# Author: Amir
+# Date: 11/02/2024
+#
+# This Script outputs the node health
+#
+# Version: V1
+###################################################
+
+
+set -x # debug mode
+set -e # exit the script when there is an error
+set -o pipefail 
+
+
+df -h
+
+free -g
+
+nproc
+
+ps -ef | grep amazon | awk -F" " '{print $2}'
+
+
+
+
+
+-> Output of the Above Command - 
+
+./nodeHealth.sh
+
++ set -e
++ set -o pipefail
++ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       7.6G  1.8G  5.8G  24% /
+devtmpfs        470M     0  470M   0% /dev
+tmpfs           478M     0  478M   0% /dev/shm
+tmpfs            96M  888K   95M   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           478M     0  478M   0% /sys/fs/cgroup
+/dev/loop0       25M   25M     0 100% /snap/amazon-ssm-agent/7628
+/dev/loop1       56M   56M     0 100% /snap/core18/2790
+/dev/loop3       92M   92M     0 100% /snap/lxd/24061
+/dev/loop2       64M   64M     0 100% /snap/core20/2015
+/dev/loop4       41M   41M     0 100% /snap/snapd/20290
+/dev/xvda15     105M  6.1M   99M   6% /boot/efi
+tmpfs            96M     0   96M   0% /run/user/1000
++ free -g
+              total        used        free      shared  buff/cache   available
+Mem:              0           0           0           0           0           0
+Swap:             0           0           0
++ nproc
+1
++ awk '-F ' '{print $2}'
++ grep amazon
++ ps -ef
+1110
+2793 
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+What is CURL - Curl command is Used to Retrive the Data From Internet,  Curl  is  a  tool  for  transferring data from or to a server. The command is designed to work without user interaction.
+
+
+How to Check Error in the Logfile Using "curl"
+
+[We can use "wget"as well but "wget" will download the Log File]
+
+
+1) curl https://raw.githubusercontent.com/iam-veeramalla/sandbox/main/log/dummylog01122022.log | grep ERROR
+
+
+Below are the Error in the Log File
+
+ % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     003/22 08:53:38 ERROR  :......router_forward_getOI:         route handle:   7f5251c8
+03/22 08:53:38 ERROR  :.......mailslot_send: sending to (9.67.116.99:0)
+03/22 08:54:24 ERROR  :......router_forward_getOI:         out inf:   9.67.116.98
+100 22987  100 22987    0     0   295k      0 --:--:-- --:--:-- --:--:--  295k
+03/22 08:54:53 ERROR  :..mailslot_sitter: process received signal SIGTERM
+
+
+
+
+
+
+
+IMP NOTE - Difference Between WGET & CURL Command ? - "curl" Command will give us the output using the grep CMD, But If we Use "wget" Cmd it will first download the file and after that we have to do cat "file_name" and grep ERROR.
+
+
+Note - "curl" Command Retrives the Information from the Internet.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+Find Command - 
+
+1) If we want to find the file or folder "pam.d"  [we will use the below cmd]
+
+sudo find / -name pam.d
+
+
+Output = sudo find / -name pam.d
+
+/etc/pam.d
+/snap/core20/2379/etc/pam.d
+/snap/core20/2318/etc/pam.d
+/snap/core18/2829/etc/pam.d
+/usr/lib/pam.d
+
+
+[This will show all the pam.d files and its Location]
+
+
+
+
+------------------------------------------------------------------------------------------------------
+
+
+
+
+
+IF Loop
+
+#!/bin/bash
+
+a=4
+b=10
+
+if [ $a -gt $b ]
+then
+        echo "a is greater than b"
+else
+        echo "b is greater than a"
+fi
+
+
+
+
+Output = ./ifelse.sh
+b is greater than a
+
+
+
+
+--> "trap" Command is Used for Trapping the Signals in Linux
+
+
+# What is Trap in Linux -  Trap is basically used for trapping signals. So whatever action that you are performing you are performing using your keyboard or you're performing using some commands Okay let's say you're using a kill command kill command is basically used to kill a process okay so if a Java process is running and you want to kill it so what you will say kill -9 Java. When you are executing this command there is a signal that is passed to the Linux saying that okay so this person is asking you to kill a specific process so this is a signal and another thing is let's say asking you to kill a specific file so this is a signal and another thing is let's say there is a script that is getting executed what we usually do is to terminate the script we use Ctrl C.
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+History 
+    1  sudo apt update
+    2  touch first-shell-script.sh
+    3  ls
+    4  vim first-shell-script.sh
+    5  chmod u+x first-shell-script.sh
+    6  ./first-shell-script.sh
+    7  sh first-shell-script.sh
+    8  PWD
+    9  pqd
+   10  pwd
+   11  mkdir myfirstfolder
+   12  ls
+   13  ls -ltr
+   14  cd myfirstfolder/
+   15  cd
+   16  pwd
+   17  cd myfirstfolder/
+   18  ls
+   19  vim sample-shell-script.sh
+   20  chmod u+x sample-shell-script.sh
+   21  ./sample-shell-script.sh
+   22  ls
+   23  cd amir
+   24  ls
+   25  cd .
+   26  cd ..
+   27  ls
+   28  cat sample-shell-script.sh
+   29  top
+   30  nproc
+   31  free
+   32  top
+   33  vim nodeHealth.sh
+   34  chmod u+x nodeHealth.sh
+   35  ./nodeHealth.sh
+   36  vim nodeHealth.sh
+   37  ./nodeHealth.sh
+   38  vim nodeHealth.sh
+   39  ./nodeHealth.sh
+   40  ps
+   41  ps -ef
+   42  ps -ef | grep "amazon"
+   43  ps -ef | grep "pid"
+   44  vim test.sh
+   45  chmod u+x test.sh
+   46  ./test.sh | grep 1
+   47  cat test.sh
+   48  vim test.sh
+   49  vim nodeHealth.sh
+   50  cat nodeHealth.sh
+   51  awk
+   52  vim ifelse.sh
+   53  u+x ifelse.sh
+   54  chmod u+x ifelse.sh
+   55  ./ifelse.sh
+   56  history
