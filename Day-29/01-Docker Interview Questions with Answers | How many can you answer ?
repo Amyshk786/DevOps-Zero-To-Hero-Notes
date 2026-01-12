@@ -1,0 +1,44 @@
+
+
+
+Day-29 | Docker Interview Questions with Answers | How many can you answer ?
+==============================================================================
+
+
+1) What is Docker?
+
+
+2) How Containers are Different From Virtual Machines?
+
+
+3) What is Docker Life-Cycle?
+
+
+4) What are the Different Docker Components?
+
+
+5) What is the Difference Between Docker COPY and Docker ADD?
+
+
+6) What is the Difference Between CMD and ENTRYPOINT?
+
+
+7) What are the Networking Types in Docker and what is the Default?
+
+
+8) Can you Explain How to Isolate Networking Between the Containers?
+
+
+9) What is a Multi-Stage Build in Docker?
+
+
+10) What are Distro-Less Images in Docker?
+
+
+11) Real-Time Challenges with Docker 
+
+
+12) What Steps Would you take to Secure Containers?
+
+
+
