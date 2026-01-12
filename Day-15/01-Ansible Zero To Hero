@@ -1,0 +1,351 @@
+
+
+
+Day-15 - Ansible Zero To Hero
+==================================
+
+
+
+# We Can Refer the Ansible Documentation Using the Below Link For Reference
+
+Ansible Documentation - https://docs.ansible.com/ansible/2.9/modules/list_of_all_modules.html
+
+
+
+# Interview Questions k liye ye video refer krne ka h https://www.youtube.com/watch?v=j5PgN0J3d7M&t=4s
+
+
+
+# Password Less Authentication	
+
+Login to 1st Instance  [Source]
+
+ssh-keygen -> Copy the rsa.pub file
+
+
+
+
+Login to the 2nd Instance  [Target]
+ssh-keygen -> paste the rsa.pub of 1st Instance in "authorized keys"
+
+
+Now we can ssh (pvt_ip of 2nd Instance)from 1st Machine & The Password Less Authentication is Done
+
+
+
+-----------------------------------------------------------------
+
+
+# Ansible Adhoc Command
+
+ansible -I inventory all -m "shell" -a "touch devopsclass"
+
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+Create 2 EC2 Instances  [Source & Destination]
+
+
+# Source Machine
+================== 
+
+
+# sudo apt-add-repository ppa:ansible/ansible
+
+sudo apt update
+
+
+sudo apt install ansible 
+
+
+ansible --version
+
+
+touch inventory   [Add the Private IP of the Target Machine]
+
+
+ssh-keygen
+
+
+cd ~/.ssh/   -> ls
+
+
+cat id_rsa.pub              [Copy the id_rsa_pubkey]
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+# Target Machine
+==================
+
+
+sudo apt update
+
+
+sudo apt install ansible
+
+
+ansible --version
+
+
+ssh-keygen
+
+
+cd ~/.ssh/    -> ls    ->   vim authorized_keys 
+
+
+
+Paste the id_rsa_pubkey
+
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+Ansible Adhoc Commands [  "-m"  Stand for Modules  &&   "-a"  	Stands for Arguments]
+
+
+ansible -i inventory 172.31.93.249 -m "shell" -a "touch devopsclass"
+
+OR
+
+
+ansible -i inventory all -m "shell" -a "touch devopsclass"
+
+
+
+
+-----------------------------------------------------------------
+
+We can Get the Disk File System Info Using the Ansible Adhoc Command
+
+
+ubuntu@ip-172-31-91-91:~$ ansible -i inventory all -m "shell" -a "df -h"
+
+Output = 
+
+172.31.87.47 | CHANGED | rc=0 >>
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/root       7.6G  4.3G  3.3G  57% /
+tmpfs           479M     0  479M   0% /dev/shm
+tmpfs           192M  888K  191M   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+/dev/xvda15     105M  6.1M   99M   6% /boot/efi
+tmpfs            96M  4.0K   96M   1% /run/user/1000
+
+
+
+-----------------------------------------------------------------
+
+
+We can Get the Memory Info Using the Ansible Adhoc Command
+
+
+
+ubuntu@ip-172-31-91-91:~$ ansible -i inventory all -m "shell" -a "free -h"
+
+Output = 
+
+172.31.87.47 | CHANGED | rc=0 >>
+               total        used        free      shared  buff/cache   available
+Mem:               0           0           0           0           0           0
+Swap:              0           0           0
+
+
+
+
+-----------------------------------------------------------------
+
+
+We can Get the CPU Info Using the Ansible Adhoc Command
+
+
+
+ubuntu@ip-172-31-91-91:~$ ansible -i inventory all -m "shell" -a "nproc"
+
+Output =
+
+172.31.87.47 | CHANGED | rc=0 >>
+1
+
+
+
+
+-----------------------------------------------------------------
+
+
+
+
+If we have a Task where we have to Run Certain number of Play-Books on DBservers and Run Certain number of Play-Books on Webservers.
+
+
+So in this case we will Do Grouping In the Inventory File 
+
+
+# Example of Grouping 
+
+vim inventory
+
+
+[DB-Servers]
+192.168.10.12
+192.168.10.13
+192.168.10.14
+192.168.10.15
+192.168.10.16
+
+
+
+[Web-Servers]
+172.31.93.245
+172.31.93.246
+172.31.93.247
+172.31.93.248
+172.31.93.249
+
+
+Note - Now we will have to Just Mention which Play-Books we have to run on Which Servers.
+
+
+Demo Command -  ansible -i inventory dbserver -m "shell" -a "nproc"
+
+
+
+
+-----------------------------------------------------------------
+
+
+Writing First Play-Book
+
+vim ansible-playbook.yml
+
+---
+- name: Install Nginx
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: present
+    - name: Start Nginx
+      service:
+          name: nginx
+          state: started
+
+
+
+
+
+Output = ansible-playbook -i inventory ansible-playbook.yml   [We can also use -v for Verbose before "-i"]
+
+PLAY [Install Nginx] **********************************************************************************************************************************
+
+TASK [Gathering Facts] ********************************************************************************************************************************
+ok: [172.31.93.249]
+
+TASK [Install nginx] **********************************************************************************************************************************
+ok: [172.31.93.249]
+
+TASK [Start Nginx] ************************************************************************************************************************************
+ok: [172.31.93.249]
+
+PLAY RECAP ********************************************************************************************************************************************
+172.31.93.249              : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------
+
+
+If we Want to Create 3 EC2 Instances [We can do this By Using Terraform as It is Best In IaC]
+
+
+Configure 1 of them as Master
+
+Configure 2 of them as Worker 
+
+[We can do this By Using Ansible as It is Best In Configuration Management]
+
+
+
+
+But When we Use these Files in Kubernetes It will be Very Hard to Read the Files so In this Case we Have "Roles" In Ansible
+
+
+
+# Roles - Ansible Roles is efficient way of writing ansible playbooks that will only improve your efficiency to write complex playbooks.
+
+
+
+Example - Let's say I want to configure a kubernetes using ansible so it will have close to some 50 to 60 tasks and you have a lot of variables, a lot of parameters like you have certificates,  secrets that you have to configure while creating this Kubernetes Cluster. So for that very own reason if you try to do it with Roles you can segregate each and everything and you can properly structure your ansible playbooks so that's why the concept of roles is Introduced.
+
+
+
+To Start Playing with Roles we Can Use Ansible Galaxy 
+
+# ansible-galaxy role init kubernetes
+
+
+Output = - Role kubernetes was created successfully
+
+
+And Now If we do ls we will see there is a Folder called "kubernetes" below is the Example what are the Files Under kubernetes folder
+
+
+ubuntu@ip-172-31-87-47:~$ ls kubernetes/
+README.md  defaults  handlers  meta  tasks  tests  vars
+
+
+
+
+
+Ansible creates you bunch of files and folders and using these files and folders you can structure your ansible playbooks. so you have templates you have files you have readme where you can explain what this Playbook is and what are the Roles and Responsibilities of this Play-Book. TASKS, HANDLERS, TESTS, VARS, DEFAULTS, META.
+
+
+# META is Used to Write Metadata Information inside these Files and Licensing Information
+
+
+# DEFAULTS is Used to Store some Variables kind of things 
+
+
+# HANDLERS is Used to Handle Some Kind of Exceptions & To send Mail Notifications
+
+
+# README.md is Used to display Uses and what the Playbook will do
+
+
+
+
+
+
+
+Whenever you want to write some complicated playbooks okay what what you would do is you will start using the ansible Galaxy command to create roles and what happens if you create roles is you can write structured and efficient ansible playbooks.
+
+
+Refer the Below GitHub Repository for Ansible Examples
+
+Link - https://github.com/ansible/ansible-examples
