@@ -1,0 +1,131 @@
+
+
+
+Day-31 | KUBERNETES ARCHITECTURE USING EXAMPLES | Kubernetes is Easy
+========================================================================
+
+
+
+There is Virtual Machine and you have Installed Docker on top of it  and what you have done as a User is you have run a container using a basic command in Docker run. So you said Docker run and then you ran a container but what is happening under the hood so if you run a container nothing will happen right. Let's say you have installed a Java application and on the platform you don't have Java runtime will your Java application actually run NO it will not run similarly even when you are running a container you need to have something called as a "Container Runtime" So without container runtime your container will never run In Docker you have a container runtime component that is called as "Docker Shim" so this is something that is happening under the hood Docker.
+
+
+
+
+So now if we move to kubernetes so kubernetes also need to do some similar Behavior but because kubernetes is an advanced concept or because kubernetes provides you Enterprise support with Auto Healing, Auto Scaling and Cluster-Like Behavior what you basically do with kubernetes is you create a Master and you create a Worker so for a basic example I am just using One Master and One Node Component or Worker Component Architecture.  So that it will be very easy for you guys to understand but in general there will not be one worker there will be multiple workers in kubernetes it doesn't mean that you cannot create kubernetes with one single node you can also do it but in production always you have multiple Masters and Multiple Workers but for easy understanding let's say you have just one master and you have just One Worker so what happens is in kubernetes you will not directly send the request to worker but your request goes through Master so your request always goes through something called as a "Control Plane". 
+
+
+
+
+
+---------------------------------------------------
+
+# Worker Node Or Data Plane Components
+=========================================
+
+
+So when you Deploy your Pod in Kubernetes the Smallest Level of Deployment is POD whereas in Docker you deploy a container you can slightly understand both of them are more or less similar kind of things, A pod is just like a wrapper over your container which has some Advanced capabilities so when user tries to deploy a part similar to container or similar to Docker your pod gets deployed let's say your pod is getting deployed on this this specific worker node but you have a component in kubernetes that is called as "Kubelet" so what is this kubelet doing is basically this kubelet is Responsible for running your pod in Docker basically you have a Docker Engine and Basically you have Docker Shim in kubernetes you have something called as a Kubelet which is responsible for maintaining this kubernetes pod it always looks if the Pod is running or not if the Pod is not running because kubernetes has a feature called Auto Healing I have to inform kubernetes that the Pod is not running do something so that's why kubernetes has a component called kubelet but even if the Pod has to run like I explained you there need to be something called as a container runtime right inside a pod you will definitely have container so for this container to run even on kubernetes you need to have something called as a container runtime but the only difference is in kubernetes Docker is not mandatory in Docker like I told you there is something called as Docker Shim but in kubernetes you can either use "Docker Shim" you can either use "containerd" you can use "Crio" what are all these things these are all Competition to Docker Shim.  
+
+
+
+So Docker has only one support that is Docker Shim whereas kubernetes can support "containerd" kubernetes can support "Crio" kubernetes can support "Docker Shim" or any other container runtimes which implements kubernetes container interface.  Kubernetes has a standard called container interface if some container runtime it can be Crio it can be containerd it can be Docker shim if they can implement this container interface or it can implement the standard that kubernetes has said then kubernetes allows you to use that kubernetes container runtime or that specific container runtime so what are the two different components that we learned we have kubelet and kubernetes we have container runtime in kubernetes Kubelet is basically responsible for ensuring that their pod is always running if the Pod is not running then kubernetes will inform there is a component in kubernetes  I'll keep that component as suspense but kubelet will inform the specific component that something has gone with the Pod let us restart it or let us do something with it so that is the responsibility of kubelet. 
+
+
+
+In Docker there is something called as Docker 0 or you have a default networking in Docker that is called as a Bridge Networking so this networking is mandatory for running your pod even here in kubernetes you have something called as "Kube-Proxy" so this Kube-Proxy basically provides you Networking like every pod that you are creating every container that you are creating it has to be allocated with the IP address right and it has to be provided with a Load Balancing  Capabilities because I told you kubernetes has something called as Auto Scaling when you scale your pod instead of one replica if you have two replicas to your pod then there has to be a component which says. 
+
+
+
+Send 50 request here send fifty percent request here so that is taken care by Kube-Proxy so we talked about three components one is Kube-Proxy which provides Networking IP addresses and also the Default Load Balancing Capabilities in kubernetes then you have Kubelet which is actually responsible for running your application and if your application is not running or if your pod is not running then kubelet informs one of the components and control plane that something is going wrong and finally you have Container Runtime which actually runs your container so these are the three components that are available on the worker nodes. 
+
+
+
+So see you directly understood what are the different components that are available in worker node of kubernetes so you are already done with data plane of kubernetes or you are done with the worker component of kubernetes isn't it easy all of you understood the components that are in worker node tomorrow if somebody asks you in the interview what are the components that are present in the worker node of kubernetes you can directly tell them that in kubernetes worker node there are three components and those three components are nothing but Kube-Proxy you have Kubelet and you have something called as Container Runtime and you should be practically able to explain the purpose of each of them as well. 
+
+
+
+
+- Kubernetes Worker Node Or Data Plane Components Gist
+========================================================
+
+1) Kubelet - Kubelet is basically responsible for creation of the pods and it will basically ensure that the Pod is always in the running state if it is not then it takes the necessary action using the kubernetes Control Plane. 
+
+
+2) Kube-Proxy Then you have something called as kube-proxy kube-proxy is basically responsible for the Networking like Generating the IP addresses or Load Balancing basically it uses IP Tables on your Linux Machine.
+
+
+3) Container Runtime - And finally you have Container Runtime which is responsible for running your container. ["Docker Shim", "containerd", "crio"]
+
+
+
+
+
+
+
+
+---------------------------------------------------
+
+
+# Master Node Or Control Plane Components
+=========================================
+
+
+So worker component is done now let us move to Control Plane or the Master Component of it. So this Worker Node or the Data Plane is basically responsible for running your application so using this three components you have technically everything to run your application. So Kubelet is deploying,  Kube-Proxy is providing the networking,  Container Runtime is providing the execution environment for your container. Now why you need actually Control Plane itself so you should get this question the reason for that is for any Enterprise level tools or for any Enterprise level components like I told you there are some specific standards. Cluster is one specific standard like I told you kubernetes has cluster now who will decide that the Pod creation like user has created a pod now who will decide that should the Pod be created on node one should the Pod be created on node 2 or should the Pod be created on node 3. 
+
+
+
+So this is one specific instruction but there can be multiple instructions and there should be a heart or there should be a core component in your kubernetes that has to deal with such kind of instructions. When multiple users are basically trying to access your kubernetes cluster or when multiple people are trying to do some kind of hacking or some kind of things so there has to be a component in kubernetes which basically acts as a core component of your kubernetes and takes all the incoming requests whether you want to in you know in future you want to implement some identity provided related configuration SSO or you want to do some security related stuff so there has to be a core component which is basically doing everything in kubernetes and that core component is called as API Server and this component is present in your Master Component or you can also call it as a Control Plane of your kubernetes. 
+
+
+
+So what is the purpose of API server so the API server is a component that basically Exposes your kubernetes so this kubernetes has to be exposed to the external world all of these things are basically internal to your kubernetes the data plane all the worker nodes but the heart of the kubernetes is your kubernetes API server which basically takes all the requests from external world now  let's say the user is trying to create a pod he tries to access the API server and from the API server kubernetes API server decides that okay Node 1 is free but to schedule a component on Node 1 you have a component in kubernetes that is called as Scheduler. So what is the responsibility of scheduler so scheduler is basically responsible for scheduling your pods or scheduling your resources on kubernetes so who decides the information API server but who acts on the information that is the Kube-Scheduler.  So what are the two things that we have learned till now one is API server the second thing that we learned is Scheduler so scheduler is basically saying go and schedule this on Node 1 or node 2. 
+
+
+
+It is receiving this information from API server after this let's say that we are deploying your production level applications on this kubernetes cluster there has to be a component inside your kubernetes that basically acts as a Backup Service or you know that basically acts as a backing store of entire cluster information  even when we are talking about Jenkins I told you that backup is very essential in kubernetes there is a component that is called as etcd so etcd is basically a key value store and the entire kubernetes cluster information is stored as objects are key value pairs inside this etcd.  So the other component that we learned is etcd what happens without etcd you don't have the cluster related information tomorrow if you want to restore the cluster or you want to do any information etcd is basic component and finally you have two more components that are Controller Manager and you have Cloud Controller Manager.  Let's put this Cloud Controller Manager aside for a moment,  if you understand what is a controller manager so basically like I told you kubernetes supports Auto scaling so to support Auto scaling kubernetes has some components like you know kubernetes has to automatically detect disk and it has to do kind of things so for that kubernetes has basically some controllers.  For example Replica Set so replica set is basically is the one that is maintaining state of your kubernetes Pods. 
+
+
+
+So tomorrow let me say that one pod is not enough and I will schedule two pods I'll Auto scale one of my pod to two pods  so there has to be a component in kubernetes that ensures that the two components or two pods are actually running so that is taken care by replica set in kubernetes YAML file if you say I require two parts so a replica set controller basically ensures that the two pods are always running now there has to be a component in kubernetes which ensures such controllers are always running so that component is called as Controller Manager.
+
+
+
+
+You have One Component that is called as Cloud Controller Manager CCM many people get confused with this concept so that's why I thought I'll take this as a different concept and I'll explain you.  So you all know that kubernetes can be run on cloud platforms like EKS or you can also run it on AKS or you know GKE so what is happening is you are running your kubernetes on cloud platforms so basically This Cloud platforms let's say you are using Elastic Kubernetes Service so there is a user request or there is a request to create a Load Balancer or there is a request to create Storage.  So if you directly send this information to kubernetes so kubernetes has to understand the underlying cloud provider. If kubernetes has to create a load balancer on AWS or if kubernetes has to create a storage service on AKS or on Azure so kubernetes has to translate the request from the user on to the API request that your cloud provider understands.  So this mechanism has to be implemented on your Cloud Control Manager that means to say let's say tomorrow there is a new Cloud that is implemented called as Abhishek and you want to run kubernetes on this platform called as Abhishek. 
+
+
+
+So you want to run kubernetes on the platform called Abhishek now what kubernetes tells you is that okay I cannot write Logic for all of these different Cloud providers I will provide you a component called as Cloud Controller Manager so This Cloud controller manager is a open source utility okay so this code is available on GitHub tomorrow if Abhishek creates a new cloud provider what Abhishek can do is he can go to this open source GitHub repository and he can write the logic for his cloud provider inside this Cloud Controller Manager he can create a pull request to the cloud controller manager saying that so I have implemented a new cloud and I want I want to support kubernetes on my cloud provider so for that reason what Abhishek has to do is he has to write a bunch of logic and he has to submit to Cloud Controller Manager so if you are running kubernetes on on-premise this component is not at all required or this component does not have to be created at all on your kubernetes cluster. 
+
+
+
+So these are the various components of your kubernetes so if you have to sum up basically you have kubernetes divided into two parts one is your Control Plane and one is your Data Plane.  So if you have two worker nodes on your two worker nodes you will have kubernetes data plane components that are three components one is your Kubelet second is your Kube-Proxy third is your Container Runtime.  So every kubernetes worker node has these three components so in some cases you will not see container runtime in some documentations but end of the day container runtime is required.  So I consider it as also a component so this is worker node one but even on worker node 2 you will have these three components one two three every worker node will have these components 
+
+
+
+And then you have something called as kubernetes Master which has components like your API server which is Heart of your Kubernetes every request is received by this API server then you have your Scheduler which schedules the resources whether it has to go on worker Node 1 worker node 2 API server will take the decision and scheduler will schedule on that specific thing and then you have something called as etcd which is basically your data store or a key value store which stores all the information of your cluster and then you have Controller Manager which is manager for your kubernetes Inbuilt Controllers and finally you have something called as Cloud Controller Manager.
+ 
+
+
+
+
+
+
+- Kubernetes Master Node Or Control Plane Components Gist
+===========================================================
+
+
+1) API Server - API server which is heart of your kubernetes every request is received by this API server. 
+
+
+2) Scheduler - Scheduler which schedules the resources whether it has to go on worker Node 1 worker node 2 API server will take the decision and scheduler will schedule on that specific thing. 
+
+
+3) ETCD - Then you have something called as etcd which is basically your data store or a key value store which stores all the information of your cluster. 
+
+
+4) Controller Manager - Then you have Controller Manager which is manager for your kubernetes Inbuilt Controllers 
+
+
+5) CLoud Controller Manager - And finally you have something called as Cloud Controller Manager which we will Use if we are Using Any Public Cloud Providers Like AWS, AZURE, GCP, ORACLE, DIGITAL OCEAN  ETC....
+
+
