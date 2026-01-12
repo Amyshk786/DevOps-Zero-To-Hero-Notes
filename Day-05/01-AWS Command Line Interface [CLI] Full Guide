@@ -1,0 +1,79 @@
+
+
+
+Day-05 - AWS Command Line Interface [CLI] Full Guide 
+========================================================
+
+
+AWS CLI is a Command Line Interface Using AWS CLI what you can do is you can Directly Interact with your AWS API or to your AWS Account, And Create Any Resource on AWS, Today AWS Provides you 100 Of Services and All Of These 100 Services Can be Created Using an Automated Way Using AWS CLI. So to Achive that Firstly you need to Download the AWS CLI, AWS CLI is Just a Binary.
+
+
+1) For Checking if AWS CLI is Installed or Not Use This CMD   -> aws version
+
+
+2) For Authenticating Go to AWS Console  -> Click on Username on Top Right Corner  -> Click on Securty Credentials  -> Scroll Down You will Get an Option for Access Keys
+
+-> Click on Create Access Keys  -> You will get the Access Key & Secret Access Key Save that
+
+
+Go To CLI and Type   aws configure  It will ask for Access Key & Secret Access Key Region and Oth Info
+
+
+-> aws s3 ls  [It will list all the Buckets]
+
+
+-> aws s3 mb buck_name
+
+
+
+1) We Can Launch EC2 Instance using AWS Console
+
+
+
+
+
+
+
+2) There is a AWS Documentation on How to Create EC2 Instance using AWS CLI. [AWS CLI Documentation]
+
+
+--> AWS CLI Documentation Link - https://docs.aws.amazon.com/cli/
+
+
+
+--> Template For Creating a EC2 Instance - [Check the AZ before Creating Instance]
+
+[aws ec2 run-instances --image-id ami-0a0e5d9c7acc336f1 --count 1 --instance-type t2.micro --key-name nv --security-group-ids sg-0196f2491ad37694b --subnet-id subnet-0403630b1be87c2c7]
+
+
+# Use the Below Command For Deleting/Terminating the EC2 Instance which we have Created
+
+[aws ec2 terminate-instances --instance-ids "INSTANCE_ID"]
+
+
+
+
+
+
+3) AWS Cloud Formation Template is Another Way to Interact with AWS EC2 API. There is a GitHUb Cloud Formation Template Repo Go To AWS -> Services -> EC2 Service and Select the 1st Option. After Copying the Template Go to AWS -> Cloudformation -> Create Stack -> Select Template is Ready as we have Already Copied the Template from GitHub & By Using that we can Create EC2 Instances on AWS.
+
+
+
+--> Cloud Formation Template GitHub Link - https://github.com/aws-cloudformation/aws-cloudformation-templates
+
+
+
+
+
+
+
+4) Script Automation AWS API Itself If we Want to use this Option we need to Create a Shell Script, Python Boto 3 Or You can use Your Favourite Programming Language
+
+
+--> BOTO3 Link -  https://gist.github.com/mda590/679aba60ca03699d5b12a32314debdc0
+
+
+
+
+
+
