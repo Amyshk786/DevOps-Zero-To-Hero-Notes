@@ -1,0 +1,737 @@
+
+
+
+DAY-37 | KUBERNETES SERVICES DEEP DIVE| LIVE DEMO | LEARN TRAFFIC FLOW USING KUBESHARK
+=======================================================================================
+
+
+------------------------------------------------------------
+
+
+# vim multi-node-k8s-cluster.yaml
+
+
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+
+
+
+
+
+# Create cluster
+$ kind create cluster --name 3-node-cluster --config multi-node-k8s-cluster.yaml
+
+
+
+# Get clusters.
+
+$ kind get clusters
+3-node-cluster
+
+
+
+$ kubectl get nodes
+
+NAME                           STATUS   ROLES           AGE     VERSION
+3-node-cluster-control-plane   Ready    control-plane   2m11s   v1.33.1
+3-node-cluster-worker          Ready    <none>          116s    v1.33.1
+3-node-cluster-worker2         Ready    <none>          117s    v1.33.1
+
+
+
+
+# Get kubeconfig and use it to talk to the cluster.
+$ kind get kubeconfig --name test-cluster > ~/test-cluster-kubeconfig
+$ kubectl --kubeconfig  ~/test-cluster-kubeconfig ...
+$ k9s --kubeconfig  ~/test-cluster-kubeconfig
+
+
+
+$ kind export kubeconfig --name test-cluster
+Set kubectl context to "kind-test-cluster"
+# `current-context` of `~/.kube/config` is updated to `kind-test-cluster`
+
+
+
+# Export logs
+$ kind export logs --name test-cluster
+Exporting logs for cluster "test-cluster" to: /path/to/log
+
+
+
+# load images; calls `ctr images import` under the hood.
+$ kind load image-archive
+
+
+
+# Get IP address
+$ docker container inspect test-cluster-control-plane \
+ --format '{{ .NetworkSettings.Networks.kind.IPAddress }}'
+
+
+
+# Delete clusters.
+$ kind delete cluster --name test-cluster
+
+
+
+# Check kind version
+$ kind version
+
+
+
+------------------------------------------------------------
+
+
+
+
+git clone https://github.com/Amyshk786/Docker-Zero-to-Hero.git
+
+
+cd Docker-Zero-to-Hero/examples/python-web-app/
+
+
+
+$ ls
+Dockerfile  devops/  requirements.txt
+
+
+
+# vim multi-node-k8s-cluster.yaml
+
+
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+
+nodes:
+- role: control-plane
+- role: worker
+- role: worker
+
+
+
+
+
+# Create cluster
+$ kind create cluster --name 3-node-cluster --config multi-node-k8s-cluster.yaml
+
+
+
+# Get clusters.
+
+$ kind get clusters
+3-node-cluster
+
+
+
+
+
+$ kubectl get nodes
+
+NAME                           STATUS   ROLES           AGE     VERSION
+3-node-cluster-control-plane   Ready    control-plane   2m11s   v1.33.1
+3-node-cluster-worker          Ready    <none>          116s    v1.33.1
+3-node-cluster-worker2         Ready    <none>          117s    v1.33.1
+
+
+
+
+
+
+# vim Dockerfile
+
+FROM ubuntu
+
+WORKDIR /app
+
+COPY requirements.txt /app/
+COPY devops/ /app/
+
+RUN apt-get update && apt-get install -y python3 python3-pip python3-venv
+
+SHELL ["/bin/bash", "-c"]
+
+RUN python3 -m venv venv1 && \
+source venv1/bin/activate && \
+pip install --no-cache-dir -r requirements.txt
+
+EXPOSE 8000
+
+CMD source venv1/bin/activate && python3 manage.py runserver 0.0.0.0:8000
+
+
+
+
+
+
+
+$ docker build -t amyshaikh623/python-sample-app-demo:v1 .  [We hv to run this cmd frm where we hv dockerfile]
+
+
+docker login 
+
+
+docker push amyshaikh623/python-sample-app-demo:v1
+
+
+
+# Load Docker Image in KIND Cluster 
+kind load docker-image amyshaikh623/python-sample-app-demo:v1 --name 3-node-cluster
+
+
+
+# vim deployment.yml 
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sample-python-app
+  labels:
+    app: sample-python-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sample-python-app
+  template:
+    metadata:
+      labels:
+        app: sample-python-app
+    spec:
+      containers:
+      - name: python-app
+        image: amyshaikh623/python-simple-app-demo:v1
+        ports:
+        - containerPort: 8000
+
+
+
+
+
+$ kubectl apply -f deployment.yml
+deployment.apps/sample-python-app created
+
+
+# Now we will Start the Deployment of this Python Sample App on K8s Cluster
+
+
+
+# Inspect and verify
+kubectl get pods
+
+
+
+
+$ kubectl get pod -o wide
+NAME                                 READY   STATUS    RESTARTS   AGE     IP            NODE                        NOMINATED NODE   READINESS GATES
+sample-python-app-6878bcfcb8-7s7bk   1/1     Running   0          7m15s   10.244.0.10   dev-cluster-control-plane   <none>           <none>
+sample-python-app-6878bcfcb8-hp7kg   1/1     Running   0          7m15s   10.244.0.9    dev-cluster-control-plane   <none>           <none>
+
+
+
+
+
+
+# To Get a Verbose of how kubectl is Communicating with API Server
+
+$ kubectl get pod -o wide -v=7
+
+
+I0806 17:05:07.617413    5840 loader.go:402] Config loaded from file:  C:\Users\Amir Shaikh\.kube\config
+I0806 17:05:07.627776    5840 envvar.go:172] "Feature gate default state" feature="WatchListClient" enabled=false
+I0806 17:05:07.627776    5840 envvar.go:172] "Feature gate default state" feature="ClientsAllowCBOR" enabled=false
+I0806 17:05:07.627776    5840 envvar.go:172] "Feature gate default state" feature="ClientsPreferCBOR" enabled=false
+I0806 17:05:07.627776    5840 envvar.go:172] "Feature gate default state" feature="InformerResourceVersion" enabled=false
+I0806 17:05:07.627776    5840 envvar.go:172] "Feature gate default state" feature="InOrderInformers" enabled=true
+I0806 17:05:07.656663    5840 round_trippers.go:527] "Request" verb="GET" url="https://127.0.0.1:52987/api/v1/namespaces/default/pods?limit=500" headers=<
+        Accept: application/json;as=Table;v=v1;g=meta.k8s.io,application/json;as=Table;v=v1beta1;g=meta.k8s.io,application/json
+        User-Agent: kubectl.exe/v1.33.3 (windows/amd64) kubernetes/80779bd
+ >
+I0806 17:05:07.684002    5840 round_trippers.go:632] "Response" status="200 OK" milliseconds=27
+NAME                                 READY   STATUS    RESTARTS   AGE   IP            NODE                        NOMINATED NODE   READINESS GATES
+sample-python-app-6878bcfcb8-7s7bk   1/1     Running   0          18m   10.244.0.10   dev-cluster-control-plane   <none>           <none>
+sample-python-app-6878bcfcb8-hp7kg   1/1     Running   0          18m   10.244.0.9    dev-cluster-control-plane   <none>           <none>
+
+
+
+
+
+
+------------------------------------------------------------
+
+
+# If we Delete a Pod a New Pod will Come Up with a New IP Add 
+
+
+[In the Below Eg the Pods has IP "10.244.0.9" & "10.244.0.10"]
+
+
+$ kubectl get pods -o wide
+NAME                                 READY   STATUS    RESTARTS   AGE   IP            NODE                        NOMINATED NODE   READINESS GATES
+sample-python-app-6878bcfcb8-7s7bk   1/1     Running   0          23m   10.244.0.10   dev-cluster-control-plane   <none>           <none>
+sample-python-app-6878bcfcb8-hp7kg   1/1     Running   0          23m   10.244.0.9    dev-cluster-control-plane   <none>           <none>
+
+
+
+
+
+
+# [If I Delete the Pod with IP "10.244.0.9"]
+
+
+$ kubectl delete pod sample-python-app-6878bcfcb8-hp7kg
+pod "sample-python-app-6878bcfcb8-hp7kg" deleted
+
+
+
+
+
+# [A New Pod will Roll Out with a Different IP Add "10.244.0.11"]
+
+$ kubectl get pods -o wide
+
+NAME                                 READY   STATUS    RESTARTS   AGE   IP            NODE                        NOMINATED NODE   READINESS GATES
+sample-python-app-6878bcfcb8-7s7bk   1/1     Running   0          23m   10.244.0.10   dev-cluster-control-plane   <none>           <none>
+sample-python-app-6878bcfcb8-8k6dc   1/1     Running   0          5s    10.244.0.11   dev-cluster-control-plane   <none>           <none>
+
+
+
+
+
+
+
+
+------------------------------------------------------------
+
+
+# Here we Can see the Labels which we have given in the "deployment.yml" file is "sample-python-app" & The Replica-Set is Rolling Out a New Container with the same Label.
+
+
+$ kubectl describe pod sample-python-app-6878bcfcb8-8k6dc
+
+Name:             sample-python-app-6878bcfcb8-8k6dc
+Namespace:        default
+Priority:         0
+Service Account:  default
+Node:             dev-cluster-control-plane/172.18.0.2
+Start Time:       Wed, 06 Aug 2025 17:10:07 +0530
+Labels:           app=sample-python-app
+                  pod-template-hash=6878bcfcb8
+Annotations:      <none>
+Status:           Running
+IP:               10.244.0.11
+IPs:
+  IP:           10.244.0.11
+Controlled By:  ReplicaSet/sample-python-app-6878bcfcb8
+Containers:
+  python-app:
+    Container ID:   containerd://50ed107a343e68512ab2c76198def6a04a04b538501cd9fe7cd6f7a823ceb3a8
+    Image:          amyshaikh623/python-simple-app-demo:v1
+    Image ID:       sha256:25533e1c5d0eb118ffdd6fa8f89cfa45504a94e56004dd344167635726cddec5
+    Port:           8000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Wed, 06 Aug 2025 17:10:08 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-cqhvh (ro)
+Conditions:
+  Type                        Status
+  PodReadyToStartContainers   True
+  Initialized                 True
+  Ready                       True
+  ContainersReady             True
+  PodScheduled                True
+Volumes:
+  kube-api-access-cqhvh:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    Optional:                false
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age    From               Message
+  ----    ------     ----   ----               -------
+  Normal  Scheduled  4m30s  default-scheduler  Successfully assigned default/sample-python-app-6878bcfcb8-8k6dc to dev-cluster-control-plane
+  Normal  Pulled     4m30s  kubelet            Container image "amyshaikh623/python-simple-app-demo:v1" already present on machine
+  Normal  Created    4m30s  kubelet            Created container: python-app
+  Normal  Started    4m29s  kubelet            Started container python-app
+
+
+
+
+
+
+
+
+------------------------------------------------------------
+
+
+
+# Delete a KIND Cluster 
+kind delete cluster --name <cluster-name>
+
+
+
+# You can check the currently active Kubernetes context using
+kubectl config get-contexts
+
+
+
+
+
+# How To Log-In Into the KIND Cluster
+======================================
+
+
+# List cluster nodes: 
+$ kubectl get nodes -o wide
+
+NAME                        STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION                     CONTAINER-RUNTIME
+dev-cluster-control-plane   Ready    control-plane   57m   v1.33.1   172.18.0.2    <none>        Debian GNU/Linux 12 (bookworm)   6.6.87.2-microsoft-standard-WSL2   containerd://2.1.1
+
+
+
+
+
+
+
+# Find the corresponding Docker container: [look for Container Name]
+
+$ docker ps
+
+CONTAINER ID   IMAGE                  COMMAND                  CREATED          STATUS          PORTS                       NAMES
+06df7213271b   kindest/node:v1.33.1   "/usr/local/bin/entr…"   58 minutes ago   Up 58 minutes   127.0.0.1:52987->6443/tcp   dev-cluster-control-plane
+
+
+
+
+
+
+
+
+# Open a shell in the node container:
+
+$ docker exec -it dev-cluster-control-plane bash
+
+root@dev-cluster-control-plane:/#
+
+
+[We Have Successfully Logged Into Our KIND Cluster]
+
+
+
+
+
+
+------------------------------------------------------------
+
+
+Service Type Cluster IP
+==========================
+
+
+# This is Eg of "Service Type Cluster IP" Q Ki Agar Humko App ko Access Krna H Toh Uske Liye Cluster me Log-In Krna Pad Raha H Jisko Cluster ka Access Hoga wahi App ko Access kr payega.
+
+
+
+# Now If we will try to Reach out to the Pod we can use below Command 
+
+root@dev-cluster-control-plane:/# curl -L http://10.244.0.11:8000/demo
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CSS Template</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+
+<section>
+  <nav>
+    <ul>
+      <li><a href="www.youtube.com/@AbhishekVeeramalla">YouTube</a></li>
+      <li><a href="www.linkedin.com/in/abhishek-veeramalla-77b33996/">LinkedIn</a></li>
+      <li><a href="https://telegram.me/abhishekveeramalla">Telegram</a></li>
+    </ul>
+  </nav>
+
+  <article>
+    <h1>Agenda</h1>
+    <p>Learn DevOps with strong foundational knowledge and practical understanding</p>
+    <p>Please Share the Channel with your friends and colleagues</p>
+  </article>
+</section>
+
+<footer>
+  <p>@AbhishekVeeramalla</p>
+</footer>
+
+
+
+
+ 
+
+
+
+
+
+
+
+------------------------------------------------------------
+
+
+# Service Type Node Port 
+==========================
+
+
+Port Forwarding IMP Article Link - https://media.licdn.com/dms/document/media/v2/D4D1FAQGL1o0GgghOYQ/feedshare-document-pdf-analyzed/B4DZSP4A_FHYAY-/0/1737580629874?e=1755734400&v=beta&t=0KjjNIRKDDCZFOM1DPP1OkFCiupicR1qSrqaVQGRGbs
+
+
+
+# Use the Below Command to Get the IP Add of Kind
+
+$ docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' dev-cluster-control-plane
+
+172.18.0.2
+
+
+
+
+
+
+
+
+
+vim service.yml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: sample-python-app-service
+spec:
+  type: NodePort
+  selector:
+    app: sample-python-app
+  ports:
+    - port: 80
+      targetPort: 8000
+      nodePort: 30007
+
+
+
+
+
+$ kubectl apply -f service.yml
+
+service/sample-python-app-service created
+
+
+
+
+
+
+# The Service is Now Created You Can use below Command to List the Services
+
+$ kubectl get svc
+
+NAME                        TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)        AGE
+kubernetes                  ClusterIP   10.96.0.1      <none>        443/TCP        143m
+sample-python-app-service   NodePort    10.96.20.204   <none>        80:30007/TCP   52s
+
+
+
+
+
+
+
+
+$ kubectl port-forward svc/sample-python-app-service 32757:80    [We have to add "svc" & Name of Service]
+
+
+
+ 
+
+
+$ curl -L http://localhost:32757/demo
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>CSS Template</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Style the header */
+header {
+  background-color: #666;
+  padding: 30px;
+  text-align: center;
+  font-size: 35px;
+  color: yellow;
+}
+
+
+<header>
+  <h2>Free DevOps Course By Abhishek</h2>
+</header>
+
+<section>
+  <nav>
+    <ul>
+      <li><a href="www.youtube.com/@AbhishekVeeramalla">YouTube</a></li>
+      <li><a href="www.linkedin.com/in/abhishek-veeramalla-77b33996/">LinkedIn</a></li>
+      <li><a href="https://telegram.me/abhishekveeramalla">Telegram</a></li>
+    </ul>
+  </nav>
+
+  <article>
+    <h1>Agenda</h1>
+    <p>Learn DevOps with strong foundational knowledge and practical understanding</p>
+    <p>Please Share the Channel with your friends and colleagues</p>
+  </article>
+</section>
+
+<footer>
+  <p>@AbhishekVeeramalla</p>
+</footer>
+
+
+
+
+
+
+
+# We Can Also check by Running this in Browser  http://localhost:32757/demo
+
+
+
+
+
+
+
+
+
+
+
+IMP NOTE - The Concept of Service Type Load Balancing Can be Achieved If we are Using a Cloud Provider Like AWS, AZURE, GCP and If we are Uisng their Managed Kubernetes Service like EKS, AKS, GKE.
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------
+
+
+
+# Service Discovery 
+======================
+
+
+# Service will Always Select the Pods which Matches with the "Labels" provided under Match-Labels, If No Labels are Matched, then service would not be having any Endpoints..   And these matching of labels are done by Labels and Selectors.
+
+You can verify if the service is able to get Endpoints using the below command
+
+# kubectl get ep 
+( Here "ep" means Endpoint, which would be pods that are having Labels defined under Matchlabels of service.yaml file.. In the Output you will see pod IPs with port it is running the application on)
+
+If you are not able to Access the Application using Browser, even though you have created service, you neeed to first see if the Pods are been added as Endpoint for Service.
+
+
+
+
+# Service will check the "Labels" in deployment.yml service section  and match it with "Selectors" in service.yml  & If the labels at deployment.yml  and Selectors at service.yml is same.  Service Discovery will work 
+
+But if the Labels and Selectors are different Service will not work  
+
+
+
+
+
+$ kubectl get ep
+
+Warning: v1 Endpoints is deprecated in v1.33+; use discovery.k8s.io/v1 EndpointSlice
+NAME                        ENDPOINTS                          AGE
+kubernetes                  172.18.0.4:6443                    3h58m
+kubeshark-front             10.244.2.11:8080                   13m
+kubeshark-hub               10.244.2.10:8080                   13m
+kubeshark-worker-metrics                                       13m
+sample-python-app-service   10.244.1.10:8000,10.244.2.9:8000   150m
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------
+
+
+# Load Balancing
+==================
+
+
+# As we have used KIND for Kubernetes so we are Running the Application as "localhost" and the IP for localhost is 127.0.0.1  So we can Go to the KubeShark by accessing it on "http://localhost:8899" & There we Can Click on "Apply"  So we can see how the Traffic is Flowing and Load Balancing is Done by Service in Kubernetes.
+
+
+
+
+# Set Environment Variable for "TAG"
+
+export TAG=v52.3.92  # as an example
+
+
+
+
+# Install KubeShark
+
+kubectl apply -f https://raw.githubusercontent.com/kubeshark/kubeshark/refs/tags/$TAG/manifests/complete.yaml  
+
+
+
+
+# Forwarding the Port as KubeShark By Default Works on port 8899
+
+kubectl port-forward service/kubeshark-front 8899:80  
+
+
+
+
+# Delete KubeShark  
+
+kubectl delete -f https://raw.githubusercontent.com/kubeshark/kubeshark/refs/tags/$TAG/manifests/complete.yaml  
