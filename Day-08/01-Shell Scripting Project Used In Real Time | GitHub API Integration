@@ -41,8 +41,26 @@ Everytime we will not go to the GitHub UI Search for the Repo,  Search for the S
 Instead of Doing this What we can do  First we can List Group of People who have Access to the Repository and if the Person is there  Then Either Through Shell Scripting or Manually we can Revoke the Access.   So we will Automate this Task Today as it is Day to Day Responsibility of a DevOps Engineer.
 
 
+################################################################
+
+# How to Execute the Script
+
+- chmod u+x list_users.sh
+
+- export username='github_username'
+- export token='github_token'
+
+- ./list_users.sh Amyshk786 AWS_For_DevOps_Notes
+
+[Amyshk is the REPO_OWNER which we are Providing as a Command Line Argument]
+
+[AWS_For_DevOps_Notes  is the REPO_NAME which we are Providing as a Command Line Argument]
+
+################################################################
 
 
+
+vim list_users.sh
 
 #!/bin/bash
 
