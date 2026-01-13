@@ -21,6 +21,7 @@ What is Clone  -  Git Clone is a Process Using Which You Pull The Code from GitH
 
 
 
+SVN & CVS Both were Centralised Version Control System
 
 Git is a distributed version control system commonly used for tracking changes in source code during software development. Below are some of the essential Git commands and their detailed usage:
 
