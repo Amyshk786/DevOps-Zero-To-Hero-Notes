@@ -92,3 +92,13 @@ If we want to Push the Code from Git to GitHub we will follow below mentioned st
 - git push -u origin main
 
 
+# If we want to change the url of the Origin then we can use the below Command
+
+- git remote set-url "https://PAT@github.com/REPO_NAME"
+
+
+
+
+
+
+
