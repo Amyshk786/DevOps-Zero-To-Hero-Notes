@@ -1,0 +1,94 @@
+
+Git & GitHub for DevOps Workshop
+====================================
+
+1) What is Git ?
+
+Git is a Distributed Version Control System (DVCS) used to track, manage, and maintain source code. It allows developers to:
+
+- Maintain complete version history of projects
+
+- Share code securely with team members
+
+- Work simultaneously without conflicts
+
+- Create branches for new features and bug fixes
+
+- Merge changes efficiently
+
+- Roll back to previous versions when needed
+
+
+
+
+
+
+2) What is GitHub, GitLab & Bitbucket ?
+
+GitHub, GitLab, and Bitbucket are Source Code Management (SCM) platforms that use Git as their underlying version control technology. They provide powerful features that help teams:
+
+- Create and manage repositories
+
+- Track and control code versions
+
+- Collaborate with team members efficiently
+
+- Review code using pull/merge requests
+
+- Maintain code history and audit trails
+
+- Integrate CI/CD pipelines for automation
+
+- Manage access control and permissions
+
+
+
+
+================================
+
+git init
+
+git status
+
+git add
+
+git commit
+
+git push
+
+git restore
+
+git diff
+
+git reset --hard 'commit_id'
+
+git logs
+
+
+
+
+
+================================
+
+When the File or Code is in File-System it is in "Un-Tracked" Status
+
+When we do "git add <file_name>" the Code is in "Staged" Status
+
+When we do "git commit -m 'commit_message'" the Code is in "Tracked" Status
+
+
+
+
+
+
+================================
+
+If we want to Push the Code from Git to GitHub we will follow below mentioned steps:
+
+- git remote add origin "github_url" 
+
+- git branch -M main
+
+- git push -u origin main
+
+
