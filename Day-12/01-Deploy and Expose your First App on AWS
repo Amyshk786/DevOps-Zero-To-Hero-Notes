@@ -48,6 +48,7 @@ Output = 8.5.1
 git clone https://github.com/verma-kunal/AWS-Session
 
 
+cd AWS-Session
 
 
 Create a .env file and Enter the Below Mentioned Variables
