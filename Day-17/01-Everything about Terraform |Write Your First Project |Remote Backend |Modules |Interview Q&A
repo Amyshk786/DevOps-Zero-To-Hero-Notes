@@ -22,6 +22,7 @@ As a User you Configure a Terraform Provider and Terraform Will Talk to the Targ
 For Example If you Look at AWS Cloud Formation Templates Or Azure Resource Manager and If you want to Move from One Place to Another Place It's like you have to Learn Two Different Tools Now the options for the Cloud Providers is Vast Today you can use AWS, Tomorrow you might move to DIGITAL OCEAN Or you might move to a World of Hybrid Cloud like your Organization might have few things in AWS and few things in Azure. So instead if you just learn one terraform so terraform once you Provide the Provider Details it will Understand that so this is a provider let me convert the terraform configuration files into APIs that AWS would Understand Because AWS is Your Target So it will Convert your Configuration Files into Target AWS APIs and your terraform execution will take place.
 
 
+
 So what you are Achieving with this you are Achieving like you know you can manage Any kind of Infrastructure tomorrow if there is a new Cloud that comes into Play let's say like Alibaba tomorrow you have something called as Xyz cloud so terraform or the Module Developers at Terraform like the Hashicorp or the Open Source Contributors they will take care of writing these APIs  all that you need to do is once they write the modules you have to write the Terraform Configuration files and like you know that's why you can Manage any kind of Infrastructure using Terraform Whether it is Existing clouds or whether it is the new clouds that are going to come in the future terraform will remain and will be the only tool that you have to learn.
 
 
@@ -42,7 +43,34 @@ Standardized configuration standardized configuration means like there is a stan
 
 
 
------------------------------------------------------------------
+
+
+
+# In a Nutshell
+==================
+
+- Manage Any Infrastructure
+
+- Track your Infrastructure
+
+- Automate Changes
+
+- Collaborate
+
+- Standardized Configuration
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------
 
 
 Terraform Lifecycle -  [Write  ->  Dry Run  -> Apply]
