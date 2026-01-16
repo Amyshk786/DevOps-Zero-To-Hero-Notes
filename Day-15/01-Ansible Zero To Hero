@@ -340,7 +340,7 @@ Ansible creates you bunch of files and folders and using these files and folders
 # META is Used to Write Metadata Information inside these Files and Licensing Information
 
 
-# TASKS is Used to Write Tasks which we Previously Created in our First Playbook
+# TASKS is Used to Write Tasks which we Previously Created in our First Playbook [Core Logic (MOST IMPORTANT)]
 
 
 # TESTS is Used for Role Testing
@@ -354,7 +354,7 @@ Ansible creates you bunch of files and folders and using these files and folders
 
 
 
-Whenever you want to write some complicated playbooks okay what what you would do is you will start using the ansible Galaxy command to create roles and what happens if you create roles is you can write structured and efficient ansible playbooks.
+Whenever you want to write some complicated playbooks what what you would do is you will start using the ansible Galaxy command to create roles and what happens if you create roles is you can write structured and efficient ansible playbooks.
 
 
 Refer the Below GitHub Repository for Ansible Examples
