@@ -316,8 +316,8 @@ Output = - Role kubernetes was created successfully
 And Now If we do ls we will see there is a Folder called "kubernetes" below is the Example what are the Files Under kubernetes folder
 
 
-ubuntu@ip-172-31-87-47:~$ ls kubernetes/
-README.md  defaults  handlers  meta  tasks  tests  vars
+ubuntu@ip-172-31-31-244:/kubernetes$ ls
+README.md  defaults  files  handlers  meta  tasks  templates  tests  vars
 
 
 
@@ -341,6 +341,9 @@ Ansible creates you bunch of files and folders and using these files and folders
 
 
 # TASKS is Used to Write Tasks which we Previously Created in our First Playbook [Core Logic (MOST IMPORTANT)]
+
+
+# TEMPLATES is Used for Dynamic Configuration Files (Jinja2)
 
 
 # TESTS is Used for Role Testing
