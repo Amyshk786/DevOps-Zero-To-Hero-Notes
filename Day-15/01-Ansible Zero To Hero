@@ -326,16 +326,27 @@ README.md  defaults  handlers  meta  tasks  tests  vars
 Ansible creates you bunch of files and folders and using these files and folders you can structure your ansible playbooks. so you have templates you have files you have readme where you can explain what this Playbook is and what are the Roles and Responsibilities of this Play-Book. TASKS, HANDLERS, TESTS, VARS, DEFAULTS, META.
 
 
-# META is Used to Write Metadata Information inside these Files and Licensing Information
-
-
-# DEFAULTS is Used to Store some Variables kind of things 
-
-
-# HANDLERS is Used to Handle Some Kind of Exceptions & To send Mail Notifications
 
 
 # README.md is Used to display Uses and what the Playbook will do
+
+
+# DEFAULTS is Used to Store Default Variables (LOW PRIORITY) 
+
+
+# HANDLERS is Used to Handle Event Driven Tasks, Handle Some Kind of Exceptions & To send Mail Notifications
+
+
+# META is Used to Write Metadata Information inside these Files and Licensing Information
+
+
+# TASKS is Used to Write Tasks which we Previously Created in our First Playbook
+
+
+# TESTS is Used for Role Testing
+
+
+# VARS is Used to Store Mandatory Variables (HIGH PRIORITY)
 
 
 
