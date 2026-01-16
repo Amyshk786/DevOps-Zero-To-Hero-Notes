@@ -364,7 +364,7 @@ AV Session -
 ==============
 
 
-For Example we are working in Flipkart and it has 300 Applications,  Flipkart can Deploy this Application in Various Sources like AWS, AZURE, GCP, ORACLE, DIGITAL OCEAN, OpenShift ON-PREM.
+For Example we are working in Flipkart and it has 300 Applications,  Flipkart can Deploy this Application in Various Sources like AWS, AZURE, GCP, ORACLE, DIGITAL OCEAN, OpenStack ON-PREM.
 
 
 Flipkart have made a Decision to Host their Application on AWS and We have Started to Create on EC2 Instances, S3 Buckets, RDS Database As All of these Resources are Required for our Organization.
