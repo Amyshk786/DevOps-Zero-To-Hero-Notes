@@ -28,7 +28,7 @@ Link - https://confluence.atlassian.com/adminjiraserver/get-a-jira-data-center-t
 
 # ServiceNow - Change and Incident Management. Service based organisation, working with clients. Servicenow is extensively used.
 
-Incident management - application is not working as expected. Monitoring system will throw alert. These alert have to be addressed immediately . Tracked as Incident management tool has to. Support guys have to solve the ussue. Createdms incident on it's own . Assigned ti support guy. 
+Incident management - The Application is not working as expected, Then the Monitoring system will throw alert, These alert have to be addressed immediately . Tracked as Incident management tool has to. Support guys have to solve the issue. Createdms incident on it's own . Assigned IT support guy. 
 
 
 Change management... monitoring tool has created an incident , it hss been assigned to a specific individual . He understood the root cause, in order to implement change he will create s service now ticket and interact with other team such as database, application to perform downtime. As part of change management.
