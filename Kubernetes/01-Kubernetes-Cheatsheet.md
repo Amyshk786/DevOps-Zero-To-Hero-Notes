@@ -1,7 +1,7 @@
 
 
 
-# 📘 Kubectl Command Cheatsheet
+# 📘 Kubernetes Cheatsheet
 
 Kubectl is the command-line interface for interacting with Kubernetes clusters.  
 It allows you to deploy applications, inspect and manage cluster resources, and view logs.
