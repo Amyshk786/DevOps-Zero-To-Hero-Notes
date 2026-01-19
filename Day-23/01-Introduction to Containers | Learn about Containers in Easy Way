@@ -12,7 +12,11 @@ Day-23 | Introduction to Containers | Learn about Containers in Easy Way
 
 
 
-Virtualization - For Example we have Bought a Physical Server with 100 GB RAM & 100 CPUs and We Have Installed a Xen Hypervisor on it and we have Created 4 Virtual Machines with 25 GB RAM and 25 CPUs. 
+# Virtualization - For Example we have Bought a Physical Server with 100 GB RAM & 100 CPUs and We Have Installed a Xen Hypervisor on it and we have Created 4 Virtual Machines with 25 GB RAM and 25 CPUs. 
+
+
+
+# What is a Container - A container is a package that includes an Application,  Application Dependencies (libraries, runtimes, frameworks), and the System Dependencies required by the app (such as OS libraries and binaries),  While sharing the Kernel of the Host Operating System.
 
 
 
