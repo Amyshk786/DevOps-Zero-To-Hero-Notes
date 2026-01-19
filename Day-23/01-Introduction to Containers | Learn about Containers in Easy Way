@@ -96,7 +96,7 @@ Docker Community is working on this one and the major drawback is that till now 
 ====================== 
 
 
-So to avoid this single point of failure and to solve various challenges like what happens is whenever a Docker image is being built from Docker file it creates a lot of layers  it creates a lot of layers and each of this layer again takes a lot of space or a lot of storage on your disk so to solve again this problem instead of creating a lot of layers you can and to solve the problem of Single Point of Failure  and other challenges Buildah said that let me create a tool and this tool will help you to solve this problem so Buildah will aim to solve the layers problem spof problem Simplicity it works very well with Scorpio and Podman so that's why you should also learn Buildah so it doesn't take a lot of time Buildah basically works a lot on commands so you don't have to write something like Docker files.
+So to avoid this Single Point Of Failure (SPOF) and to solve various challenges like what happens is whenever a Docker image is being built from Docker file it creates a lot of layers and Each of these layers again takes a lot of space or a lot of storage on your Disk so to solve again this problem instead of creating a lot of layers you can and to solve the problem of Single Point of Failure  and other challenges Buildah said that let me create a tool and this tool will help you to solve this problem so Buildah will aim to solve the layers problem SPOF problem Simplicity it works very well with Scorpio and Podman so that's why you should also learn Buildah so it doesn't take a lot of time Buildah basically works a lot on commands so you don't have to write something like Docker files.
 
 
 
