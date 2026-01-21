@@ -16,12 +16,14 @@ Day-23 | Introduction to Containers | Learn about Containers in Easy Way
 
 
 
-# What is a Container - A container is a package that includes an Application,  Application Dependencies (libraries, runtimes, frameworks), and the System Dependencies required by the app (such as OS libraries and binaries),  While sharing the Kernel of the Host Operating System.
-
-
-
 
 Problem Statement - As we have Created 4 VMs and we Realised that some of the VMs are Only Using 15 GB RAM and 10 CPUs on their Full Capacity  & the Remaining 10 GB RAM and 15 CPUs are Getting Under Utilised and Are Not In Use so this is Wastage of Resources. So to Solve this Problem The Concept of Container came into Picture.
+
+
+
+
+
+# What is a Container - A container is a package that includes an Application,  Application Dependencies (libraries, runtimes, frameworks), and the System Dependencies required by the app (such as OS libraries and binaries),  While sharing the Kernel of the Host Operating System.
 
 
 
