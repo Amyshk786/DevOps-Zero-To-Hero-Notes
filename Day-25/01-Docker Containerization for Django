@@ -6,6 +6,33 @@ Day-25 | Docker Containerization for Django
 
 
 
+
+We have used "django-admin startproject devops" Command To Create a Skeleton of our Djano Project
+
+- django-admin is Simlar to Ansible Galaxy jaise humne "Ansible galaxy Kubernetes" kiye thee toh isne apne ko Ek Skeleton bana k de diya tha K8s ka,   Toh waise hi humne yaha "django-admin" use kr ke Skeleton banaye Apne Djano Project ka 
+
+
+- Aur Project k Skeleton k Andar "devops" name ki ek Directory bani hai  and "db.sqlite3"  & "manage.py"  Name k 2 files bani h aur ye Humari Project Configuration hai
+
+
+- If we do "cd devops" you will see all the Configuration Files  Under the "settings.py" We have the Entire Information [What are the IPs you can White-List],  [What is the DB you are Going to Connect],  [If u have Any Secret Keys, Secret Information, If u want to Use Any Djano Middleware, If u want to Support Any Templates Or Any Webservers Gateway Interface]  All of These Information is Present as part of your "Settings.py" 
+
+
+- In a Nutshell "Settings.py" will Set the Entire Configuration for Your Django Project
+
+
+- After That we have "urls.py" which is Responsible for Serving the Content [Yaha Humne Likhe h k Koi bhi jab App ko Access krega usko "/demo" ya fir "/admin"] likh k Access krna padega
+
+
+- Ab Tuk Humne Base Create Kiye but koi App Create nhi kiye so Now we will use    "python manage.py startapp demo"  Again this will Create a Bunch of Files for you and a "DEMO"  Directory  Except the "Templates" Directory
+
+
+- Inside Demo App there is a File called as "views.py" Here you will Write your Actual Code [Is Project k liye Humne ek Python Function Likhe h Jiska naam "Index" hai] & Ye Function ek "demo_site.html" Jo ek HTML file h Usko Render kr raha h jo "Templates" Directory k Andar  h & From there this the Content will be Served to the End User who is Accessing our Application.
+
+
+
+
+
 # GitHub Repository Used in this Lecture 
 Link - https://github.com/Amyshk786/Docker-Zero-to-Hero
 
