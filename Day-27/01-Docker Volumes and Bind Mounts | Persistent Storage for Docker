@@ -16,16 +16,13 @@ Link - https://github.com/iam-veeramalla/Docker-Zero-to-Hero
 
 
 
+# Problem-01
 Let's say you have a Container and you have Installed Nginx application inside this container and this Nginx application is continuously puts the User Information like who is the logged in user and from which IP address this logged in user has accessed the application all of this information Nginx tries to store in a Log File. This Log file is Very Important at the time of Security Auditing and If we want to Retrive any Specific Information from the Log File.
-
 
 This Log file is Very Important because whether you are doing your security Auditing of your company or whether you're retrieving any kind of details to understand the user information the log file has to have all the information like for example of last 10 days depending upon your organization requirement or from last five days or last one week time to time you perform auditing.
 
-
 For instance this container has gone down so what happens in this case is because the container has Gone down the log file gets deleted why because containers are Ephemeral in nature what is the meaning of Ephemeral they are very short-lived, Containers are very Light Weight in Nature They Use all of the resources like CPU memory and the storage or the file system all of these things directly from the kernel or the host operating system that is why Containers are very Light Weight in Nature.
 
-
-# Problem-01
 If the container goes down, they free up the resources from the operating system and they get killed. So now the user details or the log file of the Nginx is deleted if the log file is deleted now organization does not have information of the Users who authenticated with that specific organization or the user IP addresses or the any kind of information that they want to track or perform auditing on the users is completely deleted this is Problem One. 
 
 
