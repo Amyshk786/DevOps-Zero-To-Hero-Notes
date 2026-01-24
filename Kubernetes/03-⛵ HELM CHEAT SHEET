@@ -16,6 +16,9 @@ Helm helps you define, install, and manage Kubernetes applications using charts.
 | `helm repo update` | Update repo index (fetch latest charts) |
 | `helm search repo nginx` | Search charts in added repos |
 
+
+
+
 ---
 
 # 📥 INSTALLING CHARTS
@@ -26,6 +29,9 @@ Helm helps you define, install, and manage Kubernetes applications using charts.
 | `helm install myrelease ./chart` | Install from local chart directory |
 | `helm install myrelease chart --values values.yaml` | Install with custom values |
 | `helm install myrelease chart --set image.tag=1.2` | Override values from CLI |
+
+
+
 
 ---
 
@@ -38,6 +44,9 @@ Helm helps you define, install, and manage Kubernetes applications using charts.
 | `helm rollback myrelease 1` | Roll back to revision 1 |
 | `helm history myrelease` | Show release history |
 
+
+
+
 ---
 
 # 🗑️ UNINSTALL
@@ -45,6 +54,9 @@ Helm helps you define, install, and manage Kubernetes applications using charts.
 | Command | Purpose |
 |--------|---------|
 | `helm uninstall myrelease` | Remove a deployed release |
+
+
+
 
 ---
 
@@ -58,6 +70,9 @@ Helm helps you define, install, and manage Kubernetes applications using charts.
 | `helm get values myrelease` | Show custom values used |
 | `helm get manifest myrelease` | Show generated Kubernetes YAML |
 
+
+
+
 ---
 
 # 🛠️ CHART DEVELOPMENT
@@ -68,6 +83,9 @@ Helm helps you define, install, and manage Kubernetes applications using charts.
 | `helm lint mychart` | Validate chart syntax |
 | `helm template mychart` | Render chart locally without installing |
 | `helm package mychart` | Package chart into `.tgz` |
+
+
+
 
 ---
 
