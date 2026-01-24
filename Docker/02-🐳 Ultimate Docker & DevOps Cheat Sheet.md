@@ -1,7 +1,7 @@
 
 
 
-# 🐳 Ultimate Docker & DevOps Command Cheat Sheet (With Purpose)
+# 🐳 Ultimate Docker & DevOps Command Cheat Sheet 
 
 A practical reference explaining **what each Docker command is used for** in real DevOps workflows.
 
