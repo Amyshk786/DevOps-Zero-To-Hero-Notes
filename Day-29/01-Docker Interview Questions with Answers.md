@@ -5,15 +5,19 @@ Day-29 | Docker Interview Questions with Answers
 ===================================================
 
 
-1) What is Docker? - Docker is a containerization platform that allows us to package an application along with its dependencies, libraries, and runtime into a lightweight, portable unit called a container.
+Q1) What is Docker? - 
+
+Answer - Docker is a containerization platform that allows us to package an application along with its dependencies, libraries, and runtime into a lightweight, portable unit called a container.
 Containers can run consistently across environments like development, testing, and production, solving the “it works on my machine” problem.
 
 
 
 
 
-2) How Containers are Different From Virtual Machines?
+Q2) How Containers are Different From Virtual Machines?
 
+
+Answer - 
 
 | Containers                    | Virtual Machines             |
 | ----------------------------- | ---------------------------- |
@@ -28,7 +32,10 @@ Containers can run consistently across environments like development, testing, a
 
 
 
-3) What is Docker Life-Cycle?  - Docker container lifecycle refers to the different states a container goes through:
+3) What is Docker Life-Cycle?  -
+
+Answer -  Docker container lifecycle refers to the different states a container goes through:
+
 Created → Running → Paused → Stopped → Removed
 A container is created from an image, runs the application process, can be paused or stopped, and eventually removed when no longer needed.
 
@@ -37,8 +44,9 @@ A container is created from an image, runs the application process, can be pause
 
 
 
-4) What are the Different Docker Components?  - Main components are:
+4) What are the Different Docker Components?  -
 
+Answer - Main components are:
 
 - Docker Client – CLI used to send commands
 
@@ -62,6 +70,8 @@ A container is created from an image, runs the application process, can be pause
 5) What is the Difference Between Docker COPY and Docker ADD?
 
 
+Answer - 
+
 | COPY                                | ADD                                    |
 | ----------------------------------- | -------------------------------------- |
 | Simple file copy from host to image | Can copy files + extract tar archives  |
@@ -76,6 +86,8 @@ A container is created from an image, runs the application process, can be pause
 6) What is the Difference Between CMD and ENTRYPOINT?
 
 
+Answer - 
+
 | CMD                        | ENTRYPOINT                                             |
 | -------------------------- | ------------------------------------------------------ |
 | Provides default arguments | Defines the main command                               |
@@ -87,8 +99,10 @@ A container is created from an image, runs the application process, can be pause
 
 
 
-7) What are the Networking Types in Docker and what is the Default?  - Docker networking types:
+7) What are the Networking Types in Docker and what is the Default?  - 
 
+
+Answer -  Docker networking types:
 
 1) Bridge – Default network for standalone containers
 
@@ -109,8 +123,10 @@ Note - Default network: Bridge
 
 
 
-8) Can you Explain How to Isolate Networking Between the Containers?   - We can isolate containers by:
+8) Can you Explain How to Isolate Networking Between the Containers?   - 
 
+
+Answer -  We can isolate containers by:
 
 - Creating user-defined bridge networks
 
@@ -132,7 +148,7 @@ Note - Default network: Bridge
 9) What is a Multi-Stage Build in Docker?
 
 
-A multi-stage build uses multiple FROM statements in one Dockerfile.
+Answer -  A multi-stage build uses multiple FROM statements in one Dockerfile.
 
 Purpose:
 
@@ -151,8 +167,7 @@ Purpose:
 
 10) What are Distro-Less Images in Docker?
 
-
-Distroless images contain only:
+Answer -  Distroless images contain only:
 - The application
 - Its runtime dependencies
 
@@ -176,7 +191,7 @@ Benefits:
 11) Real-Time Challenges with Docker 
 
 
-Some common real-world challenges:
+Answer -  Some common real-world challenges:
 
 - Managing persistent data for stateful apps
 
@@ -199,7 +214,7 @@ Some common real-world challenges:
 12) What Steps Would you take to Secure Containers?
 
 
-Key container security practices:
+Answer -  Key container security practices:
 
 - Use minimal base images (Alpine, distroless)
 
