@@ -193,9 +193,12 @@ Benefits:
 
 Answer -  Some common real-world challenges:
 
-- Managing persistent data for stateful apps
 
-- Networking complexity in microservices
+- Docker is a Single Deamon Process that Causes SPOF if the Docker Deamon goes down for some reason All the Applications are Down.  
+
+- Docker Deamon Runs as a Root User Which is a Security Threat
+
+- Managing persistent data for stateful apps
 
 - Container security and vulnerabilities
 
