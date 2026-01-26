@@ -17,6 +17,7 @@ Link - https://github.com/iam-veeramalla/Docker-Zero-to-Hero
 Networking allows containers to communicate with each other, with Host system & the Outside World (Internet/Users). Containers Run Isolated from the Host System and need a way to Communicate with each other and with the host system.
 
 
+
 # So there are 2 Scenario 
 
 Scenario-1 - One Container has to Talk to the Another Container [Like Frond-End & Back-End]
@@ -27,11 +28,11 @@ Scenario-2 - One Container Needs to be Completely Isolated from Another Containe
 
 
 
+# How a Container Commuincates with the Host
+---------------------------------------------
 
 
-
-# How a Container Commuincates with the Host - Let's Say we have Created a Container Named as C1 which has an App running on C1 and this C1 is on a Host. By Default whenever you are creating Host or even if you look at your laptop there is a Network Called ad "eth0"  & This "eth0" is a Special Network that is available Out Of the Box,  let's say this network has an IP Add "192.16.3.4". And Similarly the Container will Also have "eth0" with an IP 172.17.0.2 We can Clearly see the Both the IPs are in Different Subnets and if we Ping from Container to the Host we will see Networking Error which will say "Container Cannot Ping to your Host".
-
+1) Bridge Networking - Let's Say we have Created a Container Named as C1 which has an App running on C1 and this C1 is on a Host. By Default whenever you are creating Host or even if you look at your laptop there is a Network Called ad "eth0"  & This "eth0" is a Special Network that is available Out Of the Box,  let's say this network has an IP Add "192.16.3.4". And Similarly the Container will Also have "eth0" with an IP 172.17.0.2 We can Clearly see the Both the IPs are in Different Subnets and if we Ping from Container to the Host we will see Networking Error which will say "Container Cannot Ping to your Host".
 
 So to Solve this Problem Docker has Created a Virtual Ethernet which is called as "docker0",  Without this Virtual Ethernet the Container Cannot Talk or Communicate with the Host. By Default when we Create a Container the Virutal Ethernet which is "docker0" is Created and this is Called as "Bridge Networking". And this is the Default Networking in Docker which is Called as Bridge Networking,  This Network is called as Bridge Network Because the Conatiner and Host has Different Network, And they Can Communicate to Each Other using this Virtual Ethernet (veth) called as "eth0".
 
@@ -40,12 +41,14 @@ So to Solve this Problem Docker has Created a Virtual Ethernet which is called a
 
 
 
-# Host Network - This Means The Containers will Directly Use the Network of your Host, So in this case what Docker does is whenever you are creating a container Docker will directly Bind your container with the IP address of your host not the IP address but the "eth0" of your host. Let's say your Host has IP Address 192.16.3.4 and You Create a Container  probably you would get IP Add something like 192.16.3.6 so both of them are in the same CIDR Block and Both of them will be in the Same Subnet. So by default when you try to Ping from the container to Host It is Possible
+2) Host Network - This Means The Containers will Directly Use the Network of your Host, So in this case what Docker does is whenever you are creating a container Docker will directly Bind your container with the IP address of your host not the IP address but the "eth0" of your host. Let's say your Host has IP Address 192.16.3.4 and You Create a Container  probably you would get IP Add something like 192.16.3.6 so both of them are in the same CIDR Block and Both of them will be in the Same Subnet. So by default when you try to Ping from the container to Host It is Possible
 
 
 
 
 
+
+3) Overlay Networking - This mode enables communication between containers across multiple Docker host machines, allowing containers to be connected to a single network even when they are running on different hosts. Overlay Networking is Very Popular when we are Dealing with Container Orchestration Engines like (Kubernetes, Docker Swarm) Because the Overlay Networking is Useful when we have Multiple Hosts. 
 
 
 
@@ -181,7 +184,7 @@ Additionally, not all Docker image and command combinations are compatible with 
 ### Overlay Networking
 =========================
 
-This mode enables communication between containers across multiple Docker host machines, allowing containers to be connected to a single network even when they are running on different hosts.
+This mode enables communication between containers across multiple Docker host machines, allowing containers to be connected to a single network even when they are running on different hosts. Overlay Networking is Very Popular when we are Dealing with Container Orchestration Engines like (Kubernetes, Docker Swarm) Because the Overlay Networking is Useful when we have Multiple Hosts. 
 
 
 
