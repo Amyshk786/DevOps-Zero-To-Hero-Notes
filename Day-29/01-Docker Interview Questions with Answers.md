@@ -1,8 +1,8 @@
 
 
 
-Day-29 | Docker Interview Questions with Answers | How many can you answer ?
-==============================================================================
+Day-29 | Docker Interview Questions with Answers 
+===================================================
 
 
 1) What is Docker? - Docker is a containerization platform that allows us to package an application along with its dependencies, libraries, and runtime into a lightweight, portable unit called a container.
