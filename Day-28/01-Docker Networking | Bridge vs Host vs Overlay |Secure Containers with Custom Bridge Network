@@ -53,6 +53,33 @@ So to Solve this Problem Docker has Created a Virtual Ethernet which is called a
 
 
 
+4) Custom Bridge Network - If you want to Secure your Containers and Isolate them from the Default Bridge Network you can also create your own bridge network. That is Called as "Custom Bridge Network".
+
+
+
+```
+docker network create secure-network
+```
+
+Now, if you list the docker networks, you will see a new network.
+
+```
+docker network ls
+
+NETWORK ID     NAME             DRIVER    SCOPE
+62b56c769dec   bridge           bridge    local
+6178e2cef437   host             host      local
+1c36555d9327   none             null      local
+5b8d6a6c21fd   secure-network   bridge    local
+```
+
+
+
+
+
+
+
+
 
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
