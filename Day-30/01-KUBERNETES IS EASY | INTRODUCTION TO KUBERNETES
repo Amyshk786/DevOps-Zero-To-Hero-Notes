@@ -115,16 +115,15 @@ And the Problem Number 4 is Docker is a very minimalistic or very simple platfor
 # Solution using Kubernetes for All the Problems which we Faced while Using Docker
 ===================================================================================
 
+Solution No-1 Cluster-Like Behaviour of Kubernetes
 
 By Default Kubernetes is a Cluster what is a cluster cluster is basically Group Of Nodes. So previously when we installed Docker we just installed on One Personal Laptop or you know we just installed on One simple EC2 Instance. So Kubernetes in general in a production use case it is installed in a Master Node Architecture so what is Master-Node Architecture just like Jenkins we create clusters. So that means to say whenever we install kubernetes we just create one master node and we create multiple nodes.  Kubernetes can also be installed on one single node you can definitely do it but that is only your Developer Environment. 
 
 
-
-So to just practice Kubernetes or to just start working around with kubernetes you can also install kubernetes on one single node but in general in production kubernetes is Installed in whether it is High Availability or a Standalone Mode Kubernetes is generally installed as a cluster. So now what happens I might be installing it as a cluster but your question will be what what is the Advantage if I install as a cluster the advantage would be in kubernetes there are two nodes let's assume so if this node so let's assume this is the specific node and this is container one and container 99 so if container one is impacting this container 99 immediately kubernetes will put this container 99 in a different node. 
-
+So to just practice Kubernetes or to just start working around with kubernetes you can also install kubernetes on one single node but in general in production kubernetes is Installed in whether it is High Availability or a Standalone Mode Kubernetes is generally installed as a cluster.  If we Install Kubernetes as a Cluster the Advantage would be in kubernetes there are Two Nodes. Let's assume so if  there is Container 1 and Container 99 And if the Container 1 is impacting this container 99 Immediately kubernetes will put this container 99 in a different Node. 
 
 
-So what happened this container 99 is not affected by container one or the meaning is that a Faulty Node so there is a Faulty Node for example or there is one faulty application in the node which is impacting the other applications so kubernetes because it has Multiple Node Architecture immediately it can put nodes in a different pods in a different node or applications in a different node. So because of which you have a cluster-like architectures  So this is one problem that is already solved by using the Cluster Behavior of Bubernetes. Kubernetes is By Default Cluster in Nature. 
+So what happened this container 99 is not affected by container 1 or the meaning is that A Faulty Node so there is a Faulty Node for example or there is one faulty application in the Node which is impacting the other Applications so kubernetes because it has Multiple Node Architecture immediately it can put pods in a different node or applications in a different node. So because of which you have a Cluster-Like Architecture  So this is one problem that is already solved by using the Cluster Behavior of Kubernetes. Kubernetes is By Default Cluster in Nature. 
 
 
 
@@ -132,17 +131,23 @@ So what happened this container 99 is not affected by container one or the meani
 
 
 
-Now the Second Problem what is that Auto Healing, so kubernetes basically has something called as Replication Controller or Replica Sets. So Replica set is a new name Replication Controller is old name. So all that you need to do is you don't even have to deploy a new container  for example let's say you have C1 and your C1 or your application is receiving load increase load previously it was receiving 10000 on one Festival it is receiving one lakh. So what we can simply do is kubernetes is basically dependent on YAML files so in replication controller.yaml file replica set controller.yaml file or even in the deployment YAML file.  
+Solution No-2 Replica Sets Solves the Problem of Auto-Scaling
+
+Now the Second Problem what is that Auto Scaling, so kubernetes basically has something called as Replication Controller or Replica Sets. So Replica Set is a new name Replication Controller is old name. So all that you need to do is you don't even have to deploy a new container  for example let's say you have C1 and your C1 or your application is receiving load increase load previously it was receiving 10000 on one Festival it is receiving one lakh. So what we can simply do is kubernetes is basically dependent on YAML files so in replication controller.yaml file replica set controller.yaml file or even in the deployment YAML file.  
 
 
 
-You can go to one specific yaml file yaml is basically a indentation format file just like Json files so you can simply go to this yaml template file and say that increase my replicas from 1 to 10 because my traffic is increasing I know that tomorrow is Festival so I want to increase traffic from 1 to 10 this is manual way and kubernetes also supports something called as HPA which is Horizontal Pod Auto-Scalar. So using which you can directly say that whenever there is a load just keep increase if one of my container is receiving a threshold of 80 percentage so whenever you see that the load is reaching threshold of 80 percent just spin up one more container so in such cases it will keep up spinning the Containers if the load is even going from 1 million to 10 Millions even your Horizontal Pod Scalar feature of your kubernetes can handle so this is how you are achieving Auto Scaling two problems solved.  
+You can go to one specific yaml file yaml is basically a Indentation format file just like Json files so you can simply go to this yaml template file and say that Increase my Replicas from 1 to 10 because my traffic is increasing I know that tomorrow is Festival so I want to increase traffic from 1 to 10 this is manual way and kubernetes also supports something called as HPA which is Horizontal Pod Auto-Scalar. So using which you can directly say that whenever there is a load just keep increase if one of my container is receiving a threshold of 80 percentage so whenever you see that the load is reaching threshold of 80 percent just spin up one more container so in such cases it will keep up spinning the Containers if the load is even going from 1 million to 10 Millions even your Horizontal Pod Auto-Scalar feature of your kubernetes can handle so this is how you are achieving Auto Scaling two problems solved.  
 
 
 
 
 
 
+
+
+
+Solution No-3 : Solves the Problem of Auto-Healing
 
 Now let's go with the Problem number three which is Auto Healing so what is Auto Healing basically the word heal itself means that whenever there is a damage kubernetes has to control the damage and fix the damage so it will either control or it will fix. So most of the time it will control the damage now what is the meaning of Controlling the Damage or what is the meaning of Auto Healing. Let's say for some reason one of your container is going down there are hundreds of reasons why your container can go down I'll explain you what are the classic problems of why a pod can go down or why a container can't go down there are multiple things and there are some standard things that you can remember or you know standard debugging steps for a container when container goes down but for now let's assume that your container is going down so in case of Docker like I told you you have to look into the docker PS commands look into all the list of containers and understand  one of my container went down, so let me restart or let me re-create this container whereas kubernetes has a feature called Auto Healing.
 
@@ -159,7 +164,9 @@ Using this Auto Healing feature whenever the container is going down even before
 
 
 
-Now let's go with the Problem number four which is the Enterprise Level Support,  Docker does not have Enterprise Nature so it does not have many Enterprise Support Capabilities like it does not support Firewalls it does not support Load Balancers or by default  so it does not support a lot of things unless you go to Docker Swarm.  So what the people at kubernetes have done is so kubernetes is basically a tool that was originated from Google so people at Google were using a specific tool called Borg where they say that kubernetes is one of the parts of Borg. You can consider kubernetes as Initial Solution for Borg,  So the People at Google what they have done is they have built a Enterprise Level Container Orchestration Platform. So why they have built a Container Orchestration Platform  that supports Enterprise level Because the docker platform which is just a Container Platform.  It does not have all of these capabilities but to run your application on a pad on a platform which is not Enterprise ready it is not suggestible.
+Solution No-4 :
+
+Now let's go with the Problem number Four which is the Enterprise Level Support,  Docker does not have Enterprise Nature so it does not have many Enterprise Support Capabilities like it does not support Firewalls it does not support Load Balancers.  So it does not support a lot of things unless you go to Docker Swarm.  So what the people at kubernetes have done is so kubernetes is basically a tool that was Originated from Google so people at Google were using a specific tool called Borg where they say that kubernetes is one of the parts of Borg. You can consider kubernetes as Initial Solution for Borg,  So the People at Google what they have done is they have built a Enterprise Level Container Orchestration Platform. So why they have built a Container Orchestration Platform  that supports Enterprise level Because the docker platform which is just a Container Platform.  It does not have all of these capabilities but to run your application on a pad on a platform which is not Enterprise ready it is not suggestible.
  
  
  
