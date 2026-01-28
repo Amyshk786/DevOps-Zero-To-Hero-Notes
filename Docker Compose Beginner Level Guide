@@ -35,7 +35,7 @@ Now we will need to Create Docker Image for Creating the We will Log-In to the V
 
 
 STEP3
-Now the next step will be to RUN this Docker Container which will be the Final Stage [docker run -d -p or any oth arguments which we want to pass]
+Now the next step will be to RUN this Docker Container which will be the Final Stage [docker run "-d",  "-p",  "--network",   "--mount" or any oth arguments which we want to pass]
 
 We can verify the State of the Container by Running the "docker ps" Command 
 
