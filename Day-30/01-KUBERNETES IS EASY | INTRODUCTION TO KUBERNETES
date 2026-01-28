@@ -5,57 +5,62 @@ Day-30 | KUBERNETES IS EASY | INTRODUCTION TO KUBERNETES
 =========================================================
 
 
-Kubernetes is a Container Orchestration Platform,   Containers are Ephemeral in nature ephemeral is nothing but something that is Short Life or Short Living in nature that means containers can Die and Revive Anytime. So basically if you have a Host and on top of which you have Installed Docker on top of which you created let's say 100 containers now one of these containers is taking a lot of memory all of a sudden It started taking a lot of memory. 
+Kubernetes is a Container Orchestration Platform,   Containers are Ephemeral in Nature Ephemeral is nothing but something that is Short Life or Short Living in nature that means containers can Die and Revive Anytime. 
 
 
+# Problem N0-1 Single Host Nature of Docker :
 
-So this one impacts your 99th or it impacts your 50th container why it impacts because this container is not getting enough resources so it will die or if it is already not scheduled what happens is this container will not get started so basically the life of containers is very short lived if there is a lack of memory resources or you know if there is some issue with the container like the image is not getting pulled in any of the cases the container will immediately die because there is only one host here and on top of that I installed 100 containers there is no relation between container number one and there is no relation between container number 100. 
-
-
-
-But still what is happening here is the container one which is consuming a lot of memory and that is killing the container 100 it is not directly killing but this is the way how Linux works.  In Linux what happens is there is a priority that is allocated for each process so now what happens is that when one of the process is taking a lot of memory depending upon your Linux and kernel rules the process like Linux have to Define right or kernel has to decide which process to kill let's say there are 100 process it cannot randomly kill process number 50 right so there is a particular algorithm in kernel using which it deletes one of the processes so here in this case container one was taking a lot of resources because of which container 100 is not at all getting created or it is directly dying. So this is one use case what is the problem here because you have only one host and on top of it you have installed docker and you have created 100 containers one of the container is dying because of the other thing so what is one problem that we have learned here Single Host Nature of Docker Container so this is problem number one.
+For Instance you have a Host and on top of this Host you have Installed Docker on top of which you created let's say 100 containers now one of these containers is taking a lot of Memory All of a sudden It started taking a lot of memory. So this one impacts your 99th or it impacts your 50th container  Because this container is not getting enough Resources so it will die or if it is already not scheduled what happens is this container will not get started so basically the life of containers is very short lived if there is a Lack of Memory Resources or if there is some issue with the container like the image is not getting pulled in any of these cases the container will immediately die because there is only One Host here and on top of that We have installed 100 containers there is No Relation between Container number One and Container number 100. 
 
 
-
-
-Now let's move to problem number two what is problem number one the nature of Docker or the nature of this container platform is scope to One Single Host so because it is only one single host the containers which are there it is impacting another Container and if one of the container is impacting the other container there is no way that this container can come up so this is problem number one. 
-
-
-
-
-Now the problem number two let's say somebody has killed One of your container now  what will happen if somebody kills the container immediately the application that is running inside the container will be not accessible and the reason for it  not being accessible because the container got killed and unless there is a User or a DevOps Engineer who starts this container somebody has to act upon the container that got killed so this behavior is called as Auto healing.
-
-
-
-
-Auto healing is a behavior where without users Manual Intervention so without the user's manual intervention your container should start by itself but does it happen in the docker let's say you are playing around with your Docker containers on your personal laptop does the container come up automatically no it does not come up now there are hundreds of reasons why your container can go down and In Real Life there are Thousands of Containers in the Orgainsation and DevOps Engineer cannot do "docker ps" COMMAND to check which containers are running.  So there has to be a mechanism that is called as Auto Healing. So Auto Healing is a very important feature that Docker or any container platform by itself is missing so what is problem number two Auto Healing.
-
-
-
-
-So the problem number three is called as Auto Scaling now let us try to understand what is this problem number three so again let's take the same example you have a EC2 instance or a Physical Host on top of which you install docker on top of which you have let's assume you just created one container and this container you know it has some resources called as 4GB RAM and 4 CPU now this container can maximum consume up to 4G 4 CPU and 4 GB Ram because it is the maximum capacity of 
-your host in general your container will not get all the required resources from your host because the host itself has a lot of processes that is running right but for easy understanding let's say maximum this container can go up to 4 CPU and 4GB.
-
-
-
-
-Your application has some 10,000 Users but what happened is during a festival season let's say some Christmas or Dasera or any Festival season your users all of a sudden went from 10,000 to 1 Lakh so this happens all the times right so let's say a movie is released on Netflix and this is a very popular movie something like Marvel or Avengers or any popular actors movie so usually Netflix might receive load from 10,000 users but on this particular occasion Netflix will receive some 1 Million. So to act upon the Increasing load you need to have a specific feature which is called as Auto Scaling now what is Auto Scaling as soon as the load gets increased there are two ways one is manually you increase the container count from one to 10 because the load is increased by 10 times I am just giving an example so manually you increase the load from one to ten or the containers similar containers like similar to C1 what you will do is you will create 10 different C1 containers or it has to happen automatically.
-
-
-
-
-As soon as this sees the load the docker container has to immediately understand that so the load is getting increased so I have to scale up myself but Docker does not support both of the things. So let's say you have one container called C1 so manually what you will do is let's say you want to increase from 10,000 to 20,000 user request what you have to do you have to create another container called C1 and apart from this you have to configure load balancing. If there is no load balancing you know you cannot tell user that for first 10,000 users access my application URL as 172.16.3.4 and for next 10,000 your users access my application on 170.16.3.5 that is not possible Netflix will never tell you this right all that you do as an end user is just access netflix.com  so you just access netflix.com and Watch your favorite movie.
-
-
-
-
-So now what is happening behind the hood is there is a load balancer which is actually sending you the load whether you are doing it manually or automatically whether you increase these containers count manually from one to ten or automatically if your platform is increasing from 1 to 10 behind the hood there is a load balancer so this load balancer basically says that  now I understood that instead of one container there are two or instead of two there are three or there are ten so let me equally split the load so there has to be this mechanism of load balancer which supports your auto scaling so this is feature number three which is missing in your docker.
+But still what is happening here is the Container One which is consuming A lot of memory that is killing the container 100 it is not directly killing but this is the way how Linux works.  In Linux what happens is there is a priority that is allocated for Each Process. So now what happens is when one of the process is taking a lot of memory depending upon your Linux and kernel rules the  Linux have to Define or kernel has to decide which process to kill. Let's say there are 100 process it cannot randomly kill process number 50  so there is a particular algorithm in kernel using which it deletes one of the processes.  So here in this case container one was taking a lot of resources because of which container 100 is not at all getting created or it is directly dying. So this is one use case what is the problem here because you have only one host and on top of it you have installed docker and you have created 100 containers one of the container is dying because of the other thing so what is one problem that we have learned here Single Host Nature of Docker Container so this is Problem Number One.
 
 
 
 
 
-And the Problem Number 4 is Docker is a very minimalistic or very simple platform  Docker does not support any of your Enterprise level application support,  Docker does not provide any Enterprise level support. When we Deploy a Enterprise Grade Application it Must have a Load Balancer, Firewall, Auto Scalability, Support API Gateways these are Some Enterprise Grade Standard But Docker Does not Support this Enterprise level standards By Default. 
+
+ 
+
+
+# Problem N0-2 Auto Healing :
+
+Now the problem number Two is Let's say somebody has Killed One of your Container now  what will happen if somebody kills the container immediately the Application that is running inside the container will be not Accessible and the reason for it  not being accessible because the container got killed and unless there is a User or a DevOps Engineer who starts this container somebody has to act upon the container that got killed so this behavior is called as Auto Healing.
+
+
+Auto healing is a behavior where without users Manual Intervention so without the user's manual intervention your container should start by itself but does it happen in the docker let's say you are playing around with your Docker containers on your personal laptop does the container come up automatically no it does not come up now there are hundreds of reasons why your container can go down and In Real Life there are Thousands of Containers in the Orgainsation and DevOps Engineer cannot do "docker ps" COMMAND to check which containers are running state.  So there has to be a Mechanism that is called as Auto Healing. So Auto Healing is a very important feature that Docker or any container platform by itself is missing so what is problem number two Auto Healing.
+
+
+
+
+
+
+
+
+
+
+# Problem N0-3 Auto Scaling :
+
+So the problem number Three is called as Auto Scaling  So again let's take the same example you have a EC2 instance or a Physical Host on top of which you install Docker on top of which you have let's assume you just created One container and this container you know it has some resources called as 4GB RAM and 4 CPU now this container can Maximum Consume up to 4 CPU and 4 GB RAM because it is the maximum capacity of your host in general your container will not get all the required resources from your host because the host itself has a lot of processes. [Let's say maximum this container can go up to 4 CPU and 4GB RAM.]
+
+
+Your application has some 10,000 Users but what happened is during a festival season let's say some Christmas or Dasera or any Festival season your users all of a sudden went from 10,000 to 1 Lakh so this happens all the times right so let's say a movie is released on Netflix and this is a very popular movie something like Marvel or Avengers or any popular actors movie. So usually Netflix might receive load from 10,000 users but on this particular occasion Netflix will receive some 1 Million Users. So to act upon the Increasing load you need to have a Specific feature which is called as Auto Scaling. What is Auto Scaling as soon as the load gets increased there are Two ways One is Manually you increase the container count from 1 to 10 Because the load is Increased by 10 times I am just giving an example so manually you increase the load from 1 to 10, Second Way is it has to Check if the Number of Incoming Users have Increased so It should Create 10 C1 Containers Automatically.
+
+
+As soon as this sees the load the docker container has to immediately understand that so the load is getting increased so I have to scale up myself but Docker does not support both of the things. So let's say you have one container called C1 so manually what you will do is let's say you want to increase from 10,000 to 20,000 User request what you have to do you have to create another container called C1 and apart from this you have to configure Load Balancing. If there is no load balancing you know you cannot tell user that for first 10,000 users access my Application URL as 172.16.3.4 and for next 10,000 your users access my Application on 170.16.3.5 that is not possible Netflix will never tell you this right all that you do as an end user is just access netflix.com,  so you just access netflix.com and Watch your favorite movie.
+
+
+So now what is happening behind the hood is there is a load balancer which is actually sending you the load whether you are doing it Manually or Automatically whether you increase these containers count manually from 1 to 10 or Automatically if your platform is increasing from 1 to 10 behind the hood there is a load balancer so this load balancer basically says that  now I understood that instead of one container there are two or instead of two there are three or there are ten so let me equally split the load so there has to be this mechanism of load balancer which supports your Auto Scaling so this is feature number three which is missing in your docker.
+
+
+
+
+
+
+
+# Problem N0-4 Docker does not support any of your Enterprise Level Support :
+
+And the Problem Number 4 is Docker is a very minimalistic or very simple platform  Docker does not support any of your Enterprise Level Application Support,  Docker does not provide any Enterprise Level Support. When we Deploy a Enterprise Grade Application it Must have a Load Balancer, Firewall, Auto Scalability, Support API Gateways these are Some Enterprise Grade Standard But Docker Does not Support this Enterprise level standards By Default. 
 
 
 
@@ -81,7 +86,7 @@ And the Problem Number 4 is Docker is a very minimalistic or very simple platfor
 4) Enterprise Level Support
 
 
-So what are the three different things the first one is Docker has a single host, Docker Platform relies on one single host whether you install it on your laptop or ec2 instance what you are doing is on one specific ec2 instance you are installing Docker and top of which you are installing containers whether the containers are like you know if you have 10 containers 100 containers you are just simply installing on that specific host and you are serving the traffic.
+So what are the three different things the first one is Docker has a Single Host, Docker Platform relies on one single host whether you install it on your laptop or ec2 instance what you are doing is on one specific ec2 instance you are installing Docker and top of which you are installing containers whether the containers are like you know if you have 10 containers 100 containers you are just simply installing on that specific host and you are serving the traffic.
 
 
 
