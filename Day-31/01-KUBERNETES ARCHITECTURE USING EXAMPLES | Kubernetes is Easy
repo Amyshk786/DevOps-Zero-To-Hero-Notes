@@ -126,6 +126,6 @@ And then you have something called as kubernetes Master which has components lik
 4) Controller Manager - Then you have Controller Manager which is manager for your kubernetes Inbuilt Controllers 
 
 
-5) CLoud Controller Manager - And finally you have something called as Cloud Controller Manager which we will Use if we are Using Any Public Cloud Providers Like AWS, AZURE, GCP, ORACLE, DIGITAL OCEAN  ETC....
+5) Cloud Controller Manager - And finally you have something called as Cloud Controller Manager which we will Use if we are Using Any Public Cloud Providers Like AWS, AZURE, GCP, ORACLE, DIGITAL OCEAN  ETC....
 
 
