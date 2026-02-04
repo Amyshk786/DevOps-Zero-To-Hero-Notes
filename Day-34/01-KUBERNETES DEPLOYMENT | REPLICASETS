@@ -114,7 +114,7 @@ REPLICASET - Replica-Set is a Kubernetes Controller and a Kubernetes Controller 
 
 
 
-NOTE - To List Out All the Resources Available in a Particular Namespace   [VERY IMP Question]
+NOTE - To List Out All the Resources Available in a All Namespaces   [VERY IMP Question]
 # kubectl get all -A
 
 
