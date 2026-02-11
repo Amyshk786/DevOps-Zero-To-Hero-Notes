@@ -10,6 +10,10 @@ Like we have Discussed Earlier In Production we do not Deploy a Pod we Usually D
 
 
 
+# We need Multiple Replica's of a Pod if there are 10 Concurrent Users (Users Accessing the Application at the Same Time). So if we have Multiple Replica's so the Load will be Distributed across all the Pods. Number of Count of Replica Depends upon the Number of Users Trying to Access your Application & Also Number of Connections 1 Particular Pod Can Take. [It Depends Upon Number of Concurrent Users & Number of Requests 1 Pod can Handle]. For Eg 1 Pod Can Handle 10 Requests and there are 100 Requests that are coming in so we will need 10 Pods.
+
+
+
 
 # What If There is No Concept Service in Kubernetes - As a DevOps Engineer  we will usually deploy a Deployment in Production Once we Create a "DEPLOYMENT"  ->  It Will Create a "REPLICASET" for You and RS is Resp to Create  -> "POD" and we have set the Number of Replica as 3 So if a Pod has gone down Replica-Set which is a Kubernetes Controller will Ensure that a New Pod is Up and Running As it provides Auto Healing Capability to Kubernetes Before the Pod goes down or the New Pod Creation will happen Parallelly. But when a Pod has gone down For Instance the IP Address of the Pod was "172.0.3.1" but when a new Pod is Rolled out by the Replica-Set the IP Address of the new Pod will not be the same For Instance the IP Address of the New Pod which is Rolled out is "172.0.3.4". If you have given these 3 Pods to 3 Different Teams or 3 Different Users or 3 Different Projects,  The Users who has the IP Add for the Pod-1 which has gone down will not be able to access that Pod or the Application inside it. So this is a problem if there is No Concept Service in Kubernetes.
 
