@@ -36,6 +36,57 @@ We are working in a Org named Example.com At this org we develop Ecommerce Appli
 3) Designing Phase - After that we will move to the Designing Phase So Designing Phase is very Critical Phase Because in Designing Phase you will do High Level Design (HLD) and Low Level Design (LLD). Lets say we have a Architect or Team Leader these members will write the HLD on the HLD you will be Talking about the Overall Your System has to be Scalable or Whenever there is a Requirement This Kids Catalog have to be Scalable to Probably there might be more Load for the Kids Catalog during Christmas. So you have to Build your Kids Catalog Application in such a way that it is Scalable when Required or it is Highly Available. These things we will Design in HLD. Number of Replicas and Which Database will be used are also decided in HLD.  And Coming to the LLD your Architect and the Development Team they would write the LLD Requirements. Like Lets use These Particular Functions or Modules They also decide which Programming Language will be used like  Java, Python.
 
 
+🔹 High-Level Design (HLD) – Components (Big Picture)
+
+Focuses on overall system architecture.
+
+Main components:
+
+System architecture (e.g., monolithic, microservices)
+
+Modules / major components
+
+Technology stack (frontend, backend, database)
+
+Database design (high-level schema)
+
+External integrations / APIs
+
+Data flow between modules
+
+Deployment architecture (cloud, servers, load balancer)
+
+
+HLD answers: How the whole system is structured.
+
+
+
+
+
+
+🔹 Low-Level Design (LLD) – Components (Detailed View)
+
+Focuses on internal logic of each module.
+
+Main components:
+
+Class diagrams
+
+Method/function definitions
+
+Data structures
+
+API request/response formats
+
+Algorithms & business logic
+
+Database tables with fields
+
+Error handling logic
+
+
+LLD answers: How each component works internally.
+
 
 
 
