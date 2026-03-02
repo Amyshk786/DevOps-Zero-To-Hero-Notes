@@ -73,7 +73,14 @@ We are working in a Org named Example.com At this org we develop Ecommerce Appli
 
 
 
-
-
+-------------------------------------------------------------------
+| Aspect   | HLD                      | LLD                       |
+| -------- | ------------------------ | ------------------------- |
+| Focus    | System-wide architecture | Internal module details   |
+| Level    | Conceptual               | Detailed/Technical        |
+| Audience | Architects, stakeholders | Developers                |
+| Diagrams | Architecture diagrams    | Class & sequence diagrams |
+| Database | Conceptual entities      | Full schema with types    |
+-------------------------------------------------------------------
 
 
