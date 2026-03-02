@@ -1,6 +1,3 @@
-DevOps Zero to Hero
-
-
 DevOps Day-01 - Introduction to DevOps 
 =========================================
 
