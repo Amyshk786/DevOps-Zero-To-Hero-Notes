@@ -67,7 +67,7 @@
 
 
 
-##  Summary of Role Interactionst 
+##  Summary of Role Interactions
 
 | Role | Key Responsibilities | Deliverables |
 |------|----------------------|--------------|
