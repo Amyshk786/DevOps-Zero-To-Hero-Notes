@@ -66,6 +66,39 @@
 
 
 
+
+##  Summary of Role Interactionst 
+
+| Role | Key Responsibilities | Deliverables |
+|------|----------------------|--------------|
+| Business Analyst | Gathers and documents customer requirements | Business Requirements Document (BRD) |
+| Product Manager | Defines product vision, goals, and priorities | Product Vision, Roadmap, Strategy |
+| Product Owner | Manages backlog and converts vision into actionable items | User Stories, Epics, Prioritized Backlog |
+| UI/UX Designer | Designs user interface and user experience | Wireframes, Mockups, Prototypes, Design System |
+| Software Architect | Designs technical system structure and frameworks | High-Level Design (HLD), Low-Level Design (LLD) |
+| Developers | Build the actual product (UI, APIs, databases) | Application Code, Features, Integrations |
+| DBA (Database Administrator) | Designs and manages databases | Database Schema, Performance Optimization, Backups |
+| Security Engineer | Ensures product and infrastructure security | Security Architecture, Vulnerability Reports, Compliance Checks |
+| QA Engineer | Tests product quality and performance | Test Cases, Bug Reports, Automation Scripts, Test Reports |
+| DevOps Engineer | Builds CI/CD pipelines and manages environments | CI/CD Pipelines, Infrastructure as Code, Deployment Automation |
+| Release Manager | Plans and manages releases | Release Plan, Deployment Schedule, Release Notes |
+| SRE (Site Reliability Engineer) | Ensures uptime, performance, and reliability post-release | Monitoring Dashboards, Incident Reports, Reliability Improvements |
+| Technical Writer | Creates documentation for users and developers | User Guides, API Documentation, Knowledge Base Articles |
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------
+
+
+
+
+
 ### 1. Business Analyst
 
 **Role Overview**: A Business Analyst (BA) bridges the gap between business needs and technical solutions, ensuring that the final product aligns with organizational goals.
@@ -463,24 +496,6 @@ Enhances user adoption and satisfaction by providing clear, accessible documenta
 
 
 
---------------
 
-## 📌 Product Development Roles & Responsibilities
 
-| Role | Key Responsibilities | Deliverables |
-|------|----------------------|--------------|
-| Business Analyst | Gathers and documents customer requirements | Business Requirements Document (BRD) |
-| Product Manager | Defines product vision, goals, and priorities | Product Vision, Roadmap, Strategy |
-| Product Owner | Manages backlog and converts vision into actionable items | User Stories, Epics, Prioritized Backlog |
-| UI/UX Designer | Designs user interface and user experience | Wireframes, Mockups, Prototypes, Design System |
-| Software Architect | Designs technical system structure and frameworks | High-Level Design (HLD), Low-Level Design (LLD) |
-| Developers | Build the actual product (UI, APIs, databases) | Application Code, Features, Integrations |
-| DBA (Database Administrator) | Designs and manages databases | Database Schema, Performance Optimization, Backups |
-| Security Engineer | Ensures product and infrastructure security | Security Architecture, Vulnerability Reports, Compliance Checks |
-| QA Engineer | Tests product quality and performance | Test Cases, Bug Reports, Automation Scripts, Test Reports |
-| DevOps Engineer | Builds CI/CD pipelines and manages environments | CI/CD Pipelines, Infrastructure as Code, Deployment Automation |
-| Release Manager | Plans and manages releases | Release Plan, Deployment Schedule, Release Notes |
-| SRE (Site Reliability Engineer) | Ensures uptime, performance, and reliability post-release | Monitoring Dashboards, Incident Reports, Reliability Improvements |
-| Technical Writer | Creates documentation for users and developers | User Guides, API Documentation, Knowledge Base Articles |
 
--------
